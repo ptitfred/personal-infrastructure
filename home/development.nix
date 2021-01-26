@@ -49,23 +49,14 @@
     neovim = {
       enable = true;
       vimAlias = true;
-      plugins = with pkgs.vimPlugins;
-        let neovim-ghcid = pkgs.vimUtils.buildVimPlugin {
-              name = "ghcid";
-              src = (pkgs.fetchFromGitHub {
-                owner = "ndmitchell";
-                repo = "ghcid";
-                rev = "5d7f859bc6dd553bdf93e6453391353cf310e232";
-                sha256 = "1gyasmk6k2yqlkny27wnc1fn2khphgv400apfh1m59pzd9mdgsc2";
-              }) + "/plugins/nvim";
-            };
-         in [
-              gruvbox
-              vim-airline
-              vim-autoformat
-              vim-polyglot
-              neovim-ghcid
-            ];
+      plugins =
+        with pkgs.vimPlugins;
+          [
+            gruvbox
+            vim-airline
+            vim-autoformat
+            vim-polyglot
+          ];
       extraConfig = ''
           colorscheme gruvbox
 
