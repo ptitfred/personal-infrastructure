@@ -4,14 +4,11 @@
   home = {
     packages = with pkgs; [
       bat
-      cachix
       file
       glow
       gnumake
       httpie
       jq
-      niv
-      nix-prefetch-github
       shellcheck
       tree
       posix-toolbox.git-bubbles
@@ -19,7 +16,6 @@
       posix-toolbox.git-ps1
       posix-toolbox.ls-colors
       posix-toolbox.wait-tcp
-      nix-linter
     ];
 
     sessionVariables = {
@@ -67,7 +63,6 @@
               gruvbox
               vim-airline
               vim-autoformat
-              vim-nix
               vim-polyglot
               neovim-ghcid
             ];
