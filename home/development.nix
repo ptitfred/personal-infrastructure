@@ -28,6 +28,7 @@
       enable = true;
       shellAliases = {
         glow = "${pkgs.glow}/bin/glow -p";
+        ":e" = "vim";
       };
       initExtra = ''
         source $HOME/.nix-profile/share/ls-colors/bash.sh
