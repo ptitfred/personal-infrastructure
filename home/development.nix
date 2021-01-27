@@ -5,7 +5,6 @@
     packages = with pkgs; [
       bat
       file
-      glow
       gnumake
       httpie
       jq
@@ -28,7 +27,7 @@
     bash = {
       enable = true;
       shellAliases = {
-        glow = "glow -p";
+        glow = "${pkgs.glow}/bin/glow -p";
       };
       initExtra = ''
         source $HOME/.nix-profile/share/ls-colors/bash.sh
