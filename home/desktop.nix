@@ -54,6 +54,8 @@ in
           "module/memory" = {
             type = "internal/memory";
             interval = "0.5";
+            format = "<label>";
+            label = "Mémoire libre  %gb_free%";
           };
 
           "module/i3" = {
@@ -69,6 +71,7 @@ in
             label-separator = "|";
             label-separator-foreground = orange;
             label-separator-padding = 1;
+            wrapping-scroll = false;
           };
 
           "module/date" = {
