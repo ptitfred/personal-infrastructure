@@ -43,7 +43,7 @@ in
           i3GapsSupport = true;
         };
         config = {
-          "bar/top" = {
+          "bar/main" = {
             font-0 = toPolybar roboto + ";2";
             inherit bottom;
             # height = 20;
@@ -58,6 +58,8 @@ in
             border-bottom-size = if bottom then spacing else 0;
             separator = "|";
             module-margin = 2;
+            locale = "fr_FR.UTF-8";
+            tray-position = "center";
           };
 
           "module/memory" = {
@@ -91,7 +93,7 @@ in
             label = "%date%  %time%";
           };
         };
-        script = "polybar top &";
+        script = "polybar main &";
       };
 
       picom = {
@@ -145,7 +147,12 @@ in
             text = lib.mkForce palette.mate.white;
           };
         };
-        gaps.inner = spacing;
+
+        gaps = {
+          inner = spacing;
+          smartBorders = "on";
+        };
+
         keybindings =
           let modifier = config.xsession.windowManager.i3.config.modifier;
               mkWorkspace = index: name: {
@@ -168,6 +175,9 @@ in
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
         ];
       };
+      extraConfig = ''
+        for_window [class=".*"] title_format "  %title"
+      '';
     };
 
     xresources.properties = with palette; {
