@@ -41,6 +41,7 @@
 
     urxvt = {
       enable = true;
+      fonts = [ "xft:Monospace:pixelsize=10" ];
     };
   };
 
