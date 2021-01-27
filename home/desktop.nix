@@ -166,14 +166,20 @@ in
                       // mkWorkspace 1 "Terminal"
                       // mkWorkspace 2 "Chat"
                       // mkWorkspace 3 "Pro"
-                      // mkWorkspace 4 "Web";
+                      // mkWorkspace 4 "Web"
+                      // mkWorkspace 9 "Capture";
            in lib.mkOptionDefault bindings;
 
         menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${orange}' --tf '${orange}'";
 
-        startup = [
-          { command = "systemctl --user restart polybar"; always = true; notification = false; }
+        startup = let onStart = command: { inherit command; always = true; notification = false; }; in builtins.map onStart [
+          "systemctl --user restart polybar"
+          "${pkgs.shutter}/bin/shutter --min_at_startup"
         ];
+
+        assigns = {
+          "9: Capture" = [ { class = "^.shutter-wrapped$"; } ];
+        };
       };
       extraConfig = ''
         for_window [class=".*"] title_format "  %title"
