@@ -9,6 +9,8 @@ let regionParisienne =
     lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
     spacing = 10;
     bottom = true;
+
+    palette = import ./palette.nix;
 in
   {
     programs = {
@@ -125,9 +127,14 @@ in
         bars = []; # we rely on polybar
         colors = {
           focused = lib.mkOptionDefault {
-            border      = lib.mkForce orange;
-            childBorder = lib.mkForce orange;
+            border      = lib.mkForce palette.special.background;
+            childBorder = lib.mkForce palette.special.background;
             indicator   = lib.mkForce orange;
+            background = lib.mkForce palette.special.background;
+            text = lib.mkForce orange;
+          };
+          unfocused = lib.mkOptionDefault {
+            text = lib.mkForce palette.mate.white;
           };
         };
         gaps.inner = spacing;
@@ -154,45 +161,26 @@ in
       };
     };
 
-    xresources.properties = {
-      # Colorscheme (for urxvt), from https://addy-dclxvi.github.io/post/configuring-urxvt/
+    xresources.properties = with palette; {
+      "*.foreground"  = special.foreground;
+      "*.background"  = special.background;
+      "*.cursorColor" = special.cursorColor;
 
-      # special
-      "*.foreground" = "#93a1a1";
-      "*.background" = "#141c21";
-      "*.cursorColor" = "#afbfbf";
-
-      # black
-      "*.color0" = "#263640";
-      "*.color8" = "#4a697d";
-
-      # red
-      "*.color1" = "#d12f2c";
-      "*.color9" = "#fa3935";
-
-      # green
-      "*.color2" = "#819400";
-      "*.color10" = "#a4bd00";
-
-      # yellow
-      "*.color3" = "#b08500";
-      "*.color11" = "#d9a400";
-
-      # blue
-      "*.color4" = "#2587cc";
-      "*.color12" = "#2ca2f5";
-
-      # magenta
-      "*.color5" = "#696ebf";
-      "*.color13" = "#8086e8";
-
-      # cyan
-      "*.color6" = "#289c93";
-      "*.color14" = "#33c5ba";
-
-      # white
-      "*.color7" = "#bfbaac";
-      "*.color15" = "#fdf6e3";
+      "*.color0"  = mate.black;
+      "*.color1"  = mate.red;
+      "*.color2"  = mate.green;
+      "*.color3"  = mate.yellow;
+      "*.color4"  = mate.blue;
+      "*.color5"  = mate.magenta;
+      "*.color6"  = mate.cyan;
+      "*.color7"  = mate.white;
+      "*.color8"  = vivid.black;
+      "*.color9"  = vivid.red;
+      "*.color10" = vivid.green;
+      "*.color11" = vivid.yellow;
+      "*.color12" = vivid.blue;
+      "*.color13" = vivid.magenta;
+      "*.color14" = vivid.cyan;
+      "*.color15" = vivid.white;
     };
-
   }
