@@ -144,7 +144,7 @@ in
                       // mkWorkspace 3 "Pro"
                       // mkWorkspace 4 "Web";
            in lib.mkOptionDefault bindings;
-        menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn 'Roboto 9' -H 15";
+        menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn 'Roboto 9' -H 15 --hf '${orange}' --tf '${orange}'";
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
         ];
