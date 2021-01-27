@@ -11,6 +11,11 @@ let regionParisienne =
     bottom = true;
 
     palette = import ./palette.nix;
+
+    roboto = { name = "Roboto"; size = "9"; };
+
+    toPolybar = { name, size }: "${name}:size=${size}";
+    toI3 = { name, size }: "${name} ${size}";
 in
   {
     programs = {
@@ -39,7 +44,7 @@ in
         };
         config = {
           "bar/top" = {
-            font-0 = "Roboto:size=9;2";
+            font-0 = toPolybar roboto + ";2";
             inherit bottom;
             # height = 20;
             radius = 4;
@@ -123,8 +128,11 @@ in
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      config = {
+      config = let font = toI3 roboto; in {
         bars = []; # we rely on polybar
+        fonts = [ font ];
+        workspaceAutoBackAndForth = true;
+
         colors = {
           focused = lib.mkOptionDefault {
             border      = lib.mkForce palette.special.background;
@@ -153,11 +161,12 @@ in
                       // mkWorkspace 3 "Pro"
                       // mkWorkspace 4 "Web";
            in lib.mkOptionDefault bindings;
-        menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn 'Roboto 9' -H 15 --hf '${orange}' --tf '${orange}'";
+
+        menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${orange}' --tf '${orange}'";
+
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
         ];
-        workspaceAutoBackAndForth = true;
       };
     };
 
