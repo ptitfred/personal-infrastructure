@@ -8,6 +8,7 @@ let regionParisienne =
     orange = "#ffb52a";
     lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
     spacing = 10;
+    bottom = true;
 in
   {
     programs = {
@@ -37,7 +38,7 @@ in
         config = {
           "bar/top" = {
             font-0 = "Roboto:size=9;2";
-            bottom = false;
+            inherit bottom;
             # height = 20;
             radius = 4;
             width = "100%";
@@ -46,7 +47,8 @@ in
             background = "#99000000";
             padding = 3;
             border-size = spacing;
-            border-bottom-size = 0;
+            border-top-size = if bottom then 0 else spacing;
+            border-bottom-size = if bottom then spacing else 0;
             separator = "|";
             module-margin = 2;
           };
