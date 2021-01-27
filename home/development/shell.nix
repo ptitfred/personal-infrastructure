@@ -15,7 +15,6 @@
       enable = true;
       shellAliases = {
         glow = "${pkgs.glow}/bin/glow -p";
-        ":e" = "vim";
       };
       initExtra = ''
         source ${pkgs.posix-toolbox.ls-colors}/share/ls-colors/bash.sh
