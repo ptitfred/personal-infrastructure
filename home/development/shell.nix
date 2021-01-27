@@ -21,7 +21,10 @@
       '';
     };
 
-    htop.enable = true;
+    htop = {
+      enable = true;
+      highlightBaseName = true;
+    };
 
     tmux = {
       enable = true;
