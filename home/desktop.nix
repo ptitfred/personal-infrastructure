@@ -12,10 +12,8 @@ let regionParisienne =
 
     palette = import ./palette.nix;
 
-    roboto = { name = "Roboto"; size = "9"; };
-
-    toPolybar = { name, size }: "${name}:size=${size}";
-    toI3 = { name, size }: "${name} ${size}";
+    fonts = import ./fonts.nix;
+    inherit (fonts) roboto toPolybar toI3;
 in
   {
     programs = {
