@@ -179,7 +179,7 @@ in
           let onStart = command: { inherit command; always = true; notification = false; };
           in
             builtins.map onStart [
-              "systemctl --user restart polybar"
+              "systemctl --user restart polybar.service"
               "${pkgs.networkmanagerapplet}/bin/nm-applet"
               "${pkgs.shutter}/bin/shutter --min_at_startup"
             ];
