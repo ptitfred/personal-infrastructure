@@ -19,6 +19,7 @@ in
     home.packages = [
       pkgs.networkmanager
       pkgs.networkmanagerapplet
+      pkgs.gnome3.nautilus
     ];
 
     programs = {
@@ -51,7 +52,7 @@ in
           };
           gtk3ExtraConfig = gtk2ExtraConfig // {
             gtk-application-prefer-dark-theme = 0;
-            gtk-decoration-layout = "icon:minimize,maximize,close";
+            gtk-decoration-layout = "icon:close";
           };
           formatGtk2Option = n: v:
             let
@@ -217,6 +218,7 @@ in
                       // mkWorkspace 2 "Chat"
                       // mkWorkspace 3 "Pro"
                       // mkWorkspace 4 "Web"
+                      // mkWorkspace 5 "Navigation"
                       // mkWorkspace 9 "Capture";
            in lib.mkOptionDefault bindings;
 
@@ -232,7 +234,8 @@ in
             ];
 
         assigns = {
-          "9: Capture" = [ { class = "^.shutter-wrapped$"; } ];
+          "5: Navigation" = [ { class = "^org.gnome.Nautilus$"; } ];
+          "9: Capture"    = [ { class = "^.shutter-wrapped$"; } ];
         };
       };
       extraConfig = ''
