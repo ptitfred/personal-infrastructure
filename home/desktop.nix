@@ -16,6 +16,11 @@ let regionParisienne =
     inherit (fonts) roboto toPolybar toI3;
 in
   {
+    home.packages = [
+      pkgs.networkmanager
+      pkgs.networkmanagerapplet
+    ];
+
     programs = {
 
       firefox = {
@@ -170,10 +175,14 @@ in
 
         menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${orange}' --tf '${orange}'";
 
-        startup = let onStart = command: { inherit command; always = true; notification = false; }; in builtins.map onStart [
-          "systemctl --user restart polybar"
-          "${pkgs.shutter}/bin/shutter --min_at_startup"
-        ];
+        startup =
+          let onStart = command: { inherit command; always = true; notification = false; };
+          in
+            builtins.map onStart [
+              "systemctl --user restart polybar"
+              "${pkgs.networkmanagerapplet}/bin/nm-applet"
+              "${pkgs.shutter}/bin/shutter --min_at_startup"
+            ];
 
         assigns = {
           "9: Capture" = [ { class = "^.shutter-wrapped$"; } ];
