@@ -31,6 +31,7 @@ in
             settings = {
               "intl.accept_languages" = "fr, fr-FR, en-US, en";
               "intl.locale.requested" = "fr, en-US";
+              "services.sync.username" = "frederic.menou@gmail.com";
             };
           };
         };
