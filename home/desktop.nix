@@ -13,7 +13,7 @@ let regionParisienne =
     palette = import ./palette.nix;
 
     fonts = import ./fonts.nix;
-    inherit (fonts) roboto toPolybar toI3;
+    inherit (fonts) roboto toPolybar toI3 toGTK;
 in
   {
     home.packages = [
@@ -38,6 +38,52 @@ in
       };
 
     };
+
+    gtk =
+      let gtk2ExtraConfig = {
+            gtk-button-images = 1;
+            gtk-cursor-theme-name = "breeze_cursors";
+            gtk-enable-animations = 1;
+            gtk-fallback-icon-theme = "hicolor";
+            gtk-menu-images = 1;
+            gtk-primary-button-warps-slider = 0;
+            gtk-toolbar-style = "GTK_TOOLBAR_BOTH_HORIZ";
+          };
+          gtk3ExtraConfig = gtk2ExtraConfig // {
+            gtk-application-prefer-dark-theme = 0;
+            gtk-decoration-layout = "icon:minimize,maximize,close";
+          };
+          formatGtk2Option = n: v:
+            let
+              isConstant = v: builtins.match "([A-Z_ ]*)" v == [ v ];
+              v' = if lib.isBool v then
+                (if v then "true" else "false")
+              else if lib.isString v && isConstant v then
+                v
+              else if lib.isString v then
+                ''"${v}"''
+              else
+                toString v;
+            in "${n}=${v'}";
+          toGTK2 = config : lib.concatStringsSep "\n" (lib.mapAttrsToList formatGtk2Option config);
+
+       in {
+            enable = true;
+            font.name = toGTK roboto;
+            theme = {
+              package = pkgs.breeze-gtk;
+              name = "Breeze";
+            };
+            iconTheme = {
+              package = pkgs.papirus-icon-theme;
+              name = "papirus-icon-theme";
+            };
+            gtk2.extraConfig = toGTK2 gtk2ExtraConfig;
+            gtk3.extraConfig = gtk3ExtraConfig;
+            gtk3.extraCss = "@import 'colors.css';";
+          };
+
+    xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile desktop/colors.css;
 
     services = {
       polybar = {
