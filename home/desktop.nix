@@ -120,16 +120,20 @@ in
             label = "Mémoire libre  %gb_free%";
           };
 
-          "module/i3" = {
+          "module/i3" = let padding = 2; in {
             type = "internal/i3";
             strip-wsnumbers = true;
             label-focused = "%name%";
             label-focused-foreground = "#ffffff";
             label-focused-background = "#3f3f3f";
             label-focused-underline = "#fba922";
-            label-focused-padding = 2;
+            label-focused-padding = padding;
             label-unfocused = "%name%";
-            label-unfocused-padding = 2;
+            label-unfocused-padding = padding;
+            label-urgent = "%name% [%index%]";
+            label-urgent-foreground = palette.vivid.white;
+            label-urgent-background = palette.mate.cyan;
+            label-urgent-padding = padding;
             label-separator = "|";
             label-separator-foreground = orange;
             label-separator-padding = 1;
