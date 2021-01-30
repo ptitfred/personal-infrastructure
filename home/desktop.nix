@@ -51,7 +51,7 @@ in
             gtk-toolbar-style = "GTK_TOOLBAR_BOTH_HORIZ";
           };
           gtk3ExtraConfig = gtk2ExtraConfig // {
-            gtk-application-prefer-dark-theme = 0;
+            gtk-application-prefer-dark-theme = 1;
             gtk-decoration-layout = "icon:close";
           };
           formatGtk2Option = n: v:
