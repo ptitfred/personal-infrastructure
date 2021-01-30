@@ -223,6 +223,7 @@ in
                       // mkWorkspace 3 "Pro"
                       // mkWorkspace 4 "Web"
                       // mkWorkspace 5 "Navigation"
+                      // mkWorkspace 6 "Documentation"
                       // mkWorkspace 9 "Capture";
            in lib.mkOptionDefault bindings;
 
@@ -238,8 +239,9 @@ in
             ];
 
         assigns = {
-          "5: Navigation" = [ { class = "^org.gnome.Nautilus$"; } ];
-          "9: Capture"    = [ { class = "^.shutter-wrapped$"; } ];
+          "5: Navigation"    = [ { class = "^org.gnome.Nautilus$"; } ];
+          "6: Documentation" = [ { class = "^Zeal$"; } ];
+          "9: Capture"       = [ { class = "^.shutter-wrapped$"; } ];
         };
       };
       extraConfig = ''

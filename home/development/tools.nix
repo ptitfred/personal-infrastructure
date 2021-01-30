@@ -7,5 +7,6 @@
     jq
     shellcheck
     posix-toolbox.wait-tcp
+    zeal
   ];
 }
