@@ -185,65 +185,84 @@ in
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      config = let font = toI3 roboto; in {
-        bars = []; # we rely on polybar
-        fonts = [ font ];
-        workspaceAutoBackAndForth = true;
+      config =
+        let font = toI3 roboto;
+            mkWorkspace = index: name: { inherit index name; };
 
-        colors = {
-          focused = lib.mkOptionDefault {
-            border      = lib.mkForce palette.special.background;
-            childBorder = lib.mkForce palette.special.background;
-            indicator   = lib.mkForce orange;
-            background = lib.mkForce palette.special.background;
-            text = lib.mkForce orange;
+            terminal      = mkWorkspace 1 "Terminal";
+            chat          = mkWorkspace 2 "Chat";
+            pro           = mkWorkspace 3 "Pro";
+            web           = mkWorkspace 4 "Web";
+            navigation    = mkWorkspace 5 "Navigation";
+            documentation = mkWorkspace 6 "Documentation";
+            capture       = mkWorkspace 9 "Capture";
+
+            workspaces =
+              [ terminal
+                chat
+                pro
+                web
+                navigation
+                documentation
+                capture
+              ];
+            foldMap = function: builtins.foldl' (acc: value: acc // function value) {};
+            concat = foldMap (x: x);
+        in {
+          bars = []; # we rely on polybar
+          fonts = [ font ];
+          workspaceAutoBackAndForth = true;
+
+          colors = {
+            focused = lib.mkOptionDefault {
+              border      = lib.mkForce palette.special.background;
+              childBorder = lib.mkForce palette.special.background;
+              indicator   = lib.mkForce orange;
+              background = lib.mkForce palette.special.background;
+              text = lib.mkForce orange;
+            };
+            unfocused = lib.mkOptionDefault {
+              text = lib.mkForce palette.mate.white;
+            };
           };
-          unfocused = lib.mkOptionDefault {
-            text = lib.mkForce palette.mate.white;
+
+          gaps = {
+            inner = spacing;
+            smartBorders = "on";
           };
+
+          keybindings =
+            let modifier = config.xsession.windowManager.i3.config.modifier;
+                bindWorkspace = { index, name } : {
+                  "${modifier}+${builtins.toString index}"       = "workspace number ${builtins.toString index}:${name}";
+                  "${modifier}+Shift+${builtins.toString index}" = "move container to workspace number ${builtins.toString index}:${name}";
+                };
+                bindWorkspaces = foldMap bindWorkspace;
+                mkBind = key: command: {
+                  "${modifier}+${key}" = "exec ${command}";
+                };
+                bindings = mkBind "comma" lockCmd // bindWorkspaces workspaces;
+             in lib.mkOptionDefault bindings;
+
+          menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${orange}' --tf '${orange}'";
+
+          startup =
+            let onStart = command: { inherit command; always = true; notification = false; };
+            in
+              builtins.map onStart [
+                "systemctl --user restart polybar.service"
+                "${pkgs.networkmanagerapplet}/bin/nm-applet"
+                "${pkgs.shutter}/bin/shutter --min_at_startup"
+              ];
+
+          assigns =
+            let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
+             in concat
+                  [ (assignToWorkspace navigation    [ { class = "^org.gnome.Nautilus$"; } ])
+                    (assignToWorkspace capture       [ { class = "^.shutter-wrapped$";   } ])
+                    (assignToWorkspace documentation [ { class = "^Zeal$";               } ])
+                  ];
         };
-
-        gaps = {
-          inner = spacing;
-          smartBorders = "on";
-        };
-
-        keybindings =
-          let modifier = config.xsession.windowManager.i3.config.modifier;
-              mkWorkspace = index: name: {
-                "${modifier}+${builtins.toString index}"       = "workspace number ${builtins.toString index}:${name}";
-                "${modifier}+Shift+${builtins.toString index}" = "move container to workspace number ${builtins.toString index}:${name}";
-              };
-              mkBind = key: command: {
-                "${modifier}+${key}" = "exec ${command}";
-              };
-              bindings = mkBind "comma" lockCmd
-                      // mkWorkspace 1 "Terminal"
-                      // mkWorkspace 2 "Chat"
-                      // mkWorkspace 3 "Pro"
-                      // mkWorkspace 4 "Web"
-                      // mkWorkspace 5 "Navigation"
-                      // mkWorkspace 6 "Documentation"
-                      // mkWorkspace 9 "Capture";
-           in lib.mkOptionDefault bindings;
-
-        menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${orange}' --tf '${orange}'";
-
-        startup =
-          let onStart = command: { inherit command; always = true; notification = false; };
-          in
-            builtins.map onStart [
-              "systemctl --user restart polybar.service"
-              "${pkgs.networkmanagerapplet}/bin/nm-applet"
-              "${pkgs.shutter}/bin/shutter --min_at_startup"
-            ];
-
-        assigns = {
-          "5: Navigation"    = [ { class = "^org.gnome.Nautilus$"; } ];
-          "6: Documentation" = [ { class = "^Zeal$"; } ];
-          "9: Capture"       = [ { class = "^.shutter-wrapped$"; } ];
-        };
-      };
       extraConfig = ''
         for_window [class=".*"] title_format "  %title"
       '';
