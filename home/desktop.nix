@@ -12,8 +12,7 @@ let regionParisienne =
 
     palette = import ./palette.nix;
 
-    fonts = import ./fonts.nix;
-    inherit (fonts) roboto toPolybar toI3 toGTK;
+    inherit (import ./fonts.nix) roboto toPolybar toI3 toGTK;
 in
   {
     home.packages = [
