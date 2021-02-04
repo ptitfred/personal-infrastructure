@@ -5,7 +5,9 @@ in
 {
   home = {
     packages = with pkgs; [
+      ghcid
       stack
+      stylish-haskell
     ];
 
     file = {
@@ -21,6 +23,7 @@ in
               pure = false;
               packages = map check [ "icu" "git" "postgresql_12_postgis" "unzip" "zlib" "gmp" "curl" ];
             };
+            recommend-stack-upgrade = false;
           };
     };
   };
