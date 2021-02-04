@@ -1,5 +1,7 @@
 { pkgs, ... }:
 
+let check = name: assert pkgs.lib.attrsets.hasAttr name pkgs; name;
+in
 {
   home = {
     packages = with pkgs; [
@@ -11,6 +13,15 @@
       ".ghci".text = ''
         :set prompt "λ> "
       '';
+
+      ".stack/config.yaml".text =
+        builtins.toJSON
+          {
+            nix = {
+              pure = false;
+              packages = map check [ "icu" "git" "postgresql_12_postgis" "unzip" "zlib" "gmp" "curl" ];
+            };
+          };
     };
   };
 
