@@ -18,6 +18,7 @@
       };
       initExtra = ''
         source ${pkgs.posix-toolbox.ls-colors}/share/ls-colors/bash.sh
+        if [ -r "$HOME/.private/bash_aliases" ]; then source "$HOME/.private/bash_aliases"; fi
       '';
     };
 
