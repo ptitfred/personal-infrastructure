@@ -24,6 +24,9 @@ in
               packages = map check [ "icu" "git" "postgresql_12_postgis" "unzip" "zlib" "gmp" "curl" ];
             };
             recommend-stack-upgrade = false;
+            ghc-options = {
+              "$locals" = "-O0"; # stack build --fast by default
+            };
           };
     };
   };
