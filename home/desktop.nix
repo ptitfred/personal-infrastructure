@@ -176,7 +176,7 @@ in
 
       screen-locker = {
         enable = true;
-        inactiveInterval = 10;
+        inactiveInterval = 120;
         inherit lockCmd;
       };
     };
