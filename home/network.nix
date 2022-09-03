@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    wireguard
+    wireguard-tools
     bind
   ];
 }
