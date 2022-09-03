@@ -9,6 +9,8 @@
     ":e" = "vim";
   };
 
+  home.packages = [ pkgs.xclip pkgs.libxml2 ];
+
   programs.neovim = {
     enable = true;
     vimAlias = true;
@@ -20,6 +22,11 @@
           vim-airline
           vim-autoformat
           vim-polyglot
+          nvim-autopairs
+          nvim-cmp
+          nvim-lspconfig
+          telescope-nvim
+          telescope-fzf-native-nvim
         ];
   };
 }
