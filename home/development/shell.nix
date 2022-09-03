@@ -24,7 +24,9 @@
 
     htop = {
       enable = true;
-      highlightBaseName = true;
+      settings = {
+        highlight_base_name = 1;
+      };
     };
 
     tmux = {
