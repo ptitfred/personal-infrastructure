@@ -39,6 +39,7 @@
     extraConfig = {
       pull.rebase = true;
       bubbles.remote-name = "mine";
+      http.sslcainfo = "/etc/ssl/certs/ca-bundle.crt";
     };
   };
 }
