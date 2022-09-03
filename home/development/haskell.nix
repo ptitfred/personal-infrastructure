@@ -8,6 +8,12 @@ in
       ghcid
       stack
       stylish-haskell
+      haskell-language-server
+      gmp
+    ];
+
+    sessionPath = [
+      "~/.local/bin" # where stack installs programs
     ];
 
     file = {
