@@ -6,6 +6,7 @@
       weechat
       slack
       shutter
+      ncdu
     ];
 
   nixpkgs.config.allowUnfree = true;
