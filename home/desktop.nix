@@ -5,6 +5,11 @@ let regionParisienne =
         latitude = "48.89";
         longitude = "2.24";
       };
+    regionLyonnaise =
+      {
+        latitude = "45.7578";
+        longitude = "4.8322";
+      };
     orange = "#ffb52a";
     lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
     spacing = 10;
@@ -13,12 +18,26 @@ let regionParisienne =
     palette = import ./palette.nix;
 
     inherit (import ./fonts.nix) roboto toPolybar toI3 toGTK;
+
+    mkAnonymousFirefoxProfile = id: {
+      inherit id;
+      settings = {
+        "intl.accept_languages" = "fr, fr-FR, en-US, en";
+        "intl.locale.requested" = "fr, en-US";
+      };
+    };
+
+    mkFirefoxProfile = id: username: (mkAnonymousFirefoxProfile id) // {
+      settings = {
+        "services.sync.username" = username;
+      };
+    };
 in
   {
     home.packages = [
       pkgs.networkmanager
       pkgs.networkmanagerapplet
-      pkgs.gnome3.nautilus
+      pkgs.gnome.nautilus
     ];
 
     programs = {
@@ -26,14 +45,9 @@ in
       firefox = {
         enable = true;
         profiles = {
-          perso = {
-            id = 0;
-            settings = {
-              "intl.accept_languages" = "fr, fr-FR, en-US, en";
-              "intl.locale.requested" = "fr, en-US";
-              "services.sync.username" = "frederic.menou@gmail.com";
-            };
-          };
+          perso = mkFirefoxProfile 0 "frederic.menou@gmail.com";
+          pro = mkFirefoxProfile 1 "frederic.menou@fretlink.com";
+          screenshots = mkAnonymousFirefoxProfile 2;
         };
       };
 
@@ -156,7 +170,7 @@ in
         blur = false;
         inactiveOpacity = "0.93";
         menuOpacity = "0.95";
-        opacityRule = [ "100:name *= 'i3lock'" ];
+        opacityRule = [ "100:name *= 'i3lock'" "100:class_g = 'Firefox'"];
         vSync = false;
       };
 
@@ -167,12 +181,14 @@ in
 
       redshift = {
         enable = true;
-        brightness = {
-          day = "1";
-          night = "0.5";
+        settings = {
+          redshift = {
+            brightness-day = "1";
+            brightness-night = "0.5";
+          };
         };
         tray = true;
-      } // regionParisienne;
+      } // regionLyonnaise;
 
       screen-locker = {
         enable = true;
@@ -185,7 +201,7 @@ in
       enable = true;
       package = pkgs.i3-gaps;
       config =
-        let font = toI3 roboto;
+        let font = toGTK roboto;
             mkWorkspace = index: name: { inherit index name; };
 
             terminal      = mkWorkspace 1 "Terminal";
@@ -209,7 +225,7 @@ in
             concat = foldMap (x: x);
         in {
           bars = []; # we rely on polybar
-          fonts = [ font ];
+          fonts = toI3 roboto;
           workspaceAutoBackAndForth = true;
 
           colors = {
