@@ -48,4 +48,6 @@
     };
   };
 
+  xsession.windowManager.i3.config.terminal = "${pkgs.rxvt-unicode-unwrapped}/bin/urxvt -e ${pkgs.tmux}/bin/tmux";
+
 }
