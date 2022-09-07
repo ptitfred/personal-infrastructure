@@ -1,0 +1,4 @@
+home/private.nix
+home/private/
+overlays/private.nix
+overlays/private/
