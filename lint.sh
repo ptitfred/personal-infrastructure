@@ -4,4 +4,4 @@
 
 set -e
 
-find . -type f -name "*.nix" ! -path "./nix/*" -exec nix-linter {} \;
+find . -type f -name "*.nix" ! -path "./nix/*" -exec nix-linter {} + && echo "Everything is fine!"
