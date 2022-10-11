@@ -1,0 +1,26 @@
+{
+    "nixpkgs": {
+        "branch": "nixos-22.05",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9ecc270f02b09b2f6a76b98488554dd842797357",
+        "sha256": "1k9zwg3yh20f55bwh3lhv8q9vzq0fp5yir1lxdyxn40j4jlwz0ff",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/9ecc270f02b09b2f6a76b98488554dd842797357.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "personal-homepage": {
+        "branch": "main",
+        "description": "Sources for my homepage hosted on https://frederic.menou.me/",
+        "homepage": null,
+        "owner": "ptitfred",
+        "repo": "personal-homepage",
+        "rev": "2e94d4f1b0260a09872a567f75ebf385a99c6362",
+        "sha256": "1ckkssiab7fy4jdzx4vyksj6m831jn1fj1kmk7vdn0bx9kcyv8q8",
+        "type": "tarball",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/2e94d4f1b0260a09872a567f75ebf385a99c6362.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
