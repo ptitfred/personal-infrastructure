@@ -6,13 +6,9 @@ let
   cfg = config.services.personal-website;
   sources = import ../nix/sources.nix;
 
-  root =
-    pkgs.callPackage (sources.personal-homepage + "/website/package.nix")
+  website =
+    pkgs.callPackage (sources.personal-homepage + "/nginx.nix")
       { baseUrl = "https://${cfg.domain}"; };
-
-  extraConfig = ''
-    error_page 404 /404.html;
-  '';
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
 
@@ -33,7 +29,7 @@ let
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          inherit root extraConfig;
+          inherit (website) root extraConfig;
         };
       };
     };
@@ -60,7 +56,7 @@ in
       aliases = mkOption {
         type = types.listOf types.str;
         description = ''
-          CNAMEs to respond to by redirecting to the domain set at `services.personal-website.domain`;
+          CNAMEs to respond to by redirecting to the domain set at `services.personal-website.domain`.
         '';
         default = [];
       };
