@@ -7,7 +7,7 @@ let
   sources = import ../nix/sources.nix;
 
   website =
-    pkgs.callPackage (sources.personal-homepage + "/nginx.nix")
+    pkgs.callPackage (sources.personal-homepage + "/package.nix")
       { baseUrl = "https://${cfg.domain}"; };
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
@@ -29,7 +29,7 @@ let
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          inherit (website) root extraConfig;
+          inherit (website.nginx) root extraConfig;
         };
       };
     };
