@@ -16,10 +16,10 @@ let
     alias:
       {
         "${alias}" = {
-          useACMEHost = cfg.domain;
-          locations."/" = {
-            return = "301 https://${cfg.domain}$request_uri";
-          };
+          forceSSL = true;
+          enableACME = true;
+          acmeFallbackHost = cfg.domain;
+          globalRedirect = cfg.domain;
         };
       };
 
