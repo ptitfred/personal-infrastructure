@@ -63,6 +63,7 @@ in
     imports = [
       hosts/homepage-02.nix
       morph-utils/monitor-nginx.nix
+      services/monitoring.nix
       services/website.nix
       configuration/security.nix
       configuration/wireguard.nix
@@ -97,6 +98,7 @@ in
       hosts/homepage-03.nix
       configuration/security.nix
       configuration/wireguard.nix
+      services/monitoring.nix
     ];
 
     security.personal-infrastructure = {
