@@ -7,6 +7,10 @@
       file
       tree
     ];
+
+    sessionVariables = {
+      NIX_SHELL_PRESERVE_PROMPT = 1;
+    };
   };
 
   programs = {
