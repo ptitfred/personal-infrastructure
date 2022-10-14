@@ -6,6 +6,5 @@ in
     in
       {
         posix-toolbox = fetchPackage self ./ptitfred-posix-toolbox.json "/nix/default.nix";
-        inherit (fetchPackage self ./synthetica9-nix-linter.json "/default.nix") nix-linter;
         inherit postgresql_12_postgis;
       }
