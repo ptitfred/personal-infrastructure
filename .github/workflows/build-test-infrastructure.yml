@@ -2,6 +2,8 @@ name: "Build test infrastructure"
 on:
   pull_request:
   push:
+    branches:
+      - main
 jobs:
   tests:
     runs-on: ubuntu-latest
