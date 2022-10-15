@@ -1,7 +1,7 @@
 {
     "owner": "ptitfred",
     "repo": "posix-toolbox",
-    "rev": "423c2d563a7846e4feb3260278ab5ea95ea20cc8",
-    "sha256": "0ypghl793g1f3sap7mf6msqnm7v1j2wl84zyrhkgq1wmljk2n3hs",
-    "fetchSubmodules": true
+    "rev": "d31128c1c8bbf7907534377633a43477c2e8d521",
+    "sha256": "lhkGUYuMvIsBJfHJEeitiH58Yh29h7ePgracCevtHHc=",
+    "fetchSubmodules": false
 }
