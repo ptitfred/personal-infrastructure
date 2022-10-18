@@ -6,5 +6,6 @@ in
     in
       {
         posix-toolbox = fetchPackage self ./ptitfred-posix-toolbox.json "/nix/default.nix";
+        haddocset = fetchPackage self ./ptitfred-haddocset.json "/default.nix";
         inherit postgresql_12_postgis;
       }
