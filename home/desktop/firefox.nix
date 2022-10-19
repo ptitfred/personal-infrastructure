@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 let mkAnonymousFirefoxProfile = id: {
       inherit id;

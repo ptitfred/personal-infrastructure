@@ -1,11 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let regionParisienne =
-      {
-        latitude = "48.89";
-        longitude = "2.24";
-      };
-    regionLyonnaise =
+let regionLyonnaise =
       {
         latitude = "45.7578";
         longitude = "4.8322";
