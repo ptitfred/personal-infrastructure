@@ -6,9 +6,14 @@ let
   cfg = config.services.personal-website;
   sources = import ../nix/sources.nix;
 
+  baseUrl = "https://${cfg.domain}";
+
+  assetsDirectory = "homepage-extra-assets";
+  screenshotsSubdirectory = "og";
+
   website =
     pkgs.callPackage (sources.personal-homepage + "/package.nix")
-      { baseUrl = "https://${cfg.domain}"; };
+      { inherit baseUrl; };
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
 
@@ -28,8 +33,14 @@ let
       ${cfg.domain} = {
         forceSSL = true;
         enableACME = true;
+
         locations."/" = {
           inherit (website.nginx) root extraConfig;
+        };
+
+        locations."/${screenshotsSubdirectory}/" = {
+          root = "/var/lib/${assetsDirectory}";
+          inherit (website.nginx) extraConfig;
         };
       };
     };
@@ -69,6 +80,27 @@ in
       };
 
       networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+      systemd.services.homepage-screenshots = {
+        description = "Utility to take screenshots at deployment.";
+
+        after    = [ "nginx.service" ];
+        requires = [ "nginx.service" ];
+        wantedBy = [ "default.target" ];
+
+        script = ''
+          mkdir -p /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
+          ${website.tools.take-screenshots}/bin/take-screenshots.sh ${baseUrl} /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
+        '';
+
+        serviceConfig = {
+          StateDirectory = assetsDirectory;
+          StateDirectoryMode = "0750";
+          User = "nginx";
+          Group = "nginx";
+          Type = "oneshot";
+        };
+      };
 
       security.acme.certs.${cfg.domain}.extraDomainNames = cfg.aliases;
     };
