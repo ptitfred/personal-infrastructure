@@ -5,6 +5,7 @@
     packages = with pkgs; [
       cachix
       niv
+      nix-linter
       nix-prefetch-github
       nvd
     ];
