@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "226b4252344ce9a17a3b5978e030d027ba06b122",
-        "sha256": "145yv62mlcmyfzqs4aii7rl70fpk4828lg9d936pcbnp1v0bvzvj",
+        "rev": "615c042cd1324f2d9123ee2162e752c42a91d940",
+        "sha256": "1g7d2wndkcva26mfki18h88nw148b17phq9wkmlwbm71cznpq9g9",
         "type": "tarball",
-        "url": "https://github.com/ptitfred/personal-homepage/archive/226b4252344ce9a17a3b5978e030d027ba06b122.tar.gz",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/615c042cd1324f2d9123ee2162e752c42a91d940.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
