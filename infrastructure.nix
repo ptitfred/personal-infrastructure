@@ -4,7 +4,7 @@ let
   pkgs = import sources.nixpkgs {};
 in
 
-{ domain, aliases, acme-email, safe-ips }:
+{ domain, aliases, acme-email, safe-ips, ssh-key }:
 
 {
   network = {
@@ -27,6 +27,20 @@ in
     };
 
     security.acme.defaults.email = acme-email;
+
+    security.personal-infrastructure = {
+      inherit safe-ips;
+    };
+  };
+
+  homepage-03 = { ... }: {
+    deployment.tags = [ "infra" ];
+
+    imports = [
+      hosts/homepage-03.nix
+    ];
+
+    cloud-providers.ovh.root-ssh-key = ssh-key;
 
     security.personal-infrastructure = {
       inherit safe-ips;
