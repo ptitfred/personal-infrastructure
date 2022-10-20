@@ -4,7 +4,7 @@ let
   pkgs = import sources.nixpkgs {};
 in
 
-{ domain, aliases, acme-email }:
+{ domain, aliases, acme-email, safe-ips }:
 
 {
   network = {
@@ -28,5 +28,8 @@ in
 
     security.acme.defaults.email = acme-email;
 
+    security.personal-infrastructure = {
+      inherit safe-ips;
+    };
   };
 }

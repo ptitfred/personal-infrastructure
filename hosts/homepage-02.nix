@@ -4,6 +4,7 @@
   imports = [
     ../hosting-providers/gandicloud.nix
     ../configuration/acme.nix
+    ../configuration/fail2ban.nix
   ];
 
   networking.hostName = "homepage-02";
