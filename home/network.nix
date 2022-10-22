@@ -5,4 +5,10 @@
     wireguard-tools
     bind
   ];
+
+  home.file = {
+    ".digrc".text = ''
+      +noall +answer
+    '';
+  };
 }
