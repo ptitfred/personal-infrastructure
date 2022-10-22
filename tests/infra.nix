@@ -7,4 +7,6 @@ import ../infrastructure.nix {
     local  = builtins.readFile ./key.pub;
     remote = builtins.readFile ./key.pub;
   };
+  wg-peers = [];
+  resolver = { homepage-02 = "127.0.0.1"; };
 }
