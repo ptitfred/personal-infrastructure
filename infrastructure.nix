@@ -4,12 +4,22 @@ let
   pkgs = import sources.nixpkgs {};
 in
 
-{ domain, aliases, acme-email, safe-ips, ssh-key }:
+{ domain, aliases, acme-email, safe-ips, ssh-keys }:
 
 {
   network = {
     inherit pkgs;
     description = "Personal infrastructure";
+  };
+
+  dev-01 = { ... }: {
+    deployment = {
+      tags = [ "workstation" ];
+    };
+
+    users.users.root.openssh.authorizedKeys.keys = [ ssh-keys.local ];
+
+    imports = [ ./hosts/dev-01/configuration.nix ];
   };
 
   homepage-02 = { ... }: {
@@ -40,7 +50,7 @@ in
       hosts/homepage-03.nix
     ];
 
-    cloud-providers.ovh.root-ssh-key = ssh-key;
+    cloud-providers.ovh.root-ssh-key = ssh-keys.remote;
 
     security.personal-infrastructure = {
       inherit safe-ips;
