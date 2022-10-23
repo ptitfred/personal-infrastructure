@@ -4,7 +4,7 @@ let
   pkgs = import sources.nixpkgs {};
 in
 
-{ domain, aliases, acme-email, safe-ips, ssh-keys }:
+{ domain, aliases, acme-email, safe-ips, ssh-keys, ... }:
 
 {
   network = {
@@ -17,9 +17,12 @@ in
       tags = [ "workstation" ];
     };
 
-    users.users.root.openssh.authorizedKeys.keys = [ ssh-keys.local ];
+    imports = [
+      hosts/dev-01/configuration.nix
+      configuration/security.nix
+    ];
 
-    imports = [ ./hosts/dev-01/configuration.nix ];
+    security.personal-infrastructure.root-ssh-keys = [ ssh-keys.local ];
   };
 
   homepage-02 = { ... }: {
@@ -29,6 +32,7 @@ in
       hosts/homepage-02.nix
       morph-utils/monitor-nginx.nix
       services/website.nix
+      configuration/security.nix
     ];
 
     services.personal-website = {
@@ -40,6 +44,7 @@ in
 
     security.personal-infrastructure = {
       inherit safe-ips;
+      root-ssh-keys = [ ssh-keys.remote ];
     };
   };
 
@@ -48,12 +53,12 @@ in
 
     imports = [
       hosts/homepage-03.nix
+      configuration/security.nix
     ];
-
-    cloud-providers.ovh.root-ssh-key = ssh-keys.remote;
 
     security.personal-infrastructure = {
       inherit safe-ips;
+      root-ssh-keys = [ ssh-keys.remote ];
     };
   };
 }

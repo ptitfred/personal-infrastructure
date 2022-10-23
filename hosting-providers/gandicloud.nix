@@ -4,6 +4,7 @@
   imports = [
     "${toString modulesPath}/../maintainers/scripts/openstack/openstack-image.nix"
   ];
+
   config = {
     boot.initrd.kernelModules = [
       "xen-blkfront" "xen-tpmfront" "xen-kbdfront" "xen-fbfront"
