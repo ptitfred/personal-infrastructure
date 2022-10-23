@@ -4,7 +4,13 @@ let
   pkgs = import sources.nixpkgs {};
 in
 
-{ domain, aliases, acme-email, safe-ips, ssh-keys, ... }:
+{ domain
+, aliases
+, acme-email
+, safe-ips
+, ssh-keys
+, ...
+}:
 
 {
   network = {
