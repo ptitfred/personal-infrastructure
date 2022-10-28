@@ -1,8 +1,5 @@
 { ... }:
 
-let optionalImport = path : if builtins.pathExists path then [ path ] else [];
-in
-
 {
   imports = [
     home/nix.nix
@@ -11,5 +8,5 @@ in
     home/development
     home/network.nix
     home/others.nix
-  ] ++ optionalImport home/private.nix;
+  ];
 }
