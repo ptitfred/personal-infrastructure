@@ -13,6 +13,11 @@ in
     ];
 
     options = with lib; {
+      desktop.virtual-machine = mkOption {
+        type = types.bool;
+        default = false;
+      };
+
       desktop.location.latitude = mkOption {
         type = types.str;
         description = ''
@@ -41,11 +46,10 @@ in
     };
 
     config = {
-      home.packages = [
-        pkgs.networkmanager
-        pkgs.networkmanagerapplet
-        pkgs.gnome.nautilus
-      ];
+      home.packages =
+        if config.desktop.virtual-machine
+        then [ pkgs.gnome.nautilus ]
+        else [ pkgs.networkmanager pkgs.gnome.nautilus ];
 
       gtk =
         let gtk2ExtraConfig = {
@@ -173,7 +177,7 @@ in
           imageDirectory = "%h/Pictures/backgrounds";
         };
 
-        redshift = {
+        redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
           enable = true;
           settings = {
             redshift = {
@@ -259,11 +263,18 @@ in
             startup =
               let onStart = command: { inherit command; always = true; notification = false; };
               in
-                builtins.map onStart [
-                  "systemctl --user restart polybar.service"
-                  "${pkgs.networkmanagerapplet}/bin/nm-applet"
-                  "${pkgs.shutter}/bin/shutter --min_at_startup"
-                ];
+                if config.desktop.virtual-machine
+                then
+                  builtins.map onStart [
+                    "systemctl --user restart polybar.service"
+                    "${pkgs.shutter}/bin/shutter --min_at_startup"
+                  ]
+                else
+                  builtins.map onStart [
+                    "systemctl --user restart polybar.service"
+                    "${pkgs.networkmanagerapplet}/bin/nm-applet"
+                    "${pkgs.shutter}/bin/shutter --min_at_startup"
+                  ];
 
             assigns =
               let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
