@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e179d1e57ad07f1294dcc29ad5283b214a6ae21e",
-        "sha256": "029ycyvc83prgi7232liak1cpv2bs17z24pl9dxlizxm3mig20ls",
+        "rev": "040c6d8374d090f46ab0e99f1f7c27a4529ecffd",
+        "sha256": "0s14a7mii0fsy5g3pk1vvv2siknz9v1c5jjgw4sr9wq06kmv6apr",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/e179d1e57ad07f1294dcc29ad5283b214a6ae21e.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/040c6d8374d090f46ab0e99f1f7c27a4529ecffd.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "personal-homepage": {
@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "615c042cd1324f2d9123ee2162e752c42a91d940",
-        "sha256": "1g7d2wndkcva26mfki18h88nw148b17phq9wkmlwbm71cznpq9g9",
+        "rev": "3191da4f5243d34d0b43feaaa8ba3cffcb5b0351",
+        "sha256": "00777qvmd0rqvxpw20rnk3vhca3c5qn53w5j6rxi9bbid064bqhl",
         "type": "tarball",
-        "url": "https://github.com/ptitfred/personal-homepage/archive/615c042cd1324f2d9123ee2162e752c42a91d940.tar.gz",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/3191da4f5243d34d0b43feaaa8ba3cffcb5b0351.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
