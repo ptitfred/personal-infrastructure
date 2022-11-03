@@ -1,4 +1,16 @@
 {
+    "nix-serve-ng": {
+        "branch": "main",
+        "description": "A drop-in replacement for nix-serve that is faster and more reliable",
+        "homepage": "",
+        "owner": "aristanetworks",
+        "repo": "nix-serve-ng",
+        "rev": "b6cabad4343edb0247eeac29bc35920de8d08785",
+        "sha256": "11b8n8kvk468fnwsfqhmc0cygw80q4vcywdywl7rk1xm4d454g3p",
+        "type": "tarball",
+        "url": "https://github.com/aristanetworks/nix-serve-ng/archive/b6cabad4343edb0247eeac29bc35920de8d08785.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nixpkgs": {
         "branch": "nixos-22.05",
         "description": "Nix Packages collection",

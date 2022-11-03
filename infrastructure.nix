@@ -3,10 +3,10 @@ let
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs {};
 
-  wg-private-key = hostname: {
-    "wg-private-key" = {
-      source = "./secrets/${hostname}/wg-private-key";
-      destination = "/var/secrets/wg-private-key";
+  secret-for-root = filename: hostname: {
+    "${filename}" = {
+      source = "./secrets/${hostname}/${filename}";
+      destination = "/var/secrets/${filename}";
       owner = {
         user = "root";
         group = "root";
@@ -14,6 +14,9 @@ let
       permissions = "0400";
     };
   };
+
+  wg-private-key = secret-for-root "wg-private-key";
+  nix-serve-private-key = secret-for-root "nix-serve-private-key";
 in
 
 { domain
@@ -34,12 +37,17 @@ in
 
   dev-01 = { ... }: {
     deployment.tags = [ "workstation" ];
-    deployment.secrets = wg-private-key "dev-01";
+    deployment.secrets =
+      wg-private-key "dev-01" //
+      # Following key has been generated with:
+      # `nix-store --generate-binary-cache-key dev-01-1 nix-serve-private-key nix-serve-public-key`
+      nix-serve-private-key "dev-01";
 
     imports = [
       hosts/dev-01/configuration.nix
       configuration/security.nix
       configuration/wireguard.nix
+      configuration/nix-serve.nix
     ];
 
     security.personal-infrastructure = {
