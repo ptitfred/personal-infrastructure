@@ -52,8 +52,6 @@ in
         joinable = true;
       };
     };
-
-    programs.ssh.startAgent = true;
   };
 
   homepage-02 = { ... }: {
