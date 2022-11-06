@@ -29,10 +29,10 @@
         "homepage": null,
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "51912f367585baa901ee81d6919662cae0a3514f",
-        "sha256": "19cc977glqi48k3lnjmz28shbvpj93sv4k7pgzv7xx4h3d9v7n70",
+        "rev": "f5213d3db6badfe2c1bb8f9dbb4a9fe896089684",
+        "sha256": "0rf0kcilxx42gd3z2ij20df9wwc1sxjwxl1v3123368gr6vagwhl",
         "type": "tarball",
-        "url": "https://github.com/ptitfred/personal-homepage/archive/51912f367585baa901ee81d6919662cae0a3514f.tar.gz",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/f5213d3db6badfe2c1bb8f9dbb4a9fe896089684.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
