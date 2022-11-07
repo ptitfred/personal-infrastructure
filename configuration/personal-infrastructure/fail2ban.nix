@@ -2,10 +2,10 @@
 
 with lib;
 
-let cfg = config.security.personal-infrastructure.fail2ban;
+let cfg = config.personal-infrastructure.fail2ban;
 in
 {
-  options.security.personal-infrastructure.fail2ban = {
+  options.personal-infrastructure.fail2ban = {
     enable = mkOption {
       type = types.bool;
       default = false;

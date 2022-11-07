@@ -2,11 +2,11 @@
 
 with lib;
 
-let cfg = config.security.personal-infrastructure;
+let cfg = config.personal-infrastructure;
 
 in
 {
-  options.security.personal-infrastructure = {
+  options.personal-infrastructure = {
     acme-email = mkOption {
       type = types.str;
       default = null;

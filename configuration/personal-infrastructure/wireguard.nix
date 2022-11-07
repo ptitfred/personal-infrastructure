@@ -25,7 +25,7 @@ let otherPeersOpts = with lib; {
 in
 {
   options = with lib; {
-    security.personal-infrastructure.tissue = {
+    personal-infrastructure.tissue = {
       publicKey = publicKeyOpt;
 
       ip = mkOption {
@@ -64,13 +64,13 @@ in
   config = {
     networking =
       let wg-interface = "tissue";
-          cfg = config.security.personal-infrastructure.tissue;
+          cfg = config.personal-infrastructure.tissue;
           isServer = builtins.length cfg.clients > 0;
           isClient = builtins.isString cfg.host;
-          server = nodes.${cfg.host}.config.security.personal-infrastructure.tissue.listenIp;
+          server = nodes.${cfg.host}.config.personal-infrastructure.tissue.listenIp;
           serverListenPort = nodes.${cfg.host}.config.networking.wireguard.interfaces.${wg-interface}.listenPort;
           mkPeer = hostname:
-            let cfg' = nodes.${hostname}.config.security.personal-infrastructure.tissue;
+            let cfg' = nodes.${hostname}.config.personal-infrastructure.tissue;
             in
               {
                 inherit (cfg') publicKey;
@@ -98,7 +98,7 @@ in
                 else lib.modules.mkIf isClient
                   [
                     {
-                      publicKey = nodes."${cfg.host}".config.security.personal-infrastructure.tissue.publicKey;
+                      publicKey = nodes."${cfg.host}".config.personal-infrastructure.tissue.publicKey;
                       allowedIPs = [ "10.100.0.0/24" ];
                       endpoint = "${server}:${toString serverListenPort}";
 

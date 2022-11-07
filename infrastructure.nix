@@ -48,7 +48,7 @@ in
       configuration/personal-infrastructure
     ];
 
-    security.personal-infrastructure = {
+    personal-infrastructure = {
       root-ssh-keys = [ ssh-keys.local ];
 
       nix-cache.enable = true;
@@ -78,7 +78,7 @@ in
       inherit domain aliases;
     };
 
-    security.personal-infrastructure = {
+    personal-infrastructure = {
       inherit acme-email;
 
       fail2ban = {
@@ -111,7 +111,7 @@ in
       configuration/personal-infrastructure
     ];
 
-    security.personal-infrastructure = {
+    personal-infrastructure = {
       inherit acme-email;
 
       fail2ban = {
