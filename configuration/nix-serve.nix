@@ -1,17 +1,51 @@
 let
   sources = import ../nix/sources.nix;
   nix-serve-ng = import sources.nix-serve-ng;
+
 in
 
-{ config, ... }:
+{ config, lib, ... }:
+
+let
+  cfg = config.security.personal-infrastructure.nix-cache;
+
+  isPrivate = cfg.domain == null;
+in
+
 {
   imports = [ nix-serve-ng.nixosModules.default ];
 
-  services.nix-serve = {
-    enable = true;
-    bindAddress = config.security.personal-infrastructure.tissue.ip;
-    secretKeyFile = config.deployment.secrets.nix-serve-private-key.destination;
+  options.security.personal-infrastructure.nix-cache = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+
+    domain = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      example = "cache.example.org";
+    };
   };
 
-  networking.firewall.interfaces."tissue".allowedTCPPorts = [ config.services.nix-serve.port ];
+  config = lib.mkIf cfg.enable {
+    services.nix-serve.enable = true;
+    services.nix-serve.secretKeyFile = config.deployment.secrets.nix-serve-private-key.destination;
+
+    services.nix-serve.bindAddress = if isPrivate then config.security.personal-infrastructure.tissue.ip else "127.0.0.1";
+
+    networking.firewall.allowedTCPPorts = lib.mkIf (! isPrivate) [ 80 443 ];
+    networking.firewall.interfaces."tissue".allowedTCPPorts = lib.mkIf isPrivate [ config.services.nix-serve.port ];
+
+    services.nginx = lib.mkIf (! isPrivate) {
+      enable = true;
+      virtualHosts."${cfg.domain}" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${toString config.services.nix-serve.port}/";
+        };
+      };
+    };
+  };
 }

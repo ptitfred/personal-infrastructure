@@ -1,7 +1,7 @@
 let
   # nixos-22.05 as of 2022-10-09, fetched by niv for commodity
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs {};
+  pkgs = import sources.nixpkgs { allowAliases = false; warnUndeclaredOptions = true; };
 
   secret-for-root = filename: hostname: {
     "${filename}" = {
@@ -53,6 +53,8 @@ in
     security.personal-infrastructure = {
       root-ssh-keys = [ ssh-keys.local ];
 
+      nix-cache.enable = true;
+
       tissue = {
         publicKey = "XVJY3lSCjQxHBrrEIDTickR01ox/VKtyiWO6I0nkACQ=";
         ip = "10.100.0.3";
@@ -97,17 +99,29 @@ in
 
   homepage-03 = { ... }: {
     deployment.tags = [ "infra" ];
-    deployment.secrets = wg-private-key "homepage-03";
+    deployment.secrets =
+      wg-private-key "homepage-03" //
+      # Following key has been generated with:
+      # `nix-store --generate-binary-cache-key homepage-03-1 nix-serve-private-key nix-serve-public-key`
+      nix-serve-private-key "homepage-03";
 
     imports = [
       hosts/homepage-03.nix
       configuration/security.nix
       configuration/wireguard.nix
+      configuration/nix-serve.nix
     ];
+
+    security.acme.defaults.email = acme-email;
 
     security.personal-infrastructure = {
       inherit safe-ips;
       root-ssh-keys = [ ssh-keys.remote ];
+
+      nix-cache = {
+        enable = true;
+        domain = "cache.menou.me";
+      };
 
       tissue = {
         publicKey = "jOab1ZoQrdbcNSN3qKTOOZ783CdtkCYSnMDXqqIWwXg=";
