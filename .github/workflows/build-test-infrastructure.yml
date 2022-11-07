@@ -13,6 +13,6 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-22.05:home-manager=https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz
         extra_nix_config: |
-          trusted-public-keys = cache.menou.me-1:xYMqGP/9BAKWIlONTERSaNX61H799tD25Xix7sp9Duc= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-          substituters = https://cache.menou.me/ https://cache.nixos.org/
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.menou.me-1:xYMqGP/9BAKWIlONTERSaNX61H799tD25Xix7sp9Duc=
+          substituters = https://cache.nixos.org/ https://cache.menou.me/
     - run: tests/build.sh
