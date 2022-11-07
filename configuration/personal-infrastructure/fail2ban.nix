@@ -2,8 +2,15 @@
 
 with lib;
 
+let cfg = config.security.personal-infrastructure.fail2ban;
+in
 {
-  options.security.personal-infrastructure = {
+  options.security.personal-infrastructure.fail2ban = {
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
+
     safe-ips = mkOption {
       type = types.listOf types.str;
       description = ''
@@ -13,7 +20,7 @@ with lib;
     };
   };
 
-  config.services.fail2ban = {
+  config.services.fail2ban = mkIf cfg.enable {
     enable = true;
     maxretry = 5;
     ignoreIP = [
@@ -21,6 +28,6 @@ with lib;
       "10.0.0.0/8"
       "172.16.0.0/12"
       "192.168.0.0/16"
-    ] ++ config.security.personal-infrastructure.safe-ips;
+    ] ++ cfg.safe-ips;
   };
 }

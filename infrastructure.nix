@@ -79,7 +79,13 @@ in
     };
 
     security.personal-infrastructure = {
-      inherit acme-email safe-ips;
+      inherit acme-email;
+
+      fail2ban = {
+        enable = true;
+        inherit safe-ips;
+      };
+
       root-ssh-keys = [ ssh-keys.remote ];
 
       tissue = {
@@ -106,7 +112,13 @@ in
     ];
 
     security.personal-infrastructure = {
-      inherit acme-email safe-ips;
+      inherit acme-email;
+
+      fail2ban = {
+        enable = true;
+        inherit safe-ips;
+      };
+
       root-ssh-keys = [ ssh-keys.remote ];
 
       nix-cache = {

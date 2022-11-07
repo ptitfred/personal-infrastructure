@@ -3,7 +3,6 @@
 {
   imports = [
     ../hosting-providers/ovhcloud
-    ../configuration/fail2ban.nix
   ];
 
   networking.hostName = "homepage-03";
