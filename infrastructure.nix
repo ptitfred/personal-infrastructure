@@ -78,10 +78,8 @@ in
       inherit domain aliases;
     };
 
-    security.acme.defaults.email = acme-email;
-
     security.personal-infrastructure = {
-      inherit safe-ips;
+      inherit acme-email safe-ips;
       root-ssh-keys = [ ssh-keys.remote ];
 
       tissue = {
@@ -107,10 +105,8 @@ in
       configuration/personal-infrastructure
     ];
 
-    security.acme.defaults.email = acme-email;
-
     security.personal-infrastructure = {
-      inherit safe-ips;
+      inherit acme-email safe-ips;
       root-ssh-keys = [ ssh-keys.remote ];
 
       nix-cache = {
