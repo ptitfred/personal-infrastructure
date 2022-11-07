@@ -45,9 +45,7 @@ in
 
     imports = [
       hosts/dev-01/configuration.nix
-      configuration/security.nix
-      configuration/wireguard.nix
-      configuration/nix-serve.nix
+      configuration/personal-infrastructure
     ];
 
     security.personal-infrastructure = {
@@ -70,10 +68,9 @@ in
 
     imports = [
       hosts/homepage-02.nix
+      configuration/personal-infrastructure
       morph-utils/monitor-nginx.nix
       services/website.nix
-      configuration/security.nix
-      configuration/wireguard.nix
     ];
 
     services.personal-website = {
@@ -107,9 +104,7 @@ in
 
     imports = [
       hosts/homepage-03.nix
-      configuration/security.nix
-      configuration/wireguard.nix
-      configuration/nix-serve.nix
+      configuration/personal-infrastructure
     ];
 
     security.acme.defaults.email = acme-email;
