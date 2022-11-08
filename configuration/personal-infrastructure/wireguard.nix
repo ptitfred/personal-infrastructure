@@ -76,8 +76,19 @@ in
                 inherit (cfg') publicKey;
                 allowedIPs = [ "${cfg'.ip}/32" ];
               };
+
+          mkHostAlias = hostname:
+            let ip' = nodes.${hostname}.config.personal-infrastructure.tissue.ip;
+                alias = "${hostname}.${wg-interface}";
+            in _: { "${ip'}" = alias; };
+
+          collectHostAliases = lib.attrsets.foldAttrs (n: a: [n] ++ a) [];
+
+          hostAliases = lib.attrsets.mapAttrsToList mkHostAlias nodes;
       in
         {
+          hosts = collectHostAliases hostAliases;
+
           nat = lib.modules.mkIf isServer {
             enable = true;
             externalInterface = "eth0";
