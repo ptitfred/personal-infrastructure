@@ -57,7 +57,7 @@ in
         publicKey = "XVJY3lSCjQxHBrrEIDTickR01ox/VKtyiWO6I0nkACQ=";
         ip = "10.100.0.3";
         host = "homepage-02";
-        joinable = true;
+        reachable = true;
       };
     };
   };
@@ -130,7 +130,7 @@ in
         publicKey = "jOab1ZoQrdbcNSN3qKTOOZ783CdtkCYSnMDXqqIWwXg=";
         ip = "10.100.0.2";
         host = "homepage-02";
-        joinable = true;
+        reachable = true;
       };
     };
   };
