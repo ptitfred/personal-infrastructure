@@ -45,12 +45,10 @@ in
 
     imports = [
       hosts/dev-01/configuration.nix
-      configuration/security.nix
-      configuration/wireguard.nix
-      configuration/nix-serve.nix
+      configuration/personal-infrastructure
     ];
 
-    security.personal-infrastructure = {
+    personal-infrastructure = {
       root-ssh-keys = [ ssh-keys.local ];
 
       nix-cache.enable = true;
@@ -70,10 +68,9 @@ in
 
     imports = [
       hosts/homepage-02.nix
+      configuration/personal-infrastructure
       morph-utils/monitor-nginx.nix
       services/website.nix
-      configuration/security.nix
-      configuration/wireguard.nix
     ];
 
     services.personal-website = {
@@ -81,10 +78,14 @@ in
       inherit domain aliases;
     };
 
-    security.acme.defaults.email = acme-email;
+    personal-infrastructure = {
+      inherit acme-email;
 
-    security.personal-infrastructure = {
-      inherit safe-ips;
+      fail2ban = {
+        enable = true;
+        inherit safe-ips;
+      };
+
       root-ssh-keys = [ ssh-keys.remote ];
 
       tissue = {
@@ -107,15 +108,17 @@ in
 
     imports = [
       hosts/homepage-03.nix
-      configuration/security.nix
-      configuration/wireguard.nix
-      configuration/nix-serve.nix
+      configuration/personal-infrastructure
     ];
 
-    security.acme.defaults.email = acme-email;
+    personal-infrastructure = {
+      inherit acme-email;
 
-    security.personal-infrastructure = {
-      inherit safe-ips;
+      fail2ban = {
+        enable = true;
+        inherit safe-ips;
+      };
+
       root-ssh-keys = [ ssh-keys.remote ];
 
       nix-cache = {

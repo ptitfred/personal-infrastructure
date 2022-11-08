@@ -1,5 +1,5 @@
 let
-  sources = import ../nix/sources.nix;
+  sources = import ../../nix/sources.nix;
   nix-serve-ng = import sources.nix-serve-ng;
 
 in
@@ -7,7 +7,7 @@ in
 { config, lib, ... }:
 
 let
-  cfg = config.security.personal-infrastructure.nix-cache;
+  cfg = config.personal-infrastructure.nix-cache;
 
   isPrivate = cfg.domain == null;
 in
@@ -15,7 +15,7 @@ in
 {
   imports = [ nix-serve-ng.nixosModules.default ];
 
-  options.security.personal-infrastructure.nix-cache = {
+  options.personal-infrastructure.nix-cache = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -32,7 +32,7 @@ in
     services.nix-serve.enable = true;
     services.nix-serve.secretKeyFile = config.deployment.secrets.nix-serve-private-key.destination;
 
-    services.nix-serve.bindAddress = if isPrivate then config.security.personal-infrastructure.tissue.ip else "127.0.0.1";
+    services.nix-serve.bindAddress = if isPrivate then config.personal-infrastructure.tissue.ip else "127.0.0.1";
 
     networking.firewall.allowedTCPPorts = lib.mkIf (! isPrivate) [ 80 443 ];
     networking.firewall.interfaces."tissue".allowedTCPPorts = lib.mkIf isPrivate [ config.services.nix-serve.port ];
