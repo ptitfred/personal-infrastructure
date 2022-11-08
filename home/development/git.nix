@@ -41,6 +41,7 @@
       bubbles.remote-name = "mine";
       http.sslcainfo = "/etc/ssl/certs/ca-bundle.crt";
       advice.skippedCherryPicks = false;
+      init.defaultBranch = "main";
     };
   };
 }
