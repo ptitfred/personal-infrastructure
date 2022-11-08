@@ -10,6 +10,7 @@ in
       stylish-haskell
       haskell-language-server
       gmp
+      cabal-install
       cabal2nix
     ];
 

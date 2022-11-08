@@ -6,6 +6,7 @@
       cachix
       niv
       nix-linter
+      nix-prefetch-git
       nix-prefetch-github
       nvd
     ];
