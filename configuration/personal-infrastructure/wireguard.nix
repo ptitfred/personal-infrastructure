@@ -58,6 +58,11 @@ in
         type = types.bool;
         default = false;
       };
+
+      open-ports = mkOption {
+        type = types.listOf types.int;
+        default = [];
+      };
     };
   };
 
@@ -123,8 +128,9 @@ in
                   ];
             };
           };
-        };
 
+          firewall.interfaces."${wg-interface}".allowedTCPPorts = lib.modules.mkIf cfg.reachable cfg.open-ports;
+        };
   };
 
 }
