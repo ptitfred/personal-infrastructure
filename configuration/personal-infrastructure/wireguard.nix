@@ -54,9 +54,14 @@ in
         example = [ { publicKey = "522Qq1oUTefraap0xh/UdVsGeRGS+H8vS3+QAciQths="; allowedIPs = [ "10.100.12.34/32" ]; } ];
       };
 
-      joinable = mkOption {
+      reachable = mkOption {
         type = types.bool;
         default = false;
+      };
+
+      open-ports = mkOption {
+        type = types.listOf types.int;
+        default = [];
       };
     };
   };
@@ -114,7 +119,7 @@ in
                       endpoint = "${server}:${toString serverListenPort}";
 
                       persistentKeepalive =
-                        if cfg.joinable
+                        if cfg.reachable
                         then
                           # Useful if we want mobile devices to be able to reach this machine behind NAT
                           25
@@ -123,8 +128,9 @@ in
                   ];
             };
           };
-        };
 
+          firewall.interfaces."${wg-interface}".allowedTCPPorts = lib.modules.mkIf cfg.reachable cfg.open-ports;
+        };
   };
 
 }
