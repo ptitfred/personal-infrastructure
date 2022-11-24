@@ -168,7 +168,7 @@ in
           blur = false;
           inactiveOpacity = "0.93";
           menuOpacity = "0.95";
-          opacityRule = [ "100:name *= 'i3lock'" "100:class_g = 'Firefox'"];
+          opacityRule = [ "100:name *= 'i3lock'" "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
           vSync = false;
         };
 
