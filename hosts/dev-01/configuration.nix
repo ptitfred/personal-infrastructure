@@ -199,5 +199,5 @@
     ''
   ];
 
-  nix.trustedUsers = [ "root" "frederic" ];
+  nix.settings.trusted-users = [ "root" "frederic" ];
 }
