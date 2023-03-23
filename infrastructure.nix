@@ -26,6 +26,7 @@ in
 , ssh-keys
 , wg-peers
 , resolver
+, matomo-hostname
 , ...
 }:
 
@@ -87,6 +88,11 @@ in
         inherit safe-ips;
       };
 
+      matomo = {
+        enable = true;
+        hostname = matomo-hostname;
+      };
+
       root-ssh-keys = [ ssh-keys.remote ];
 
       tissue = {
@@ -97,6 +103,7 @@ in
         other-peers = wg-peers;
       };
     };
+
   };
 
   homepage-03 = { ... }: {
