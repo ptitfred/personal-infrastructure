@@ -24,15 +24,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "personal-homepage": {
-        "branch": "main",
+        "branch": "cv-update",
         "description": "Sources for my homepage hosted on https://frederic.menou.me/",
         "homepage": null,
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "f5213d3db6badfe2c1bb8f9dbb4a9fe896089684",
-        "sha256": "0rf0kcilxx42gd3z2ij20df9wwc1sxjwxl1v3123368gr6vagwhl",
+        "rev": "fd8fff820fd0d366b023eefd4d914e32f1039267",
+        "sha256": "18fy0lkp9im2al6rn6z01z8x435jv0w8wrxif9frf76crsm5rnq4",
         "type": "tarball",
-        "url": "https://github.com/ptitfred/personal-homepage/archive/f5213d3db6badfe2c1bb8f9dbb4a9fe896089684.tar.gz",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/fd8fff820fd0d366b023eefd4d914e32f1039267.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
