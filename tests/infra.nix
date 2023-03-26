@@ -9,4 +9,5 @@ import ../infrastructure.nix {
   };
   wg-peers = [];
   resolver = { homepage-02 = "127.0.0.1"; };
+  matomo-hostname = "matomo.localhost";
 }

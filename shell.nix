@@ -3,6 +3,6 @@
 
 pkgs.mkShell {
   nativeBuildInputs = [
-    pkgs.morph
+    pkgs.morph pkgs.pwgen
   ];
 }
