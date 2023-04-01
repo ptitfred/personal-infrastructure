@@ -35,6 +35,10 @@ let
   virtualHosts = foldr mkRedirect hostingHost cfg.aliases;
 in
   {
+    imports = [
+      ./brotli.nix
+    ];
+
     options.services.freelancing = {
       enable = mkOption {
         type = types.bool;
@@ -82,6 +86,7 @@ in
         inherit virtualHosts;
         recommendedGzipSettings = true;
         recommendedProxySettings = true;
+        brotliSupport = true;
       };
 
       networking.firewall.allowedTCPPorts = [ 80 443 ];
