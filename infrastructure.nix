@@ -27,6 +27,7 @@ in
 , wg-peers
 , resolver
 , matomo-hostname
+, freelancing ? null
 , ...
 }:
 
@@ -73,12 +74,21 @@ in
       configuration/personal-infrastructure
       morph-utils/monitor-nginx.nix
       services/website.nix
+      services/freelancing.nix
     ];
 
     services.personal-website = {
       enable = true;
       inherit domain aliases;
     };
+
+    services.freelancing =
+      if isNull freelancing
+      then { enable = false; }
+      else {
+        enable = true;
+        inherit (freelancing) domain root extraConfig aliases;
+      };
 
     personal-infrastructure = {
       inherit acme-email;
