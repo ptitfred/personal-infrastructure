@@ -87,6 +87,7 @@
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
       "docker"
+      "vboxsf"
     ];
   };
 
