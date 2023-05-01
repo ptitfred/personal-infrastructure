@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     posix-toolbox.git-bubbles
     posix-toolbox.git-checkout-log
+    posix-toolbox.git-tree
   ];
 
   programs.bash = {
