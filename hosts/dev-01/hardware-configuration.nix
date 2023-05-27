@@ -23,6 +23,7 @@
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/ad8b70d0-3dd7-42c7-9652-2ceb7c3752d6"; }
+      { device = "/var/lib/heavy-compilation"; size = 16*1024; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
