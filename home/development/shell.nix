@@ -50,6 +50,8 @@
       enable = true;
       fonts = [ "xft:Monospace:pixelsize=10" ];
     };
+
+    direnv.enable = true;
   };
 
   xsession.windowManager.i3.config.terminal = "${pkgs.rxvt-unicode-unwrapped}/bin/urxvt -e ${pkgs.tmux}/bin/tmux";
