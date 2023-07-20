@@ -112,6 +112,10 @@
   # Fancy boot screen
   boot.plymouth.enable = true;
 
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+  '';
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
