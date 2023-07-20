@@ -3,6 +3,7 @@
 {
   programs.home-manager.enable = true;
 
-  news.display = "silent";
+  home.stateVersion = "18.09";
 
+  news.display = "silent";
 }
