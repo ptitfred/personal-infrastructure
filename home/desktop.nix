@@ -194,7 +194,7 @@ in
           inherit (config.desktop.location) latitude longitude;
         };
 
-        screen-locker = {
+        screen-locker = lib.mkIf (! (config.desktop.virtual-machine)) {
           enable = true;
           inactiveInterval = 120;
           inherit lockCmd;
