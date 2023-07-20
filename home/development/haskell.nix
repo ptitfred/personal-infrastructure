@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 let check = name: assert pkgs.lib.attrsets.hasAttr name pkgs; name;
+    summoner = pkgs.haskellPackages.callPackage ./haskell/summoner-2.0.1.1.nix {};
 in
 {
   home = {
@@ -12,6 +13,7 @@ in
       gmp
       cabal-install
       cabal2nix
+      summoner
     ];
 
     sessionPath = [
