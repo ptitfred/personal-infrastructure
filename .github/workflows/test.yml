@@ -22,3 +22,10 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-22.11:nixpkgs-overlays=./overlays
     - run: nix-shell -p home-manager --command "home-manager build -f tests/home.nix"
+
+  tests-flakes:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v18
+    - run: nix run home-manager/release-22.11 -- build --flake .#test
