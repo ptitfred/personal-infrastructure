@@ -43,15 +43,16 @@
         easy-ps = inputs.easy-purescript-nix.packages.${system};
       };
 
-      pkgs = import nixpkgs {
+      loadPackages = overlays: import nixpkgs {
         inherit system;
-        overlays = [ personal-overlay purescript-overlay ];
+        overlays = [ personal-overlay purescript-overlay ] ++ overlays;
       };
     in rec {
       homeManagerModules.laptop = ./laptop.nix;
 
-      homeConfigurationHelper = { modules ? [], extraSpecialArgs ? {} } : home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
+      homeConfigurationHelper = { overlays ? [], modules ? [], extraSpecialArgs ? {} } : home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
+        pkgs = loadPackages overlays;
         modules = modules ++ [ homeManagerModules.laptop ];
       };
 
