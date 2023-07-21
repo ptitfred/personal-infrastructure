@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  home.stateVersion = "18.09";
+  home.stateVersion = "22.11";
 
   news.display = "silent";
 }

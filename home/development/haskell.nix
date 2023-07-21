@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-let check = name: assert pkgs.lib.attrsets.hasAttr name pkgs; name;
+let check = name: assert (lib.asserts.assertMsg (pkgs.lib.attrsets.hasAttr name pkgs) "Missing ${name}"); name;
     summoner = pkgs.haskellPackages.callPackage ./haskell/summoner-2.0.1.1.nix {};
 in
 {
