@@ -2,7 +2,7 @@
 
 ## Usage via Flakes
 
-It is recommended to use flakes to ease dependencies management.
+This project only support flakes.
 
 Example flake.nix to use this project as a base (this is very close to what I do on my machines):
 
