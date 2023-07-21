@@ -2,6 +2,7 @@ let
   # nixos-22.05 as of 2022-10-09, fetched by niv for commodity
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs { allowAliases = false; warnUndeclaredOptions = true; };
+  home-manager = import configuration/home-manager.nix (import sources.home-manager {});
 
   secret-for-root = filename: hostname: {
     "${filename}" = {
@@ -46,6 +47,7 @@ in
       nix-serve-private-key "dev-01";
 
     imports = [
+      home-manager
       ./dev-01.nix
     ];
 
