@@ -5,6 +5,8 @@ with lib;
 let
   cfg = config.services.personal-website;
   sources = import ../nix/sources.nix;
+  nixos-2211 = import sources."nixos-22.11" {};
+
   brotlify = pkgs.callPackage ./brotlify.nix { };
 
   baseUrl = "https://${cfg.domain}";
@@ -14,7 +16,7 @@ let
 
   website =
     pkgs.callPackage (sources.personal-homepage + "/package.nix")
-      { inherit baseUrl; };
+      { inherit baseUrl; pkgs = nixos-2211; };
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
 

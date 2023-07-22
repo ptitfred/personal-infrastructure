@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
+    - uses: cachix/install-nix-action@v22
       with:
-        nix_path: nixpkgs=channel:nixos-22.05
+        # Still 22.11 here because nix-linter is broken 23.05
+        nix_path: nixpkgs=channel:nixos-22.11
     - run: lint/nix.sh
     - run: lint/shell.sh

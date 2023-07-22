@@ -1,5 +1,5 @@
 let
-  # nixos-22.05 as of 2022-10-09, fetched by niv for commodity
+  # nixos-23.05 as of 2023-07-22, fetched by niv for commodity
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs { allowAliases = false; warnUndeclaredOptions = true; };
   home-manager = import configuration/home-manager.nix (import sources.home-manager {});
