@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
+    - uses: cachix/install-nix-action@v22
       with:
+        # Still 22.11 here because nix-linter is broken 23.05
         nix_path: nixpkgs=channel:nixos-22.11
     - run: ./lint.sh
 
@@ -18,5 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
-    - run: nix run home-manager/release-22.11 -- build --flake .#test
+    - uses: cachix/install-nix-action@v22
+    - run: mkdir -p ~/.local/state/nix/profiles # required as of 23.05 ; not sure why though...
+    - run: nix run home-manager/release-23.05 -- build --flake .#test

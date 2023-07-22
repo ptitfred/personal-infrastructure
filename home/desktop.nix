@@ -100,10 +100,7 @@ in
       services = {
         polybar = {
           enable = true;
-          package = pkgs.polybar.override {
-            i3 = true;
-            i3GapsSupport = true;
-          };
+          package = pkgs.polybarFull;
           config = {
             "bar/main" = {
               font-0 = toPolybar roboto + ";2";
@@ -203,7 +200,6 @@ in
 
       xsession.windowManager.i3 = {
         enable = true;
-        package = pkgs.i3-gaps;
         config =
           let font = toGTK roboto;
               mkWorkspace = index: name: { inherit index name; };
