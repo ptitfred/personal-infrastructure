@@ -4,19 +4,15 @@ with lib;
 
 let
   cfg = config.services.personal-website;
-  sources = import ../nix/sources.nix;
-  nixos-2211 = import sources."nixos-22.11" {};
 
   brotlify = pkgs.callPackage ./brotlify.nix { };
+
+  nginx = pkgs.ptitfred.nginx.override { inherit baseUrl; };
 
   baseUrl = "https://${cfg.domain}";
 
   assetsDirectory = "homepage-extra-assets";
   screenshotsSubdirectory = "og";
-
-  website =
-    pkgs.callPackage (sources.personal-homepage + "/package.nix")
-      { inherit baseUrl; pkgs = nixos-2211; };
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
 
@@ -38,13 +34,13 @@ let
         enableACME = true;
 
         locations."/" = {
-          root = brotlify { src = website.nginx.root; };
-          inherit (website.nginx) extraConfig;
+          root = brotlify { src = nginx.root; };
+          inherit (nginx) extraConfig;
         };
 
         locations."/${screenshotsSubdirectory}/" = {
           root = "/var/lib/${assetsDirectory}";
-          inherit (website.nginx) extraConfig;
+          inherit (nginx) extraConfig;
         };
       };
     };
@@ -101,7 +97,7 @@ in
 
         script = ''
           mkdir -p /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
-          ${website.tools.take-screenshots}/bin/take-screenshots.sh ${baseUrl} /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
+          ${pkgs.ptitfred.take-screenshots}/bin/take-screenshots ${baseUrl} /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
         '';
 
         serviceConfig = {
