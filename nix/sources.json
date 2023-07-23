@@ -23,18 +23,6 @@
         "url": "https://github.com/aristanetworks/nix-serve-ng/archive/f3931b8120b1ca663da280e11659c745e2e9ad1b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "nixos-22.11": {
-        "branch": "nixos-22.11",
-        "description": "Nix Packages collection & NixOS",
-        "homepage": "",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
-        "sha256": "1xi53rlslcprybsvrmipm69ypd3g3hr7wkxvzc73ag8296yclyll",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "nixpkgs": {
         "branch": "nixos-23.05",
         "description": "Nix Packages collection",
@@ -53,10 +41,10 @@
         "homepage": null,
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "c98b8cc93de3bb5cd44d1c5b33a1b5d3eb16b2e0",
-        "sha256": "14hknx185zfc7888dw0dz1w5md0pmx985md92iqrglx71hk2ab26",
+        "rev": "69d49f9c14ef0868f0e23189178c08b4aece8bc1",
+        "sha256": "1xkxdpcj7gzbnw4rid4dd2s7sabq711wd1ls0hkiww8jlplkylvl",
         "type": "tarball",
-        "url": "https://github.com/ptitfred/personal-homepage/archive/c98b8cc93de3bb5cd44d1c5b33a1b5d3eb16b2e0.tar.gz",
+        "url": "https://github.com/ptitfred/personal-homepage/archive/69d49f9c14ef0868f0e23189178c08b4aece8bc1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

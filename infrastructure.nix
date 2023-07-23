@@ -1,7 +1,8 @@
 let
   # nixos-23.05 as of 2023-07-22, fetched by niv for commodity
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { allowAliases = false; warnUndeclaredOptions = true; };
+  overlay = (import "${sources.personal-homepage}/flake-compat.nix").overlays.default;
+  pkgs = import sources.nixpkgs { allowAliases = false; warnUndeclaredOptions = true; overlays = [ overlay ]; };
   home-manager = import configuration/home-manager.nix (import sources.home-manager {});
 
   secret-for-root = filename: hostname: {
