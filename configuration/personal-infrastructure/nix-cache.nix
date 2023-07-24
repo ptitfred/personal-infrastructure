@@ -1,10 +1,4 @@
-let
-  sources = import ../../nix/sources.nix;
-  nix-serve-ng = import sources.nix-serve-ng;
-
-in
-
-{ config, lib, ... }:
+{ config, inputs, lib, ... }:
 
 let
   cfg = config.personal-infrastructure.nix-cache;
@@ -13,7 +7,7 @@ let
 in
 
 {
-  imports = [ nix-serve-ng.nixosModules.default ];
+  imports = [ inputs.nix-serve-ng.nixosModules.default ];
 
   options.personal-infrastructure.nix-cache = {
     enable = lib.mkOption {
@@ -30,7 +24,7 @@ in
 
   config = lib.mkIf cfg.enable {
     services.nix-serve.enable = true;
-    services.nix-serve.secretKeyFile = config.deployment.secrets.nix-serve-private-key.destination;
+    services.nix-serve.secretKeyFile = "${config.deployment.keys.nix-serve-private-key.destDir}/nix-serve-private-key";
 
     services.nix-serve.bindAddress = if isPrivate then config.personal-infrastructure.tissue.ip else "127.0.0.1";
 

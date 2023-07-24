@@ -26,5 +26,7 @@ let
 in
 
 {
+  imports = [ ./morph-compat.nix ];
+
   deployment.healthChecks.http = checks;
 }
