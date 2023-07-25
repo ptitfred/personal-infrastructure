@@ -89,7 +89,7 @@ in
 
           collectHostAliases = lib.attrsets.foldAttrs (n: a: [n] ++ a) [];
 
-          hostAliases = lib.attrsets.mapAttrsToList mkHostAlias nodes;
+          hostAliases = lib.attrsets.mapAttrsToList mkHostAlias (lib.attrsets.filterAttrs (n: _: n ? "config") nodes);
       in
         {
           hosts = collectHostAliases hostAliases;
@@ -107,7 +107,7 @@ in
               ips = [ "${cfg.ip}/24" ];
               listenPort = lib.modules.mkIf isServer 51820;
 
-              privateKeyFile = config.deployment.secrets.wg-private-key.destination;
+              privateKeyFile = "${config.deployment.keys.wg-private-key.destDir}/wg-private-key";
               peers =
                 if isServer
                 then (map mkPeer cfg.clients ++ cfg.other-peers)

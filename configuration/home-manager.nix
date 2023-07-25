@@ -1,9 +1,7 @@
-home-manager:
-
-{ ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
-    home-manager.nixos
+    inputs.home-manager.nixosModules.home-manager
   ];
-  environment.systemPackages = [ home-manager.home-manager ];
+  environment.systemPackages = [ inputs.home-manager.packages.${pkgs.system}.home-manager ];
 }
