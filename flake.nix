@@ -21,6 +21,7 @@
 
         previous-pkgs = import previous { inherit system; };
         lint = pkgs.callPackage ./lint.nix { inherit (previous-pkgs) nix-linter; };
+        pending-diff = pkgs.callPackage ./pending-diff.nix {};
 
         lib = pkgs.callPackage ./lib.nix {};
 
@@ -35,6 +36,8 @@
            in pkgs.linkFarm (test-hive.meta.description) (map mkNode nodes);
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
+
+          packages.${system} = { inherit pending-diff; };
 
           apps.${system} = {
             lint = {
