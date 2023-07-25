@@ -1,10 +1,28 @@
-name: "Build test infrastructure"
+name: "CI"
 on:
   pull_request:
   push:
     branches:
       - main
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
+      with:
+        nix_path: nixpkgs=channel:nixos-23.05
+    - run: nix run .#lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
+      with:
+        nix_path: nixpkgs=channel:nixos-23.05
+    - run: nix build .#pending-diff
+
   tests:
     runs-on: ubuntu-latest
     steps:
