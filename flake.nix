@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?rev=fa793b06f56896b7d1909e4b69977c7bf842b2f0";
+    previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
@@ -14,9 +15,12 @@
     home-manager.url = "github:nix-community/home-manager?rev=07c347bb50994691d7b0095f45ebd8838cf6bc38";
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ nixpkgs, previous, ... }:
     let system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; overlays = [ inputs.personal-homepage.overlays.default ]; };
+
+        previous-pkgs = import previous { inherit system; };
+        lint = pkgs.callPackage ./lint.nix { inherit (previous-pkgs) nix-linter; };
 
         lib = pkgs.callPackage ./lib.nix {};
 
@@ -31,6 +35,13 @@
            in pkgs.linkFarm (test-hive.meta.description) (map mkNode nodes);
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
+
+          apps.${system} = {
+            lint = {
+              type = "app";
+              program = "${lint}/bin/lint";
+            };
+          };
 
           inherit lib colmena tests test-hive;
         };
