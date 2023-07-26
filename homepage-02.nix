@@ -41,7 +41,7 @@
     tissue = {
       publicKey = "WHQ/KKdGP/iuE7ii1lLVq45VKiV4nOdHFSioa1U/XXA=";
       ip = "10.100.0.1";
-      clients = [ "dev-01" "homepage-03" ];
+      clients = [ "dev-01" "dev-02" "homepage-03" ];
       listenIp = infrastructure.resolver.homepage-02;
       other-peers = infrastructure.wg-peers;
     };
