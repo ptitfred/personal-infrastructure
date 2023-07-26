@@ -32,6 +32,9 @@ in
   dev-01 = { ... }: {
     deployment.keys = wg-private-key "dev-01" // nix-serve-private-key "dev-01";
   };
+  dev-02 = { ... }: {
+    deployment.keys = wg-private-key "dev-02" // nix-serve-private-key "dev-02";
+  };
   homepage-02 = { ... }: {
     deployment.keys = wg-private-key "homepage-02";
   };

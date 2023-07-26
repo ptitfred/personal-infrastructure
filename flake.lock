@@ -148,6 +148,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1690200740,
+        "narHash": "sha256-aRkEXGmCbAGcvDcdh/HB3YN+EvoPoxmJMOaqRZmf6vM=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "ba9650b14e83b365fb9e731f7d7c803f22d2aecf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1688403656,
@@ -271,6 +286,7 @@
         "colmena": "colmena",
         "home-manager": "home-manager",
         "nix-serve-ng": "nix-serve-ng",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "personal-homepage": "personal-homepage",
         "previous": "previous_2"
