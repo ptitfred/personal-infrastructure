@@ -1,4 +1,4 @@
-name: "Test"
+name: "CI"
 on:
   pull_request:
   push:
@@ -11,9 +11,8 @@ jobs:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
       with:
-        # Still 22.11 here because nix-linter is broken 23.05
-        nix_path: nixpkgs=channel:nixos-22.11
-    - run: ./lint.sh
+        nix_path: nixpkgs=channel:nixos-23.05
+    - run: nix run .#lint
 
   tests:
     runs-on: ubuntu-latest
