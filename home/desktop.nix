@@ -276,13 +276,11 @@ in
                 then
                   builtins.map onStart [
                     "systemctl --user restart polybar.service"
-                    "${pkgs.shutter}/bin/shutter --min_at_startup"
                   ]
                 else
                   builtins.map onStart [
                     "systemctl --user restart polybar.service"
                     "${pkgs.networkmanagerapplet}/bin/nm-applet"
-                    "${pkgs.shutter}/bin/shutter --min_at_startup"
                   ];
 
             assigns =
