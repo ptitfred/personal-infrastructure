@@ -46,6 +46,26 @@ in
         description = "";
         default = 10;
       };
+
+      desktop.battery.full-at = mkOption {
+        type = types.int;
+        default = 99;
+      };
+
+      desktop.battery.low-at = mkOption {
+        type = types.int;
+        default = 10;
+      };
+
+      desktop.battery.battery = mkOption {
+        type = types.str;
+        example = "BAT1";
+      };
+
+      desktop.battery.adapter = mkOption {
+        type = types.str;
+        example = "ADP1";
+      };
     };
 
     config = {
@@ -112,7 +132,7 @@ in
               radius = 4;
               width = "100%";
               modules-left = "i3";
-              modules-right = "memory date";
+              modules-right = if config.desktop.virtual-machine then "memory date" else "memory battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -158,7 +178,23 @@ in
               time = "%H:%M:%S";
               label = "%date%  %time%";
             };
-          };
+          } // (
+            if config.desktop.virtual-machine
+            then {}
+            else
+              {
+                "module/battery" = {
+                  type = "internal/battery";
+                  label-charging    =   "~ %percentage%% (%time% +%consumption%W)";
+                  label-discharging =     "%percentage%% (%time% -%consumption%W)";
+                  label-low         = "!!! %percentage%% (%time% -%consumption%W)";
+                  label-full = "Max";
+                  time-format = "%H:%M";
+                  poll-interval = 2;
+                  inherit (config.desktop.battery) full-at low-at battery adapter;
+                };
+              }
+            );
           script = "polybar main &";
         };
 
