@@ -23,6 +23,7 @@
         previous-pkgs = import previous { inherit system; };
         lint = pkgs.callPackage ./lint.nix { inherit (previous-pkgs) nix-linter; };
         pending-diff = pkgs.callPackage ./pending-diff.nix {};
+        metadata = pkgs.callPackage ./metadata.nix {};
 
         lib = pkgs.callPackage ./lib.nix {};
 
@@ -38,7 +39,7 @@
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
 
-          packages.${system} = { inherit pending-diff; };
+          packages.${system} = { inherit pending-diff metadata; };
 
           apps.${system} = {
             lint = {
