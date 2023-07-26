@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-previous.url = "github:nixos/nixpkgs/nixos-22.11";
+    previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
     ptitfred-posix-toolbox = {
       url = "github:ptitfred/posix-toolbox";
@@ -25,23 +25,23 @@
 
     spago2nix = {
       url = "github:justinwoo/spago2nix";
-      inputs.nixpkgs.follows = "nixpkgs-previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
+      inputs.nixpkgs.follows = "previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
       inputs.easy-purescript-nix.follows = "easy-purescript-nix";
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, previous, ... }:
     let
       system = "x86_64-linux";
 
       personal-overlay = self: _: {
         # 22.11 still available when needed
-        previous = inputs.nixpkgs-previous.legacyPackages.${system};
+        previous = inputs.previous.legacyPackages.${system};
 
         posix-toolbox = self.callPackage "${inputs.ptitfred-posix-toolbox}/nix/default.nix" {};
         haddocset = self.callPackage "${inputs.ptitfred-haddocset}/default.nix" {};
         postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
-        nix-linter = self.previous.nix-linter;
+        inherit (previous-pkgs) nix-linter;
       };
 
       purescript-overlay = _: _: {
@@ -53,19 +53,30 @@
         inherit system;
         overlays = [ personal-overlay purescript-overlay ] ++ overlays;
       };
+
+      previous-pkgs = import previous { inherit system; };
+      lint = previous-pkgs.callPackage ./lint.nix {};
+      laptop = ./laptop.nix;
     in rec {
-      homeManagerModules.laptop = ./laptop.nix;
+      homeManagerModules = { inherit laptop; };
 
       homeConfigurationHelper = { overlays ? [], modules ? [], extraSpecialArgs ? {} } : home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
         pkgs = loadPackages overlays;
-        modules = modules ++ [ homeManagerModules.laptop ];
+        modules = modules ++ [ laptop ];
       };
 
       homeConfigurations.test = homeConfigurationHelper {
         modules = [
           tests/home.nix
         ];
+      };
+
+      apps.${system} = {
+        lint = {
+          type = "app";
+          program = "${lint}/bin/lint";
+        };
       };
     };
 }
