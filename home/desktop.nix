@@ -139,7 +139,7 @@ in
             "bar/main" = {
               font-0 = toPolybar roboto + ";2";
               inherit bottom;
-              # height = 20;
+              height = (config.desktop.fontSize + 2) * 2;
               radius = 4;
               width = "100%";
               modules-left = "i3";
