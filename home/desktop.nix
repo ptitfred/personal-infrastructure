@@ -66,6 +66,11 @@ in
         type = types.str;
         example = "ADP1";
       };
+
+      desktop.backlight.card = mkOption {
+        type = types.str;
+        default = "intel_backlight";
+      };
     };
 
     config = {
@@ -132,7 +137,7 @@ in
               radius = 4;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "memory date" else "memory battery date";
+              modules-right = if config.desktop.virtual-machine then "memory date" else "memory backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -192,6 +197,21 @@ in
                   time-format = "%H:%M";
                   poll-interval = 2;
                   inherit (config.desktop.battery) full-at low-at battery adapter;
+                };
+                "module/backlight" = {
+                  type = "internal/backlight";
+                  inherit (config.desktop.backlight) card;
+                  enable-scroll = true;
+                  format = "<ramp> <bar>";
+                  bar-width = 5;
+                  bar-fill = "─";
+                  bar-empty = "─";
+                  bar-indicator = "|";
+                  ramp-0 = "🌕";
+                  ramp-1 = "🌔";
+                  ramp-2 = "🌓";
+                  ramp-3 = "🌒";
+                  ramp-4 = "🌑";
                 };
               }
             );
