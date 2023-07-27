@@ -144,6 +144,7 @@ in
               border-top-size = if bottom then 0 else config.desktop.spacing;
               border-bottom-size = if bottom then config.desktop.spacing else 0;
               separator = "|";
+              separator-foreground = config.desktop.mainColor;
               module-margin = 2;
               locale = "fr_FR.UTF-8";
               tray-position = "center";
