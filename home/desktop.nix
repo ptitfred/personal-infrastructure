@@ -10,7 +10,7 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     backgrounds = pkgs.callPackage ./desktop/backgrounds {};
 
-    inherit (import ./fonts.nix) roboto toPolybar toI3 toGTK;
+    inherit (import ./fonts.nix { baseSize = config.desktop.fontSize; }) roboto toPolybar toI3 toGTK;
 in
   {
     imports = [
@@ -18,6 +18,10 @@ in
     ];
 
     options = with lib; {
+      desktop.fontSize = mkOption {
+        type = types.int;
+        default = 9;
+      };
       desktop.virtual-machine = mkOption {
         type = types.bool;
         default = false;
