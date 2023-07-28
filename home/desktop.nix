@@ -8,6 +8,8 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
     screenshot = pkgs.callPackage ./desktop/screenshot.nix {};
     screenshotCmd = "${screenshot}/bin/screenshot";
 
+    backgrounds = pkgs.callPackage ./desktop/backgrounds {};
+
     inherit (import ./fonts.nix) roboto toPolybar toI3 toGTK;
 in
   {
@@ -236,7 +238,7 @@ in
 
         random-background = {
           enable = true;
-          imageDirectory = "%h/Pictures/backgrounds";
+          imageDirectory = backgrounds.outPath;
         };
 
         redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
