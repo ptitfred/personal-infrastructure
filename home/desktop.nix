@@ -296,6 +296,7 @@ in
         extraConfig =
           ''
             for_window [class=".*"] title_format "  %title"
+            exec i3-msg workspace 1
           '';
       };
 
