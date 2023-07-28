@@ -5,10 +5,10 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     palette = import ./palette.nix;
 
-    screenshot = pkgs.callPackage ./desktop/screenshot.nix {};
+    screenshot = pkgs.callPackage desktop/screenshot {};
     screenshotCmd = "${screenshot}/bin/screenshot";
 
-    backgrounds = pkgs.callPackage ./desktop/backgrounds {};
+    backgrounds = pkgs.callPackage desktop/backgrounds {};
 
     inherit (import ./fonts.nix { baseSize = config.desktop.fontSize; }) roboto toPolybar toI3 toGTK;
 
