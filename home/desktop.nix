@@ -10,7 +10,9 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     backgrounds = pkgs.callPackage desktop/backgrounds {};
 
-    inherit (import ./fonts.nix { baseSize = config.desktop.fontSize; }) roboto toPolybar toI3 toGTK;
+    baseSize = config.desktop.fontSize;
+
+    inherit (import ./fonts.nix { inherit baseSize; }) roboto toPolybar toI3 toGTK;
 
     connectionEditor = pkgs.callPackage desktop/connection-editor {};
 
@@ -87,8 +89,10 @@ in
     config = {
       home.packages =
         if config.desktop.virtual-machine
-        then [ pkgs.gnome.nautilus ]
-        else [ pkgs.networkmanager pkgs.gnome.nautilus ];
+        then [ pkgs.roboto pkgs.material-symbols pkgs.gnome.nautilus ]
+        else [ pkgs.roboto pkgs.material-symbols pkgs.gnome.nautilus pkgs.networkmanager ];
+
+      fonts.fontconfig.enable = true;
 
       gtk =
         let gtk2ExtraConfig = {
@@ -143,12 +147,13 @@ in
           config = {
             "bar/main" = {
               font-0 = toPolybar roboto + ";2";
+              font-1 = "Material Symbols Outlined:size=${toString (baseSize -1)};2";
               inherit bottom;
               height = (config.desktop.fontSize + 2) * 2;
               radius = 4;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "memory date" else "wifi memory backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "memory storage date" else "wifi memory storage backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -165,7 +170,14 @@ in
               type = "internal/memory";
               interval = "0.5";
               format = "<label>";
-              label = "Mémoire libre  %gb_free%";
+              label = "%{T2}%{T-} %free%";
+            };
+
+            "module/storage" = {
+              type = "internal/fs";
+              mount-0 = "/";
+              format-mounted = "<label-mounted>";
+              label-mounted = "%{T2}%{T-} %mountpoint% %free%";
             };
 
             "module/i3" = let padding = 2; in {
@@ -202,10 +214,28 @@ in
               {
                 "module/battery" = {
                   type = "internal/battery";
-                  label-charging    =   "~ %percentage%% (%time% +%consumption%W)";
-                  label-discharging =     "%percentage%% (%time% -%consumption%W)";
-                  label-low         = "!!! %percentage%% (%time% -%consumption%W)";
-                  label-full = "Max";
+                  format-charging    = "%{T2}<ramp-capacity>%{T-} <label-charging>";
+                  format-discharging = "%{T2}<ramp-capacity>%{T-} <label-discharging>";
+                  label-charging     = "%percentage%% (%time% +%consumption%W)";
+                  label-discharging  = "%percentage%% (%time% -%consumption%W)";
+                  label-low          = "%{T2}%{T-} %percentage%% (%time% -%consumption%W)";
+                  label-full         = "%{T2}%{T-} Max";
+
+                  # So sad we can't have ramps specifics for charging and discharging
+                # ramp-charging-0 = "";
+                # ramp-charging-1 = "";
+                # ramp-charging-2 = "";
+                # ramp-charging-3 = "";
+                # ramp-charging-4 = "";
+                # ramp-charging-5 = "";
+
+                  ramp-capacity-0 = "";
+                  ramp-capacity-1 = "";
+                  ramp-capacity-2 = "";
+                  ramp-capacity-3 = "";
+                  ramp-capacity-4 = "";
+                  ramp-capacity-5 = "";
+
                   time-format = "%H:%M";
                   poll-interval = 2;
                   inherit (config.desktop.battery) full-at low-at battery adapter;
@@ -214,23 +244,28 @@ in
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
                   enable-scroll = true;
-                  format = "<ramp> <bar>";
-                  bar-width = 5;
-                  bar-fill = "─";
-                  bar-empty = "─";
-                  bar-indicator = "|";
-                  ramp-0 = "🌕";
-                  ramp-1 = "🌔";
-                  ramp-2 = "🌓";
-                  ramp-3 = "🌒";
-                  ramp-4 = "🌑";
+                  format = "%{T2}<ramp>%{T-} <label>";
+                  label = "%percentage%%";
+                  ramp-0 = "";
+                  ramp-1 = "";
+                  ramp-2 = "";
+                  ramp-3 = "";
+                  ramp-4 = "";
+                  ramp-5 = "";
+                  ramp-6 = "";
                 };
                 "module/wifi" = {
                   type = "internal/network";
                   interface-type = "wireless";
                   click-left = "";
-                  label-connected    = editConnectionsOnClick "%essid% %local_ip%";
-                  label-disconnected = editConnectionsOnClick "Déconnecté";
+                  format-connected = "<ramp-signal> <label-connected>";
+                  label-connected    = editConnectionsOnClick "%essid%";
+                  label-disconnected = editConnectionsOnClick " Déconnecté";
+                  ramp-signal-0 = "";
+                  ramp-signal-1 = "";
+                  ramp-signal-2 = "";
+                  ramp-signal-3 = "";
+                  ramp-signal-4 = "";
                 };
               }
             );
