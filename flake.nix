@@ -72,7 +72,15 @@
         ];
       };
 
-      packages.${system} = { connection-editor = (loadPackages []).callPackage home/desktop/connection-editor {}; };
+      packages.${system} =
+        let pkgs = loadPackages [];
+            tools = {
+              connection-editor = pkgs.callPackage home/desktop/connection-editor {};
+              screenshot        = pkgs.callPackage home/desktop/screenshot.nix    {};
+            };
+         in tools // {
+              default = pkgs.linkFarm "tools" tools;
+            };
 
       apps.${system} = {
         lint = {
