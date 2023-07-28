@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+
+let baseSize = config.desktop.fontSize;
+    inherit (import ../fonts.nix { inherit baseSize; }) toXFT;
+ in
 
 {
   home = {
@@ -48,7 +52,9 @@
 
     urxvt = {
       enable = true;
-      fonts = [ "xft:Monospace:pixelsize=10" ];
+      fonts = [
+        (toXFT { name = "Monospace"; size = baseSize +1; })
+      ];
     };
 
     direnv.enable = true;
