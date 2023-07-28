@@ -14,10 +14,8 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     inherit (import ./fonts.nix { inherit baseSize; }) roboto toPolybar toI3 toGTK;
 
-    connectionEditor = pkgs.callPackage desktop/connection-editor {};
-
     editConnectionsOnClick = label:
-      "%{A1:${connectionEditor}/bin/floating-nm-connection-editor:}${label}%{A}";
+      "%{A1:${pkgs.networkmanagerapplet}/bin/nm-connection-editor:}${label}%{A}";
 in
   {
     imports = [
@@ -399,6 +397,7 @@ in
         extraConfig =
           ''
             for_window [class=".*"] title_format "  %title"
+            for_window [class="(?i)nm-connection-editor"] floating enable, move position center
             exec i3-msg workspace 1
           '';
       };
