@@ -165,6 +165,8 @@ in
               locale = "fr_FR.UTF-8";
               tray-position = "none";
               line-size = 3;
+              cursor-click  = "pointer";
+              cursor-scroll = "ns-resize";
             };
 
             "module/memory" = {
