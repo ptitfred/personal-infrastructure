@@ -5,12 +5,17 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     palette = import ./palette.nix;
 
-    screenshot = pkgs.callPackage ./desktop/screenshot.nix {};
+    screenshot = pkgs.callPackage desktop/screenshot {};
     screenshotCmd = "${screenshot}/bin/screenshot";
 
-    backgrounds = pkgs.callPackage ./desktop/backgrounds {};
+    backgrounds = pkgs.callPackage desktop/backgrounds {};
 
     inherit (import ./fonts.nix { baseSize = config.desktop.fontSize; }) roboto toPolybar toI3 toGTK;
+
+    connectionEditor = pkgs.callPackage desktop/connection-editor {};
+
+    editConnectionsOnClick = label:
+      "%{A1:${connectionEditor}/bin/floating-nm-connection-editor:}${label}%{A}";
 in
   {
     imports = [
@@ -143,7 +148,7 @@ in
               radius = 4;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "memory date" else "memory backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "memory date" else "wifi memory backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -153,7 +158,7 @@ in
               separator-foreground = config.desktop.mainColor;
               module-margin = 2;
               locale = "fr_FR.UTF-8";
-              tray-position = "center";
+              tray-position = "none";
             };
 
             "module/memory" = {
@@ -219,6 +224,13 @@ in
                   ramp-2 = "🌓";
                   ramp-3 = "🌒";
                   ramp-4 = "🌑";
+                };
+                "module/wifi" = {
+                  type = "internal/network";
+                  interface-type = "wireless";
+                  click-left = "";
+                  label-connected    = editConnectionsOnClick "%essid% %local_ip%";
+                  label-disconnected = editConnectionsOnClick "Déconnecté";
                 };
               }
             );
@@ -334,16 +346,8 @@ in
 
             startup =
               let onStart = command: { inherit command; always = true; notification = false; };
-              in
-                if config.desktop.virtual-machine
-                then
-                  builtins.map onStart [
+               in builtins.map onStart [
                     "systemctl --user restart polybar.service"
-                  ]
-                else
-                  builtins.map onStart [
-                    "systemctl --user restart polybar.service"
-                    "${pkgs.networkmanagerapplet}/bin/nm-applet"
                   ];
 
             assigns =

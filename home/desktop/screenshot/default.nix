@@ -6,5 +6,5 @@
 writeShellApplication {
   name = "screenshot";
   runtimeInputs = [ scrot xclip ];
-  text = builtins.readFile ./screenshot.sh;
+  text = builtins.readFile ./script.sh;
 }
