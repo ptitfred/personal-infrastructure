@@ -46,6 +46,31 @@ in
         description = "";
         default = 10;
       };
+
+      desktop.battery.full-at = mkOption {
+        type = types.int;
+        default = 99;
+      };
+
+      desktop.battery.low-at = mkOption {
+        type = types.int;
+        default = 10;
+      };
+
+      desktop.battery.battery = mkOption {
+        type = types.str;
+        example = "BAT1";
+      };
+
+      desktop.battery.adapter = mkOption {
+        type = types.str;
+        example = "ADP1";
+      };
+
+      desktop.backlight.card = mkOption {
+        type = types.str;
+        default = "intel_backlight";
+      };
     };
 
     config = {
@@ -112,13 +137,14 @@ in
               radius = 4;
               width = "100%";
               modules-left = "i3";
-              modules-right = "memory date";
+              modules-right = if config.desktop.virtual-machine then "memory date" else "memory backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
               border-top-size = if bottom then 0 else config.desktop.spacing;
               border-bottom-size = if bottom then config.desktop.spacing else 0;
               separator = "|";
+              separator-foreground = config.desktop.mainColor;
               module-margin = 2;
               locale = "fr_FR.UTF-8";
               tray-position = "center";
@@ -158,7 +184,38 @@ in
               time = "%H:%M:%S";
               label = "%date%  %time%";
             };
-          };
+          } // (
+            if config.desktop.virtual-machine
+            then {}
+            else
+              {
+                "module/battery" = {
+                  type = "internal/battery";
+                  label-charging    =   "~ %percentage%% (%time% +%consumption%W)";
+                  label-discharging =     "%percentage%% (%time% -%consumption%W)";
+                  label-low         = "!!! %percentage%% (%time% -%consumption%W)";
+                  label-full = "Max";
+                  time-format = "%H:%M";
+                  poll-interval = 2;
+                  inherit (config.desktop.battery) full-at low-at battery adapter;
+                };
+                "module/backlight" = {
+                  type = "internal/backlight";
+                  inherit (config.desktop.backlight) card;
+                  enable-scroll = true;
+                  format = "<ramp> <bar>";
+                  bar-width = 5;
+                  bar-fill = "─";
+                  bar-empty = "─";
+                  bar-indicator = "|";
+                  ramp-0 = "🌕";
+                  ramp-1 = "🌔";
+                  ramp-2 = "🌓";
+                  ramp-3 = "🌒";
+                  ramp-4 = "🌑";
+                };
+              }
+            );
           script = "polybar main &";
         };
 
@@ -276,13 +333,11 @@ in
                 then
                   builtins.map onStart [
                     "systemctl --user restart polybar.service"
-                    "${pkgs.shutter}/bin/shutter --min_at_startup"
                   ]
                 else
                   builtins.map onStart [
                     "systemctl --user restart polybar.service"
                     "${pkgs.networkmanagerapplet}/bin/nm-applet"
-                    "${pkgs.shutter}/bin/shutter --min_at_startup"
                   ];
 
             assigns =
@@ -296,6 +351,7 @@ in
         extraConfig =
           ''
             for_window [class=".*"] title_format "  %title"
+            exec i3-msg workspace 1
           '';
       };
 
