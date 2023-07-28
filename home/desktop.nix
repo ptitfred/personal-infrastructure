@@ -291,6 +291,7 @@ in
         random-background = {
           enable = true;
           imageDirectory = backgrounds.outPath;
+          interval = "20 minutes";
         };
 
         redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
