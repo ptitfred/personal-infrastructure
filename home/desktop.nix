@@ -164,6 +164,7 @@ in
               module-margin = 2;
               locale = "fr_FR.UTF-8";
               tray-position = "none";
+              line-size = 3;
             };
 
             "module/memory" = {
@@ -186,7 +187,7 @@ in
               label-focused = "%name%";
               label-focused-foreground = "#ffffff";
               label-focused-background = "#3f3f3f";
-              label-focused-underline = "#fba922";
+              label-focused-underline = config.desktop.mainColor; # "#fba922";
               label-focused-padding = padding;
               label-unfocused = "%name%";
               label-unfocused-padding = padding;
