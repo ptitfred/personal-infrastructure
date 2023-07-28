@@ -5,6 +5,9 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     palette = import ./palette.nix;
 
+    screenshot = pkgs.callPackage ./desktop/screenshot.nix {};
+    screenshotCmd = "${screenshot}/bin/screenshot";
+
     inherit (import ./fonts.nix) roboto toPolybar toI3 toGTK;
 in
   {
@@ -256,7 +259,12 @@ in
                   mkBind = key: command: {
                     "${modifier}+${key}" = "exec ${command}";
                   };
-                  bindings = mkBind "comma" lockCmd // bindWorkspaces workspaces;
+                  mkBindRelease = key: command: {
+                    "--release ${modifier}+${key}" = "exec ${command}";
+                  };
+                  bindings = mkBind        "comma" lockCmd
+                          // mkBindRelease "x"     screenshotCmd
+                          // bindWorkspaces workspaces;
                in lib.mkOptionDefault bindings;
 
             menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${config.desktop.mainColor}' --tf '${config.desktop.mainColor}'";
@@ -285,9 +293,10 @@ in
                       (assignToWorkspace documentation [ { class = "^Zeal$";               } ])
                     ];
           };
-        extraConfig = ''
-          for_window [class=".*"] title_format "  %title"
-        '';
+        extraConfig =
+          ''
+            for_window [class=".*"] title_format "  %title"
+          '';
       };
 
       xresources.properties = with palette; {
