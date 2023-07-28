@@ -72,6 +72,8 @@
         ];
       };
 
+      packages.${system} = { connection-editor = (loadPackages []).callPackage home/desktop/connection-editor {}; };
+
       apps.${system} = {
         lint = {
           type = "app";
