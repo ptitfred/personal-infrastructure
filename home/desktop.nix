@@ -291,6 +291,7 @@ in
         random-background = {
           enable = true;
           imageDirectory = backgrounds.outPath;
+          interval = "20 minutes";
         };
 
         redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
@@ -312,19 +313,20 @@ in
         };
       };
 
-      xsession.windowManager.i3 = {
+      xsession.windowManager.i3 =
+        let mkWorkspace = index: name: { inherit index name; };
+
+            terminal      = mkWorkspace 1 "Terminal";
+            chat          = mkWorkspace 2 "Chat";
+            pro           = mkWorkspace 3 "Pro";
+            web           = mkWorkspace 4 "Web";
+            navigation    = mkWorkspace 5 "Navigation";
+            documentation = mkWorkspace 6 "Documentation";
+            capture       = mkWorkspace 9 "Capture";
+        in {
         enable = true;
         config =
           let font = toGTK roboto;
-              mkWorkspace = index: name: { inherit index name; };
-
-              terminal      = mkWorkspace 1 "Terminal";
-              chat          = mkWorkspace 2 "Chat";
-              pro           = mkWorkspace 3 "Pro";
-              web           = mkWorkspace 4 "Web";
-              navigation    = mkWorkspace 5 "Navigation";
-              documentation = mkWorkspace 6 "Documentation";
-              capture       = mkWorkspace 9 "Capture";
 
               workspaces =
                 [ terminal
@@ -398,7 +400,7 @@ in
           ''
             for_window [class=".*"] title_format "  %title"
             for_window [class="(?i)nm-connection-editor"] floating enable, move position center
-            exec i3-msg workspace 1
+            exec i3-msg workspace ${toString terminal.index}:${terminal.name}
           '';
       };
 
