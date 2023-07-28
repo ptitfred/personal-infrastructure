@@ -149,15 +149,15 @@ in
               font-0 = toPolybar roboto + ";2";
               font-1 = "Material Symbols Outlined:size=${toString (baseSize -1)};2";
               inherit bottom;
-              height = (config.desktop.fontSize + 2) * 2;
-              radius = 4;
+              height = "${toString (builtins.ceil (baseSize * 2.2))}pt";
+              radius = 6;
               width = "100%";
               modules-left = "i3";
               modules-right = if config.desktop.virtual-machine then "memory storage date" else "wifi memory storage backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
-              border-top-size = if bottom then 0 else config.desktop.spacing;
+              border-top-size    = if bottom then 0 else config.desktop.spacing;
               border-bottom-size = if bottom then config.desktop.spacing else 0;
               separator = "|";
               separator-foreground = config.desktop.mainColor;
