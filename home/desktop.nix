@@ -22,6 +22,8 @@ let locker = pkgs.callPackage desktop/locker.nix {};
 
     onClick = program: label:
       "%{A1:${program}:}${label}%{A}";
+
+    materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
 in
   {
     imports = [
@@ -151,7 +153,7 @@ in
           config = {
             "bar/main" = {
               font-0 = toPolybar roboto + ";2";
-              font-1 = "Material Symbols Outlined:size=${toString (baseSize -1)};2";
+              font-1 = materialSymbolsOutlinedPolybar;
               inherit bottom;
               height = "${toString (builtins.ceil (baseSize * 2.2))}pt";
               radius = 6;
