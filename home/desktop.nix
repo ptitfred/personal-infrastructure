@@ -171,7 +171,7 @@ in
               radius = 6;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "memory storage date" else "wifi memory storage backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -191,11 +191,20 @@ in
               screenschange-reload = true;
             };
 
+            "module/cpu" = {
+              type = "internal/cpu";
+              interval = "0.5";
+              warn-percentage = 95;
+              label = "%{T2}%{T-} %percentage%%";
+              label-warn = "%{T2}%{T-} %percentage%%";
+              label-warn-foreground = config.desktop.mainColor;
+            };
+
             "module/memory" = {
               type = "internal/memory";
               interval = "0.5";
               format = "<label>";
-              label = "%{T2}%{T-} %free%";
+              label = "%{T2}%{T-} %free%";
             };
 
             "module/storage" = {
