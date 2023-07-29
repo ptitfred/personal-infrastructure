@@ -5,8 +5,8 @@
       qemu
       weechat
       slack
-      shutter
       ncdu
+      gimp
     ];
 
   nixpkgs.config.allowUnfree = true;
