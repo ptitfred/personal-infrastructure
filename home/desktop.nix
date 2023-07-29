@@ -175,6 +175,10 @@ in
               cursor-scroll = "ns-resize";
             };
 
+            "settings" = {
+              screenschange-reload = true;
+            };
+
             "module/memory" = {
               type = "internal/memory";
               interval = "0.5";
