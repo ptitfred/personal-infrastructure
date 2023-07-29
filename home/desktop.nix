@@ -215,7 +215,7 @@ in
               {
                 "module/battery" = {
                   type = "internal/battery";
-                  format-charging    = "%{T2}<ramp-capacity>%{T-} <label-charging>";
+                  format-charging    = "%{T2}<animation-charging>%{T-} <label-charging>";
                   format-discharging = "%{T2}<ramp-capacity>%{T-} <label-discharging>";
                   label-charging     = "%percentage%% (%time% +%consumption%W)";
                   label-discharging  = "%percentage%% (%time% -%consumption%W)";
@@ -223,12 +223,13 @@ in
                   label-full         = "%{T2}%{T-} Max";
 
                   # So sad we can't have ramps specifics for charging and discharging
-                # ramp-charging-0 = "";
-                # ramp-charging-1 = "";
-                # ramp-charging-2 = "";
-                # ramp-charging-3 = "";
-                # ramp-charging-4 = "";
-                # ramp-charging-5 = "";
+                  animation-charging-0 = "";
+                  animation-charging-1 = "";
+                  animation-charging-2 = "";
+                  animation-charging-3 = "";
+                  animation-charging-4 = "";
+                  animation-charging-5 = "";
+                  animation-charging-framerate = 750;
 
                   ramp-capacity-0 = "";
                   ramp-capacity-1 = "";
