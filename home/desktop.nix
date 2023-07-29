@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
-let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
+let locker = pkgs.callPackage desktop/locker.nix {};
+    lockCmd = "${locker}/bin/locker";
     bottom = true;
 
     palette = import ./palette.nix;
@@ -290,7 +291,7 @@ in
 
           inactiveOpacity = 0.93;
           menuOpacity = 0.95;
-          opacityRules = [ "100:name *= 'i3lock'" "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
+          opacityRules = [ "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
           vSync = false;
         };
 

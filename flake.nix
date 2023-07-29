@@ -79,6 +79,7 @@
               screenshot      = pkgs.callPackage home/desktop/screenshot          {};
               backgrounds     = pkgs.callPackage home/desktop/backgrounds         {};
               toggle-redshift = pkgs.callPackage home/desktop/toggle-redshift.nix {};
+              locker          = pkgs.callPackage home/desktop/locker.nix          {};
             };
          in tools // {
               default = pkgs.linkFarm "tools" tools;
