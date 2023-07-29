@@ -318,10 +318,10 @@ in
         let mkWorkspace = index: name: { inherit index name; };
 
             terminal      = mkWorkspace 1 "Terminal";
-            chat          = mkWorkspace 2 "Chat";
+            web           = mkWorkspace 2 "Web";
             pro           = mkWorkspace 3 "Pro";
-            web           = mkWorkspace 4 "Web";
-            navigation    = mkWorkspace 5 "Navigation";
+            chat          = mkWorkspace 4 "Chat";
+            files         = mkWorkspace 5 "Files";
             documentation = mkWorkspace 6 "Documentation";
             capture       = mkWorkspace 9 "Capture";
         in {
@@ -334,7 +334,7 @@ in
                   chat
                   pro
                   web
-                  navigation
+                  files
                   documentation
                   capture
                 ];
@@ -392,7 +392,7 @@ in
             assigns =
               let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
                in concat
-                    [ (assignToWorkspace navigation    [ { class = "^org.gnome.Nautilus$"; } ])
+                    [ (assignToWorkspace files         [ { class = "^org.gnome.Nautilus$"; } ])
                       (assignToWorkspace capture       [ { class = "^.shutter-wrapped$";   } ])
                       (assignToWorkspace documentation [ { class = "^Zeal$";               } ])
                     ];
