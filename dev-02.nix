@@ -3,7 +3,8 @@
   deployment.tags = [ "workstation" ];
 
   imports = [
-    ./configuration/home-manager.nix
+    configuration/home-manager.nix
+    configuration/backlight.nix
     hosts/dev-02/configuration.nix
     configuration/personal-infrastructure
   ];
@@ -20,5 +21,10 @@
     };
 
     root-ssh-keys = [ infrastructure.ssh-keys.local ];
+  };
+
+  backlight-support = {
+    enable = true;
+    user = "frederic";
   };
 }
