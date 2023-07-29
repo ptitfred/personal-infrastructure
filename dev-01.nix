@@ -3,9 +3,10 @@
   deployment.tags = [ "workstation" ];
 
   imports = [
-    ./configuration/home-manager.nix
     hosts/dev-01/configuration.nix
+    configuration/home-manager.nix
     configuration/personal-infrastructure
+    configuration/workstation.nix
   ];
 
   personal-infrastructure = {

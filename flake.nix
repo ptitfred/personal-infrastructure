@@ -16,6 +16,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    home-manager-base.url = "github:ptitfred/home-manager/laptop-support";
   };
 
   outputs = inputs@{ nixpkgs, previous, ... }:
