@@ -14,8 +14,13 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     inherit (import ./fonts.nix { inherit baseSize; }) roboto toPolybar toI3 toGTK;
 
-    editConnectionsOnClick = label:
-      "%{A1:${pkgs.networkmanagerapplet}/bin/nm-connection-editor:}${label}%{A}";
+    toggle-redshift = pkgs.callPackage desktop/toggle-redshift.nix {};
+
+    toggleRedshiftOnClick  = onClick "${toggle-redshift}/bin/toggle-redshift";
+    editConnectionsOnClick = onClick "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+
+    onClick = program: label:
+      "%{A1:${program}:}${label}%{A}";
 in
   {
     imports = [
@@ -246,7 +251,7 @@ in
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
                   enable-scroll = true;
-                  format = "%{T2}<ramp>%{T-} <label>";
+                  format = toggleRedshiftOnClick "%{T2}<ramp>%{T-} <label>";
                   label = "%percentage%%";
                   ramp-0 = "";
                   ramp-1 = "";
