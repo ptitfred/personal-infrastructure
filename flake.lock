@@ -190,16 +190,15 @@
         "spago2nix": "spago2nix"
       },
       "locked": {
-        "lastModified": 1690657960,
+        "lastModified": 1690676229,
         "narHash": "sha256-Zyr7RwkkUKMl8X0TbYU9tXzS24l7lCa0pyFShjdchWI=",
         "owner": "ptitfred",
         "repo": "home-manager",
-        "rev": "c6e989b849d5b23057dfd257edd282617a84b1a1",
+        "rev": "220a5f31546783e170575cc800f23cf64da15ba7",
         "type": "github"
       },
       "original": {
         "owner": "ptitfred",
-        "ref": "laptop-support",
         "repo": "home-manager",
         "type": "github"
       }

@@ -17,7 +17,7 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    home-manager-base.url = "github:ptitfred/home-manager/laptop-support";
+    home-manager-base.url = "github:ptitfred/home-manager";
   };
 
   outputs = inputs@{ nixpkgs, previous, ... }:
