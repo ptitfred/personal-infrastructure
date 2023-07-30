@@ -17,8 +17,13 @@ let locker = pkgs.callPackage desktop/locker.nix {};
 
     toggle-redshift = pkgs.callPackage desktop/toggle-redshift.nix {};
 
+    focus-by-classname = pkgs.callPackage desktop/focus-by-classname {};
+
+    focus = class-pattern: command: "${focus-by-classname}/bin/focus-by-classname ${class-pattern} ${command}";
+
     toggleRedshiftOnClick  = onClick "${toggle-redshift}/bin/toggle-redshift";
     editConnectionsOnClick = onClick "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+    monitorOnClick         = onClick (focus "^Com.github.stsdc.monitor$" "${pkgs.monitor}/bin/com.github.stsdc.monitor");
 
     onClick = program: label:
       "%{A1:${program}:}${label}%{A}";
@@ -36,6 +41,17 @@ let locker = pkgs.callPackage desktop/locker.nix {};
             sparseCheckout = [ "variablefont" ];
           };
       };
+
+    mkWorkspace = index: name: { inherit index name; };
+
+    terminal      = mkWorkspace 1 "Terminal";
+    web           = mkWorkspace 2 "Web";
+    pro           = mkWorkspace 3 "Pro";
+    chat          = mkWorkspace 4 "Chat";
+    files         = mkWorkspace 5 "Files";
+    documentation = mkWorkspace 6 "Documentation";
+    system        = mkWorkspace 8 "Système";
+    capture       = mkWorkspace 9 "Capture";
 in
   {
     imports = [
@@ -195,6 +211,7 @@ in
               type = "internal/cpu";
               interval = "0.5";
               warn-percentage = 95;
+              format = monitorOnClick "<label>";
               label = "%{T2}%{T-} %percentage%%";
               label-warn = "%{T2}%{T-} %percentage%%";
               label-warn-foreground = config.desktop.mainColor;
@@ -203,7 +220,7 @@ in
             "module/memory" = {
               type = "internal/memory";
               interval = "0.5";
-              format = "<label>";
+              format = monitorOnClick "<label>";
               label = "%{T2}%{T-} %free%";
             };
 
@@ -352,16 +369,7 @@ in
       };
 
       xsession.windowManager.i3 =
-        let mkWorkspace = index: name: { inherit index name; };
-
-            terminal      = mkWorkspace 1 "Terminal";
-            web           = mkWorkspace 2 "Web";
-            pro           = mkWorkspace 3 "Pro";
-            chat          = mkWorkspace 4 "Chat";
-            files         = mkWorkspace 5 "Files";
-            documentation = mkWorkspace 6 "Documentation";
-            capture       = mkWorkspace 9 "Capture";
-        in {
+        {
         enable = true;
         config =
           let font = toGTK roboto;
@@ -373,6 +381,7 @@ in
                   web
                   files
                   documentation
+                  system
                   capture
                 ];
               foldMap = function: builtins.foldl' (acc: value: acc // function value) {};
@@ -429,9 +438,10 @@ in
             assigns =
               let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
                in concat
-                    [ (assignToWorkspace files         [ { class = "^org.gnome.Nautilus$"; } ])
-                      (assignToWorkspace capture       [ { class = "^.shutter-wrapped$";   } ])
-                      (assignToWorkspace documentation [ { class = "^Zeal$";               } ])
+                    [ (assignToWorkspace files         [ { class = "^org.gnome.Nautilus$";       } ])
+                      (assignToWorkspace capture       [ { class = "^.shutter-wrapped$";         } ])
+                      (assignToWorkspace documentation [ { class = "^Zeal$";                     } ])
+                      (assignToWorkspace system        [ { class = "^Com.github.stsdc.monitor$"; } ])
                     ];
           };
         extraConfig =
