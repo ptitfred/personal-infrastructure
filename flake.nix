@@ -76,10 +76,11 @@
       packages.${system} =
         let pkgs = loadPackages [];
             tools = {
-              screenshot      = pkgs.callPackage home/desktop/screenshot          {};
-              backgrounds     = pkgs.callPackage home/desktop/backgrounds         {};
-              toggle-redshift = pkgs.callPackage home/desktop/toggle-redshift.nix {};
-              locker          = pkgs.callPackage home/desktop/locker.nix          {};
+              screenshot         = pkgs.callPackage home/desktop/screenshot          {};
+              backgrounds        = pkgs.callPackage home/desktop/backgrounds         {};
+              toggle-redshift    = pkgs.callPackage home/desktop/toggle-redshift.nix {};
+              locker             = pkgs.callPackage home/desktop/locker.nix          {};
+              focus-by-classname = pkgs.callPackage home/desktop/focus-by-classname  {};
             };
          in tools // {
               default = pkgs.linkFarm "tools" tools;
