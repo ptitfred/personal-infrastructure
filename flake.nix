@@ -57,6 +57,7 @@
       previous-pkgs = import previous { inherit system; };
       lint = previous-pkgs.callPackage ./lint.nix {};
       laptop = ./laptop.nix;
+
     in rec {
       homeManagerModules = { inherit laptop; };
 
@@ -75,7 +76,10 @@
       packages.${system} =
         let pkgs = loadPackages [];
             tools = {
-              screenshot = pkgs.callPackage home/desktop/screenshot {};
+              screenshot      = pkgs.callPackage home/desktop/screenshot          {};
+              backgrounds     = pkgs.callPackage home/desktop/backgrounds         {};
+              toggle-redshift = pkgs.callPackage home/desktop/toggle-redshift.nix {};
+              locker          = pkgs.callPackage home/desktop/locker.nix          {};
             };
          in tools // {
               default = pkgs.linkFarm "tools" tools;

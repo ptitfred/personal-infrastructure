@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
-let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
+let locker = pkgs.callPackage desktop/locker.nix {};
+    lockCmd = "${locker}/bin/locker";
     bottom = true;
 
     palette = import ./palette.nix;
@@ -14,8 +15,27 @@ let lockCmd = "${pkgs.posix-toolbox.i3-screen-locker}/bin/i3-screen-locker";
 
     inherit (import ./fonts.nix { inherit baseSize; }) roboto toPolybar toI3 toGTK;
 
-    editConnectionsOnClick = label:
-      "%{A1:${pkgs.networkmanagerapplet}/bin/nm-connection-editor:}${label}%{A}";
+    toggle-redshift = pkgs.callPackage desktop/toggle-redshift.nix {};
+
+    toggleRedshiftOnClick  = onClick "${toggle-redshift}/bin/toggle-redshift";
+    editConnectionsOnClick = onClick "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+
+    onClick = program: label:
+      "%{A1:${program}:}${label}%{A}";
+
+    materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
+
+    material-symbols =
+      pkgs.material-symbols.overrideAttrs {
+        src =
+          pkgs.fetchFromGitHub {
+            owner = "google";
+            repo = "material-design-icons";
+            rev = "6745d95590b1a5593888b6c402401fc3db75fbdb";
+            sha256 = "sha256-xO/LDM1OYfVJ1uQEZRvhS11+ytUVrbqFtVCb98kSLyk=";
+            sparseCheckout = [ "variablefont" ];
+          };
+      };
 in
   {
     imports = [
@@ -87,8 +107,8 @@ in
     config = {
       home.packages =
         if config.desktop.virtual-machine
-        then [ pkgs.roboto pkgs.material-symbols pkgs.gnome.nautilus ]
-        else [ pkgs.roboto pkgs.material-symbols pkgs.gnome.nautilus pkgs.networkmanager ];
+        then [ pkgs.roboto material-symbols pkgs.gnome.nautilus ]
+        else [ pkgs.roboto material-symbols pkgs.gnome.nautilus pkgs.networkmanager ];
 
       fonts.fontconfig.enable = true;
 
@@ -145,13 +165,13 @@ in
           config = {
             "bar/main" = {
               font-0 = toPolybar roboto + ";2";
-              font-1 = "Material Symbols Outlined:size=${toString (baseSize -1)};2";
+              font-1 = materialSymbolsOutlinedPolybar;
               inherit bottom;
               height = "${toString (builtins.ceil (baseSize * 2.2))}pt";
               radius = 6;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "memory storage date" else "wifi memory storage backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -167,11 +187,24 @@ in
               cursor-scroll = "ns-resize";
             };
 
+            "settings" = {
+              screenschange-reload = true;
+            };
+
+            "module/cpu" = {
+              type = "internal/cpu";
+              interval = "0.5";
+              warn-percentage = 95;
+              label = "%{T2}%{T-} %percentage%%";
+              label-warn = "%{T2}%{T-} %percentage%%";
+              label-warn-foreground = config.desktop.mainColor;
+            };
+
             "module/memory" = {
               type = "internal/memory";
               interval = "0.5";
               format = "<label>";
-              label = "%{T2}%{T-} %free%";
+              label = "%{T2}%{T-} %free%";
             };
 
             "module/storage" = {
@@ -215,27 +248,32 @@ in
               {
                 "module/battery" = {
                   type = "internal/battery";
-                  format-charging    = "%{T2}<ramp-capacity>%{T-} <label-charging>";
-                  format-discharging = "%{T2}<ramp-capacity>%{T-} <label-discharging>";
+                  format-charging    = "<animation-charging> <label-charging>";
+                  format-discharging = "<ramp-capacity> <label-discharging>";
                   label-charging     = "%percentage%% (%time% +%consumption%W)";
                   label-discharging  = "%percentage%% (%time% -%consumption%W)";
                   label-low          = "%{T2}%{T-} %percentage%% (%time% -%consumption%W)";
-                  label-full         = "%{T2}%{T-} Max";
+                  label-full         = "%{T2}%{T-} Max";
 
                   # So sad we can't have ramps specifics for charging and discharging
-                # ramp-charging-0 = "";
-                # ramp-charging-1 = "";
-                # ramp-charging-2 = "";
-                # ramp-charging-3 = "";
-                # ramp-charging-4 = "";
-                # ramp-charging-5 = "";
+                  animation-charging-font = 2;
+                  animation-charging-0 = "";
+                  animation-charging-1 = "";
+                  animation-charging-2 = "";
+                  animation-charging-3 = "";
+                  animation-charging-4 = "";
+                  animation-charging-5 = "";
+                  animation-charging-6 = "";
+                  animation-charging-framerate = 750;
 
+                  ramp-capacity-font = 2;
                   ramp-capacity-0 = "";
                   ramp-capacity-1 = "";
                   ramp-capacity-2 = "";
                   ramp-capacity-3 = "";
                   ramp-capacity-4 = "";
                   ramp-capacity-5 = "";
+                  ramp-capacity-6 = "";
 
                   time-format = "%H:%M";
                   poll-interval = 2;
@@ -245,7 +283,7 @@ in
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
                   enable-scroll = true;
-                  format = "%{T2}<ramp>%{T-} <label>";
+                  format = toggleRedshiftOnClick "%{T2}<ramp>%{T-} <label>";
                   label = "%percentage%%";
                   ramp-0 = "";
                   ramp-1 = "";
@@ -284,7 +322,7 @@ in
 
           inactiveOpacity = 0.93;
           menuOpacity = 0.95;
-          opacityRules = [ "100:name *= 'i3lock'" "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
+          opacityRules = [ "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
           vSync = false;
         };
 
@@ -317,10 +355,10 @@ in
         let mkWorkspace = index: name: { inherit index name; };
 
             terminal      = mkWorkspace 1 "Terminal";
-            chat          = mkWorkspace 2 "Chat";
+            web           = mkWorkspace 2 "Web";
             pro           = mkWorkspace 3 "Pro";
-            web           = mkWorkspace 4 "Web";
-            navigation    = mkWorkspace 5 "Navigation";
+            chat          = mkWorkspace 4 "Chat";
+            files         = mkWorkspace 5 "Files";
             documentation = mkWorkspace 6 "Documentation";
             capture       = mkWorkspace 9 "Capture";
         in {
@@ -333,7 +371,7 @@ in
                   chat
                   pro
                   web
-                  navigation
+                  files
                   documentation
                   capture
                 ];
@@ -391,7 +429,7 @@ in
             assigns =
               let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
                in concat
-                    [ (assignToWorkspace navigation    [ { class = "^org.gnome.Nautilus$"; } ])
+                    [ (assignToWorkspace files         [ { class = "^org.gnome.Nautilus$"; } ])
                       (assignToWorkspace capture       [ { class = "^.shutter-wrapped$";   } ])
                       (assignToWorkspace documentation [ { class = "^Zeal$";               } ])
                     ];
