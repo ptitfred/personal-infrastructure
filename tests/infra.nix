@@ -31,9 +31,11 @@ in
   };
   dev-01 = { ... }: {
     deployment.keys = wg-private-key "dev-01" // nix-serve-private-key "dev-01";
+    workstation.user = "demo";
   };
   dev-02 = { ... }: {
     deployment.keys = wg-private-key "dev-02" // nix-serve-private-key "dev-02";
+    workstation.user = "demo";
   };
   homepage-02 = { ... }: {
     deployment.keys = wg-private-key "homepage-02";
