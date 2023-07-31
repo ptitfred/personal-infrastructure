@@ -377,7 +377,7 @@ in
 
                   format-volume = "<ramp-volume> <label-volume>";
 
-                  label-muted = "%{T2}%{T-} muted";
+                  label-muted = "%{T2}%{T-} sourdine";
                   label-muted-foreground = config.desktop.disabledColor;
 
                   ramp-volume-0 = "";
