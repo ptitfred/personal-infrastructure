@@ -58,6 +58,7 @@ in
       desktop/firefox.nix
       desktop/notifications.nix
       desktop/brightness.nix
+      desktop/audio.nix
     ];
 
     options = with lib; {
@@ -86,8 +87,27 @@ in
       desktop.mainColor = mkOption {
         type = types.str;
         description = ''
-          Color in hexadecimal form, form instance: '#ff0000'.
+          Color in hexadecimal form
         '';
+        example = "#ff0000";
+      };
+
+      desktop.disabledColor = mkOption {
+        type = types.str;
+        description = ''
+          Color in hexadecimal form
+        '';
+        default = "#cccccc";
+        example = "#cccccc";
+      };
+
+      desktop.warnColor = mkOption {
+        type = types.str;
+        description = ''
+          Color in hexadecimal form
+        '';
+        default = "#ffc3c3";
+        example = "#ffc3c3";
       };
 
       desktop.spacing = mkOption {
@@ -204,7 +224,7 @@ in
               radius = 6;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "cpu memory storage wifi audio backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -231,7 +251,7 @@ in
               format = monitorOnClick "<label>";
               label = "%{T2}%{T-} %percentage%%";
               label-warn = "%{T2}%{T-} %percentage%%";
-              label-warn-foreground = config.desktop.mainColor;
+              label-warn-foreground = config.desktop.warnColor;
             };
 
             "module/memory" = {
@@ -286,7 +306,8 @@ in
                   format-discharging = "<ramp-capacity> <label-discharging>";
                   label-charging     = "%percentage%% (%time% +%consumption%W)";
                   label-discharging  = "%percentage%% (%time% -%consumption%W)";
-                  label-low          = "%{T2}%{T-} %percentage%% (%time% -%consumption%W)";
+                  label-low          = "%{T2}%{T-} %percentage%% !!!";
+                  label-low-foreground = config.desktop.warnColor;
                   label-full         = "%{T2}%{T-} Max";
 
                   # So sad we can't have ramps specifics for charging and discharging
@@ -317,7 +338,7 @@ in
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
                   enable-scroll = true;
-                  format = toggleRedshiftOnClick "%{T2}<ramp>%{T-} <label>";
+                  format = toggleRedshiftOnClick "<ramp> <label>";
                   label = "%percentage%%";
                   ramp-0 = "";
                   ramp-1 = "";
@@ -326,6 +347,7 @@ in
                   ramp-4 = "";
                   ramp-5 = "";
                   ramp-6 = "";
+                  ramp-font = 2;
                 };
                 "module/wifi" = {
                   type = "internal/network";
@@ -333,12 +355,27 @@ in
                   click-left = "";
                   format-connected = "<ramp-signal> <label-connected>";
                   label-connected    = editConnectionsOnClick "%essid%";
-                  label-disconnected = editConnectionsOnClick " Déconnecté";
+                  label-disconnected = editConnectionsOnClick "%{T2}%{T-} Déconnecté";
+                  label-disconnected-foreground = config.desktop.disabledColor;
                   ramp-signal-0 = "";
                   ramp-signal-1 = "";
                   ramp-signal-2 = "";
                   ramp-signal-3 = "";
                   ramp-signal-4 = "";
+                  ramp-signal-font = 2;
+                };
+                "module/audio" = {
+                  type = "internal/alsa";
+
+                  format-volume = "<ramp-volume> <label-volume>";
+
+                  label-muted = "%{T2}%{T-} muted";
+                  label-muted-foreground = config.desktop.disabledColor;
+
+                  ramp-volume-0 = "";
+                  ramp-volume-1 = "";
+                  ramp-volume-2 = "";
+                  ramp-volume-font = 2;
                 };
               }
             );
