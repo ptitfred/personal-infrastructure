@@ -56,6 +56,7 @@ in
   {
     imports = [
       desktop/firefox.nix
+      desktop/notifications.nix
     ];
 
     options = with lib; {
