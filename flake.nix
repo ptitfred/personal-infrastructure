@@ -34,48 +34,44 @@
     let
       system = "x86_64-linux";
 
-      personal-overlay = self: _: {
+      overlay = self: _: {
         # 22.11 still available when needed
         previous = inputs.previous.legacyPackages.${system};
 
         posix-toolbox = self.callPackage "${inputs.ptitfred-posix-toolbox}/nix/default.nix" {};
-        haddocset = self.callPackage "${inputs.ptitfred-haddocset}/default.nix" {};
+        haddocset = self.callPackage inputs.ptitfred-haddocset {};
         postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
         inherit (previous-pkgs) nix-linter;
-      };
-
-      purescript-overlay = _: _: {
         inherit (inputs.spago2nix.packages.${system}) spago2nix;
         easy-ps = inputs.easy-purescript-nix.packages.${system};
       };
 
-      loadPackages = overlays: import nixpkgs {
-        inherit system;
-        overlays = [ personal-overlay purescript-overlay ] ++ overlays;
-      };
+      pkgs = import nixpkgs { inherit system; };
 
       previous-pkgs = import previous { inherit system; };
       lint = previous-pkgs.callPackage ./lint.nix {};
-      laptop = ./laptop.nix;
+      laptop =
+        { ... }:
+        {
+          imports = [ ./laptop.nix ];
+          nixpkgs.overlays = [ overlay ];
+        };
 
     in rec {
       homeManagerModules = { inherit laptop; };
 
-      homeConfigurationHelper = { overlays ? [], modules ? [], extraSpecialArgs ? {} } : home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        pkgs = loadPackages overlays;
-        modules = modules ++ [ laptop ];
-      };
+      lib = home-manager.lib;
 
-      homeConfigurations.test = homeConfigurationHelper {
+      homeConfigurations.test = lib.homeManagerConfiguration {
+        inherit pkgs;
         modules = [
+          laptop
           tests/home.nix
         ];
       };
 
       packages.${system} =
-        let pkgs = loadPackages [];
-            tools = {
+        let tools = {
               screenshot         = pkgs.callPackage home/desktop/screenshot          {};
               backgrounds        = pkgs.callPackage home/desktop/backgrounds         {};
               toggle-redshift    = pkgs.callPackage home/desktop/toggle-redshift.nix {};
