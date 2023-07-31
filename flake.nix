@@ -50,22 +50,22 @@
 
       previous-pkgs = import previous { inherit system; };
       lint = previous-pkgs.callPackage ./lint.nix {};
-      laptop =
+      workstation =
         { ... }:
         {
-          imports = [ ./laptop.nix ];
+          imports = [ ./workstation.nix ];
           nixpkgs.overlays = [ overlay ];
         };
 
     in rec {
-      homeManagerModules = { inherit laptop; };
+      homeManagerModules = { inherit workstation; };
 
       lib = home-manager.lib;
 
       homeConfigurations.test = lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          laptop
+          workstation
           tests/home.nix
         ];
       };
