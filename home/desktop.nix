@@ -205,7 +205,7 @@ in
               radius = 6;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage audio backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "cpu memory storage wifi audio backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
