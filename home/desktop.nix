@@ -87,8 +87,27 @@ in
       desktop.mainColor = mkOption {
         type = types.str;
         description = ''
-          Color in hexadecimal form, form instance: '#ff0000'.
+          Color in hexadecimal form
         '';
+        example = "#ff0000";
+      };
+
+      desktop.disabledColor = mkOption {
+        type = types.str;
+        description = ''
+          Color in hexadecimal form
+        '';
+        default = "#cccccc";
+        example = "#cccccc";
+      };
+
+      desktop.warnColor = mkOption {
+        type = types.str;
+        description = ''
+          Color in hexadecimal form
+        '';
+        default = "#ffc3c3";
+        example = "#ffc3c3";
       };
 
       desktop.spacing = mkOption {
@@ -232,7 +251,7 @@ in
               format = monitorOnClick "<label>";
               label = "%{T2}%{T-} %percentage%%";
               label-warn = "%{T2}%{T-} %percentage%%";
-              label-warn-foreground = config.desktop.mainColor;
+              label-warn-foreground = config.desktop.warnColor;
             };
 
             "module/memory" = {
@@ -287,7 +306,8 @@ in
                   format-discharging = "<ramp-capacity> <label-discharging>";
                   label-charging     = "%percentage%% (%time% +%consumption%W)";
                   label-discharging  = "%percentage%% (%time% -%consumption%W)";
-                  label-low          = "%{T2}%{T-} %percentage%% (%time% -%consumption%W)";
+                  label-low          = "%{T2}%{T-} %percentage%% !!!";
+                  label-low-foreground = config.desktop.warnColor;
                   label-full         = "%{T2}%{T-} Max";
 
                   # So sad we can't have ramps specifics for charging and discharging
@@ -336,6 +356,7 @@ in
                   format-connected = "<ramp-signal> <label-connected>";
                   label-connected    = editConnectionsOnClick "%essid%";
                   label-disconnected = editConnectionsOnClick "%{T2}%{T-} Déconnecté";
+                  label-disconnected-foreground = config.desktop.disabledColor;
                   ramp-signal-0 = "";
                   ramp-signal-1 = "";
                   ramp-signal-2 = "";
@@ -349,7 +370,7 @@ in
                   format-volume = "<ramp-volume> <label-volume>";
 
                   label-muted = "%{T2}%{T-} muted";
-                  label-muted-foreground = "#999";
+                  label-muted-foreground = config.desktop.disabledColor;
 
                   ramp-volume-0 = "";
                   ramp-volume-1 = "";
