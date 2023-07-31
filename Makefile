@@ -1,3 +1,3 @@
 .PHONY:
-tests:
-	nix run .#tests
+test:
+	nix build .#tests
