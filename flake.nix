@@ -57,18 +57,18 @@
           nixpkgs.overlays = [ overlay ];
         };
 
-    in rec {
+      mkConfiguration = module:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ workstation module ];
+        };
+
+    in {
       homeManagerModules = { inherit workstation; };
 
-      lib = home-manager.lib;
+      lib = { inherit mkConfiguration; };
 
-      homeConfigurations.test = lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          workstation
-          tests/home.nix
-        ];
-      };
+      homeConfigurations.test = mkConfiguration tests/home.nix;
 
       packages.${system} =
         let tools = {
