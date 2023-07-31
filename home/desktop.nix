@@ -301,15 +301,22 @@ in
             then {}
             else
               {
-                "module/battery" = {
+                "module/battery" = rec {
                   type = "internal/battery";
-                  format-charging    = "<animation-charging> <label-charging>";
-                  format-discharging = "<ramp-capacity> <label-discharging>";
-                  label-charging     = "%percentage%% (%time% +%consumption%W)";
-                  label-discharging  = "%percentage%% (%time% -%consumption%W)";
-                  label-low          = "%{T2}%{T-} %percentage%% !!!";
+                  format-charging      = "<animation-charging> <label-charging>";
+                  format-discharging   = "<ramp-capacity> <label-discharging>";
+                  format-low           = "<animation-low> <label-low>";
+                  label-charging       = "%percentage%% (%time% +%consumption%W)";
+                  label-discharging    = "%percentage%% (%time% -%consumption%W)";
+                  label-low            = label-discharging;
                   label-low-foreground = config.desktop.warnColor;
-                  label-full         = "%{T2}%{T-} Max";
+                  label-full           = "%{T2}%{T-} Max";
+
+                  animation-low-foreground = config.desktop.warnColor;
+                  animation-low-0 = "";
+                  animation-low-1 = " ";
+                  animation-low-framerate = 1000;
+                  animation-low-font = 2;
 
                   # So sad we can't have ramps specifics for charging and discharging
                   animation-charging-font = 2;
