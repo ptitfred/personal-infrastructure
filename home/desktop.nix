@@ -59,6 +59,7 @@ in
       desktop/notifications.nix
       desktop/brightness.nix
       desktop/audio.nix
+      desktop/wifi.nix
     ];
 
     options = with lib; {

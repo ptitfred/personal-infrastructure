@@ -77,6 +77,7 @@
               toggle-redshift    = pkgs.callPackage home/desktop/toggle-redshift.nix {};
               locker             = pkgs.callPackage home/desktop/locker.nix          {};
               focus-by-classname = pkgs.callPackage home/desktop/focus-by-classname  {};
+              aeroplane-mode     = pkgs.callPackage home/desktop/aeroplane-mode      {};
             };
          in tools // {
               default = pkgs.linkFarm "tools" tools;
