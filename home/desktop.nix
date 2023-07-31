@@ -57,6 +57,7 @@ in
     imports = [
       desktop/firefox.nix
       desktop/notifications.nix
+      desktop/brightness.nix
     ];
 
     options = with lib; {
@@ -118,6 +119,11 @@ in
       desktop.backlight.card = mkOption {
         type = types.str;
         default = "intel_backlight";
+      };
+
+      desktop.i3-extra-bindings = mkOption {
+        type = types.attrsOf types.str;
+        default = {};
       };
     };
 
@@ -425,7 +431,8 @@ in
                   };
                   bindings = mkBind        "comma" lockCmd
                           // mkBindRelease "x"     screenshotCmd
-                          // bindWorkspaces workspaces;
+                          // bindWorkspaces workspaces
+                          // config.desktop.i3-extra-bindings;
                in lib.mkOptionDefault bindings;
 
             menu = "${pkgs.bemenu}/bin/bemenu-run -l 20 -p '>' -i --fn '${font}' -H 15 --hf '${config.desktop.mainColor}' --tf '${config.desktop.mainColor}'";
