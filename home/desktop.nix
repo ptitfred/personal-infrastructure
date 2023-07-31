@@ -318,7 +318,7 @@ in
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
                   enable-scroll = true;
-                  format = toggleRedshiftOnClick "%{T2}<ramp>%{T-} <label>";
+                  format = toggleRedshiftOnClick "<ramp> <label>";
                   label = "%percentage%%";
                   ramp-0 = "";
                   ramp-1 = "";
@@ -327,6 +327,7 @@ in
                   ramp-4 = "";
                   ramp-5 = "";
                   ramp-6 = "";
+                  ramp-font = 2;
                 };
                 "module/wifi" = {
                   type = "internal/network";
@@ -334,12 +335,13 @@ in
                   click-left = "";
                   format-connected = "<ramp-signal> <label-connected>";
                   label-connected    = editConnectionsOnClick "%essid%";
-                  label-disconnected = editConnectionsOnClick " Déconnecté";
+                  label-disconnected = editConnectionsOnClick "%{T2}%{T-} Déconnecté";
                   ramp-signal-0 = "";
                   ramp-signal-1 = "";
                   ramp-signal-2 = "";
                   ramp-signal-3 = "";
                   ramp-signal-4 = "";
+                  ramp-signal-font = 2;
                 };
                 "module/audio" = {
                   type = "internal/alsa";
