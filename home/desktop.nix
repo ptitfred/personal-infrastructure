@@ -121,6 +121,12 @@ in
         default = "intel_backlight";
       };
 
+      desktop.exec-on-login = mkOption {
+        type = types.listOf types.str;
+        default = [];
+        example = [ "sxhkd" ];
+      };
+
       desktop.i3-extra-bindings = mkOption {
         type = types.attrsOf types.str;
         default = {};
@@ -180,6 +186,10 @@ in
             };
 
       xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile desktop/colors.css;
+
+      desktop.exec-on-login = [
+        "systemctl --user restart polybar.service"
+      ];
 
       services = {
         polybar = {
@@ -439,9 +449,7 @@ in
 
             startup =
               let onStart = command: { inherit command; always = true; notification = false; };
-               in builtins.map onStart [
-                    "systemctl --user restart polybar.service"
-                  ];
+               in builtins.map onStart config.desktop.exec-on-login;
 
             assigns =
               let assignToWorkspace = {index, name} : assignments: { "${builtins.toString index}: ${name}" = assignments; };
