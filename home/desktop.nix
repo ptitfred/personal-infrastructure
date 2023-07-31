@@ -58,6 +58,7 @@ in
       desktop/firefox.nix
       desktop/notifications.nix
       desktop/brightness.nix
+      desktop/audio.nix
     ];
 
     options = with lib; {
@@ -204,7 +205,7 @@ in
               radius = 6;
               width = "100%";
               modules-left = "i3";
-              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage backlight battery date";
+              modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "wifi cpu memory storage audio backlight battery date";
               background = "#99000000";
               padding = 3;
               border-size = config.desktop.spacing;
@@ -339,6 +340,19 @@ in
                   ramp-signal-2 = "";
                   ramp-signal-3 = "";
                   ramp-signal-4 = "";
+                };
+                "module/audio" = {
+                  type = "internal/alsa";
+
+                  format-volume = "<ramp-volume> <label-volume>";
+
+                  label-muted = "%{T2}%{T-} muted";
+                  label-muted-foreground = "#999";
+
+                  ramp-volume-0 = "";
+                  ramp-volume-1 = "";
+                  ramp-volume-2 = "";
+                  ramp-volume-font = 2;
                 };
               }
             );
