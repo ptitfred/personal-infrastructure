@@ -173,11 +173,9 @@ in
               ramp-capacity-font = 2;
               label-discharging  = defaultLabel;
 
-              format-full               = "<animation-full> <label-full>";
-              animation-full-0          = "";
-              animation-full-font       = 2;
-              animation-full-foreground = config.desktop.activeColor;
-              label-full                = "chargée";
+              format-full            = "<ramp-capacity> <label-full>";
+              format-full-foreground = config.desktop.activeColor;
+              label-full             = "chargée";
 
               format-low               = "<animation-low> <label-low>";
               format-low-foreground    = config.desktop.warnColor;
