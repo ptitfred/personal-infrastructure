@@ -312,46 +312,51 @@ in
               {
                 "module/battery" = let defaultLabel = "%time%"; in {
                   type = "internal/battery";
-                  format-charging      = "<animation-charging> <label-charging>";
-                  format-discharging   = "<ramp-capacity> <label-discharging>";
-                  format-low           = "<animation-low> <label-low>";
-                  label-charging       = defaultLabel;
-                  label-discharging    = defaultLabel;
-                  label-low            = defaultLabel;
-                  label-low-foreground = config.desktop.warnColor;
-                  label-full           = "%{T2}%{T-} Max";
 
-                  animation-low-foreground = config.desktop.warnColor;
-                  animation-low-0 = "";
-                  animation-low-1 = " ";
-                  animation-low-framerate = 1000;
-                  animation-low-font = 2;
-
+                  format-charging               = "<animation-charging> <label-charging>";
                   # So sad we can't have ramps specifics for charging and discharging
-                  animation-charging-font = 2;
-                  animation-charging-0 = "";
-                  animation-charging-1 = "";
-                  animation-charging-2 = "";
-                  animation-charging-3 = "";
-                  animation-charging-4 = "";
-                  animation-charging-5 = "";
-                  animation-charging-6 = "";
-                  animation-charging-framerate = 750;
+                  animation-charging-0          = "";
+                  animation-charging-1          = "";
+                  animation-charging-2          = "";
+                  animation-charging-3          = "";
+                  animation-charging-4          = "";
+                  animation-charging-5          = "";
+                  animation-charging-6          = "";
+                  animation-charging-font       = 2;
+                  animation-charging-framerate  = 750;
                   animation-charging-foreground = config.desktop.activeColor;
+                  label-charging                = defaultLabel;
 
+                  format-discharging = "<ramp-capacity> <label-discharging>";
+                  ramp-capacity-0    = "";
+                  ramp-capacity-1    = "";
+                  ramp-capacity-2    = "";
+                  ramp-capacity-3    = "";
+                  ramp-capacity-4    = "";
+                  ramp-capacity-5    = "";
+                  ramp-capacity-6    = "";
                   ramp-capacity-font = 2;
-                  ramp-capacity-0 = "";
-                  ramp-capacity-1 = "";
-                  ramp-capacity-2 = "";
-                  ramp-capacity-3 = "";
-                  ramp-capacity-4 = "";
-                  ramp-capacity-5 = "";
-                  ramp-capacity-6 = "";
+                  label-discharging  = defaultLabel;
+
+                  format-full               = "<animation-full> <label-full>";
+                  animation-full-0          = "";
+                  animation-full-font       = 2;
+                  animation-full-foreground = config.desktop.activeColor;
+                  label-full                = "chargée";
+
+                  format-low               = "<animation-low> <label-low>";
+                  format-low-foreground    = config.desktop.warnColor;
+                  animation-low-0          = "";
+                  animation-low-1          = " ";
+                  animation-low-font       = 2;
+                  animation-low-framerate  = 1000;
+                  label-low                = defaultLabel;
 
                   time-format = "%H:%M";
                   poll-interval = 1;
                   inherit (config.desktop.battery) full-at low-at battery adapter;
                 };
+
                 "module/backlight" = {
                   type = "internal/backlight";
                   inherit (config.desktop.backlight) card;
@@ -367,6 +372,7 @@ in
                   ramp-6 = "";
                   ramp-font = 2;
                 };
+
                 "module/wifi" = {
                   type = "internal/network";
                   interface-type = "wireless";
@@ -382,6 +388,7 @@ in
                   ramp-signal-4 = "";
                   ramp-signal-font = 2;
                 };
+
                 "module/audio" = {
                   type = "internal/alsa";
 
