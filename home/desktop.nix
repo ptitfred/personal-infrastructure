@@ -29,6 +29,7 @@ in
       desktop/wifi.nix
       desktop/polybar.nix
       desktop/screenlocker.nix
+      desktop/redshift.nix
     ];
 
     options = with lib; {
@@ -39,19 +40,6 @@ in
       desktop.virtual-machine = mkOption {
         type = types.bool;
         default = false;
-      };
-
-      desktop.location.latitude = mkOption {
-        type = types.str;
-        description = ''
-          Latitude to use for redshift.
-        '';
-      };
-      desktop.location.longitude = mkOption {
-        type = types.str;
-        description = ''
-          Longitude to use for redshift.
-        '';
       };
 
       desktop.mainColor = mkOption {
@@ -181,18 +169,6 @@ in
           enable = true;
           imageDirectory = backgrounds.outPath;
           interval = "20 minutes";
-        };
-
-        redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
-          enable = true;
-          settings = {
-            redshift = {
-              brightness-day = "1";
-              brightness-night = "0.5";
-            };
-          };
-          tray = true;
-          inherit (config.desktop.location) latitude longitude;
         };
       };
 
