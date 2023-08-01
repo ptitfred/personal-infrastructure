@@ -5,8 +5,6 @@ let palette = import ./palette.nix;
     screenshot = pkgs.callPackage desktop/screenshot {};
     screenshotCmd = "${screenshot}/bin/screenshot";
 
-    backgrounds = pkgs.callPackage desktop/backgrounds {};
-
     inherit (import ./fonts.nix { baseSize = config.desktop.fontSize; }) roboto toI3 toGTK;
 
     mkWorkspace = index: name: { inherit index name; };
@@ -30,6 +28,7 @@ in
       desktop/polybar.nix
       desktop/screenlocker.nix
       desktop/redshift.nix
+      desktop/random-background.nix
     ];
 
     options = with lib; {
@@ -165,11 +164,6 @@ in
           vSync = false;
         };
 
-        random-background = {
-          enable = true;
-          imageDirectory = backgrounds.outPath;
-          interval = "20 minutes";
-        };
       };
 
       xsession.windowManager.i3 =
