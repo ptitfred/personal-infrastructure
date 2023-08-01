@@ -27,5 +27,9 @@ in
     };
 
     desktop.i3-extra-bindings.${binding} = "exec ${lockCmd}";
+
+    # This is required to make xss-lock work
+    xsession.enable = true;
+    xsession.importedVariables = [ "XDG_SEAT" "XDG_SEAT_PATH" ];
   };
 }
