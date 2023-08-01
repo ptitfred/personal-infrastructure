@@ -17,6 +17,7 @@ in
       desktop/random-background.nix
       desktop/picom.nix
       desktop/i3.nix
+      desktop/fonts.nix
     ];
 
     options = with lib; {
@@ -68,10 +69,8 @@ in
     config = {
       home.packages =
         if config.desktop.virtual-machine
-        then [ pkgs.roboto pkgs.gnome.nautilus ]
-        else [ pkgs.roboto pkgs.gnome.nautilus pkgs.networkmanager ];
-
-      fonts.fontconfig.enable = true;
+        then [ pkgs.gnome.nautilus ]
+        else [ pkgs.gnome.nautilus pkgs.networkmanager ];
 
       gtk =
         let gtk2ExtraConfig = {

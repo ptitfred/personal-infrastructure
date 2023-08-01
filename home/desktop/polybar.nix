@@ -23,17 +23,6 @@ let bottom = true;
 
     materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
 
-    material-symbols =
-      pkgs.material-symbols.overrideAttrs {
-        src =
-          pkgs.fetchFromGitHub {
-            owner = "google";
-            repo = "material-design-icons";
-            rev = "6745d95590b1a5593888b6c402401fc3db75fbdb";
-            sha256 = "sha256-xO/LDM1OYfVJ1uQEZRvhS11+ytUVrbqFtVCb98kSLyk=";
-            sparseCheckout = [ "variablefont" ];
-          };
-      };
 in
 {
   options = with lib; {
@@ -64,8 +53,6 @@ in
   };
 
   config = {
-    home.packages = [ material-symbols ];
-
     desktop.exec-on-login = [
       "systemctl --user restart polybar.service"
     ];
