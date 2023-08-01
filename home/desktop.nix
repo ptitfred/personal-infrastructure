@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let locker = pkgs.callPackage desktop/locker.nix {};
-    lockCmd = "${locker}/bin/locker";
-
-    palette = import ./palette.nix;
+let palette = import ./palette.nix;
 
     screenshot = pkgs.callPackage desktop/screenshot {};
     screenshotCmd = "${screenshot}/bin/screenshot";
@@ -31,6 +28,7 @@ in
       desktop/audio.nix
       desktop/wifi.nix
       desktop/polybar.nix
+      desktop/screenlocker.nix
     ];
 
     options = with lib; {
@@ -196,12 +194,6 @@ in
           tray = true;
           inherit (config.desktop.location) latitude longitude;
         };
-
-        screen-locker = lib.mkIf (! (config.desktop.virtual-machine)) {
-          enable = true;
-          inactiveInterval = 120;
-          inherit lockCmd;
-        };
       };
 
       xsession.windowManager.i3 =
@@ -252,14 +244,10 @@ in
                     "${modifier}+Shift+${builtins.toString index}" = "move container to workspace number ${builtins.toString index}:${name}";
                   };
                   bindWorkspaces = foldMap bindWorkspace;
-                  mkBind = key: command: {
-                    "${modifier}+${key}" = "exec ${command}";
-                  };
                   mkBindRelease = key: command: {
                     "--release ${modifier}+${key}" = "exec ${command}";
                   };
-                  bindings = mkBind        "comma" lockCmd
-                          // mkBindRelease "x"     screenshotCmd
+                  bindings = mkBindRelease "x"     screenshotCmd
                           // bindWorkspaces workspaces
                           // config.desktop.i3-extra-bindings;
                in lib.mkOptionDefault bindings;
