@@ -29,6 +29,7 @@ in
       desktop/screenlocker.nix
       desktop/redshift.nix
       desktop/random-background.nix
+      desktop/picom.nix
     ];
 
     options = with lib; {
@@ -147,24 +148,6 @@ in
             };
 
       xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile desktop/colors.css;
-
-      services = {
-        picom = {
-          enable = true;
-          activeOpacity = 0.95;
-
-          settings = {
-            # blur is now configured here
-          };
-          # blur = false;
-
-          inactiveOpacity = 0.93;
-          menuOpacity = 0.95;
-          opacityRules = [ "100:class_g *= 'firefox'" "100:class_g *= 'Zeal'"];
-          vSync = false;
-        };
-
-      };
 
       xsession.windowManager.i3 =
         {
