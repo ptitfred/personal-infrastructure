@@ -111,6 +111,15 @@ in
         example = "#ffc3c3";
       };
 
+      desktop.activeColor = mkOption {
+        type = types.str;
+        description = ''
+          Color in hexadecimal form
+        '';
+        default = "#afd6ff";
+        example = "#afd6ff";
+      };
+
       desktop.spacing = mkOption {
         type = types.int;
         description = "";
@@ -301,14 +310,14 @@ in
             then {}
             else
               {
-                "module/battery" = rec {
+                "module/battery" = let defaultLabel = "%time%"; in {
                   type = "internal/battery";
                   format-charging      = "<animation-charging> <label-charging>";
                   format-discharging   = "<ramp-capacity> <label-discharging>";
                   format-low           = "<animation-low> <label-low>";
-                  label-charging       = "%percentage%% (%time% +%consumption%W)";
-                  label-discharging    = "%percentage%% (%time% -%consumption%W)";
-                  label-low            = label-discharging;
+                  label-charging       = defaultLabel;
+                  label-discharging    = defaultLabel;
+                  label-low            = defaultLabel;
                   label-low-foreground = config.desktop.warnColor;
                   label-full           = "%{T2}%{T-} Max";
 
@@ -328,6 +337,7 @@ in
                   animation-charging-5 = "";
                   animation-charging-6 = "";
                   animation-charging-framerate = 750;
+                  animation-charging-foreground = config.desktop.activeColor;
 
                   ramp-capacity-font = 2;
                   ramp-capacity-0 = "";
@@ -339,7 +349,7 @@ in
                   ramp-capacity-6 = "";
 
                   time-format = "%H:%M";
-                  poll-interval = 2;
+                  poll-interval = 1;
                   inherit (config.desktop.battery) full-at low-at battery adapter;
                 };
                 "module/backlight" = {
@@ -363,7 +373,7 @@ in
                   click-left = "";
                   format-connected = "<ramp-signal> <label-connected>";
                   label-connected    = editConnectionsOnClick "%essid%";
-                  label-disconnected = editConnectionsOnClick "%{T2}%{T-} Déconnecté";
+                  label-disconnected = editConnectionsOnClick "%{T2}%{T-} déconnecté";
                   label-disconnected-foreground = config.desktop.disabledColor;
                   ramp-signal-0 = "";
                   ramp-signal-1 = "";
