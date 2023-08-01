@@ -24,33 +24,25 @@
     let system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; overlays = [ inputs.personal-homepage.overlays.default ]; };
 
-        previous-pkgs = import previous { inherit system; };
-        lint = pkgs.callPackage ./lint.nix { inherit (previous-pkgs) nix-linter; };
-        pending-diff = pkgs.callPackage ./pending-diff.nix {};
-        metadata = pkgs.callPackage ./metadata.nix {};
+        tools = pkgs.callPackages ./tools {
+          inherit (previous.legacyPackages.${system}) nix-linter;
+        };
 
         lib = pkgs.callPackage ./lib.nix {};
 
-        colmena = pkgs.callPackage ./infrastructure.nix { inherit inputs; };
+        colmena = pkgs.callPackage ./hive.nix { inherit inputs; };
 
         test-hive = lib.stackHives [ colmena (import tests/infra.nix) ];
-        test-infra = (inputs.colmena.lib.makeHive (test-hive)).toplevel;
+        test-infra = (inputs.colmena.lib.makeHive test-hive).toplevel;
 
         tests =
           let mkNode = name: { inherit name; path = test-infra.${name}; };
               nodes = lib.nodesFromHive test-hive;
-           in pkgs.linkFarm (test-hive.meta.description) (map mkNode nodes);
+           in pkgs.linkFarm test-hive.meta.description (map mkNode nodes);
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
 
-          packages.${system} = { inherit pending-diff metadata; };
-
-          apps.${system} = {
-            lint = {
-              type = "app";
-              program = "${lint}/bin/lint";
-            };
-          };
+          packages.${system} = tools;
 
           inherit lib colmena tests test-hive;
         };

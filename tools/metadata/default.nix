@@ -6,5 +6,5 @@
 writeShellApplication {
   name = "metadata";
   runtimeInputs = [ colmena yq-go ];
-  text = builtins.readFile ./metadata.sh;
+  text = builtins.readFile ./script.sh;
 }
