@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let locker = pkgs.callPackage ./locker.nix {};
-    lockCmd = "${locker}/bin/locker";
+let lockCmd = "${pkgs.lightdm}/bin/dm-tool lock";
 
     binding = "${modifier}+${key}";
     modifier = config.xsession.windowManager.i3.config.modifier;
