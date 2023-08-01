@@ -26,8 +26,6 @@
 
   config = {
     home.packages =
-      if config.desktop.virtual-machine
-      then [ pkgs.gnome.nautilus ]
-      else [ pkgs.gnome.nautilus pkgs.networkmanager ];
+      [ pkgs.gnome.nautilus ] ++ (lib.optionals (!config.desktop.virtual-machine) [ pkgs.networkmanager ]);
   };
 }
