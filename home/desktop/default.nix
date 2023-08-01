@@ -2,19 +2,19 @@
 
 {
   imports = [
-    desktop/firefox.nix
-    desktop/notifications.nix
-    desktop/brightness.nix
-    desktop/audio.nix
-    desktop/wifi.nix
-    desktop/polybar.nix
-    desktop/screenlocker.nix
-    desktop/redshift.nix
-    desktop/random-background.nix
-    desktop/picom.nix
-    desktop/i3.nix
-    desktop/fonts.nix
-    desktop/theme.nix
+    ./firefox.nix
+    ./notifications.nix
+    ./brightness.nix
+    ./audio.nix
+    ./wifi.nix
+    ./polybar.nix
+    ./screenlocker.nix
+    ./redshift.nix
+    ./random-background.nix
+    ./picom.nix
+    ./i3.nix
+    ./fonts.nix
+    ./theme.nix
   ];
 
   options = with lib; {
