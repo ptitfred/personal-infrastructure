@@ -140,103 +140,98 @@ in
           time = "%H:%M:%S";
           label = "%date%  %time%";
         };
-      } // (
-        if config.desktop.virtual-machine
-        then {}
-        else
-          {
-            "module/battery" = let defaultLabel = "%time%"; in {
-              type = "internal/battery";
+      } // lib.optionalAttrs (! config.desktop.virtual-machine) {
+        "module/battery" = let defaultLabel = "%time%"; in {
+          type = "internal/battery";
 
-              format-charging               = "<animation-charging> <label-charging>";
-              # So sad we can't have ramps specifics for charging and discharging
-              animation-charging-0          = "";
-              animation-charging-1          = "";
-              animation-charging-2          = "";
-              animation-charging-3          = "";
-              animation-charging-4          = "";
-              animation-charging-5          = "";
-              animation-charging-6          = "";
-              animation-charging-font       = 2;
-              animation-charging-framerate  = 750;
-              animation-charging-foreground = config.desktop.activeColor;
-              label-charging                = defaultLabel;
+          format-charging               = "<animation-charging> <label-charging>";
+          # So sad we can't have ramps specifics for charging and discharging
+          animation-charging-0          = "";
+          animation-charging-1          = "";
+          animation-charging-2          = "";
+          animation-charging-3          = "";
+          animation-charging-4          = "";
+          animation-charging-5          = "";
+          animation-charging-6          = "";
+          animation-charging-font       = 2;
+          animation-charging-framerate  = 750;
+          animation-charging-foreground = config.desktop.activeColor;
+          label-charging                = defaultLabel;
 
-              format-discharging = "<ramp-capacity> <label-discharging>";
-              ramp-capacity-0    = "";
-              ramp-capacity-1    = "";
-              ramp-capacity-2    = "";
-              ramp-capacity-3    = "";
-              ramp-capacity-4    = "";
-              ramp-capacity-5    = "";
-              ramp-capacity-6    = "";
-              ramp-capacity-font = 2;
-              label-discharging  = defaultLabel;
+          format-discharging = "<ramp-capacity> <label-discharging>";
+          ramp-capacity-0    = "";
+          ramp-capacity-1    = "";
+          ramp-capacity-2    = "";
+          ramp-capacity-3    = "";
+          ramp-capacity-4    = "";
+          ramp-capacity-5    = "";
+          ramp-capacity-6    = "";
+          ramp-capacity-font = 2;
+          label-discharging  = defaultLabel;
 
-              format-full            = "<ramp-capacity> <label-full>";
-              format-full-foreground = config.desktop.activeColor;
-              label-full             = "chargée";
+          format-full            = "<ramp-capacity> <label-full>";
+          format-full-foreground = config.desktop.activeColor;
+          label-full             = "chargée";
 
-              format-low               = "<animation-low> <label-low>";
-              format-low-foreground    = config.desktop.warnColor;
-              animation-low-0          = "";
-              animation-low-1          = " ";
-              animation-low-font       = 2;
-              animation-low-framerate  = 1000;
-              label-low                = defaultLabel;
+          format-low               = "<animation-low> <label-low>";
+          format-low-foreground    = config.desktop.warnColor;
+          animation-low-0          = "";
+          animation-low-1          = " ";
+          animation-low-font       = 2;
+          animation-low-framerate  = 1000;
+          label-low                = defaultLabel;
 
-              time-format = "%H:%M";
-              poll-interval = 1;
-              inherit (config.desktop.battery) full-at low-at battery adapter;
-            };
+          time-format = "%H:%M";
+          poll-interval = 1;
+          inherit (config.desktop.battery) full-at low-at battery adapter;
+        };
 
-            "module/backlight" = {
-              type = "internal/backlight";
-              inherit (config.desktop.backlight) card;
-              enable-scroll = true;
-              format = toggleRedshiftOnClick "<ramp> <label>";
-              label = "%percentage%%";
-              ramp-0 = "";
-              ramp-1 = "";
-              ramp-2 = "";
-              ramp-3 = "";
-              ramp-4 = "";
-              ramp-5 = "";
-              ramp-6 = "";
-              ramp-font = 2;
-            };
+        "module/backlight" = {
+          type = "internal/backlight";
+          inherit (config.desktop.backlight) card;
+          enable-scroll = true;
+          format = toggleRedshiftOnClick "<ramp> <label>";
+          label = "%percentage%%";
+          ramp-0 = "";
+          ramp-1 = "";
+          ramp-2 = "";
+          ramp-3 = "";
+          ramp-4 = "";
+          ramp-5 = "";
+          ramp-6 = "";
+          ramp-font = 2;
+        };
 
-            "module/wifi" = {
-              type = "internal/network";
-              interface-type = "wireless";
-              click-left = "";
-              format-connected = "<ramp-signal> <label-connected>";
-              label-connected    = editConnectionsOnClick "%essid%";
-              label-disconnected = editConnectionsOnClick "%{T2}%{T-} déconnecté";
-              label-disconnected-foreground = config.desktop.disabledColor;
-              ramp-signal-0 = "";
-              ramp-signal-1 = "";
-              ramp-signal-2 = "";
-              ramp-signal-3 = "";
-              ramp-signal-4 = "";
-              ramp-signal-font = 2;
-            };
+        "module/wifi" = {
+          type = "internal/network";
+          interface-type = "wireless";
+          click-left = "";
+          format-connected = "<ramp-signal> <label-connected>";
+          label-connected    = editConnectionsOnClick "%essid%";
+          label-disconnected = editConnectionsOnClick "%{T2}%{T-} déconnecté";
+          label-disconnected-foreground = config.desktop.disabledColor;
+          ramp-signal-0 = "";
+          ramp-signal-1 = "";
+          ramp-signal-2 = "";
+          ramp-signal-3 = "";
+          ramp-signal-4 = "";
+          ramp-signal-font = 2;
+        };
 
-            "module/audio" = {
-              type = "internal/alsa";
+        "module/audio" = {
+          type = "internal/alsa";
 
-              format-volume = "<ramp-volume> <label-volume>";
+          format-volume = "<ramp-volume> <label-volume>";
 
-              label-muted = "%{T2}%{T-} sourdine";
-              label-muted-foreground = config.desktop.disabledColor;
+          label-muted = "%{T2}%{T-} sourdine";
+          label-muted-foreground = config.desktop.disabledColor;
 
-              ramp-volume-0 = "";
-              ramp-volume-1 = "";
-              ramp-volume-2 = "";
-              ramp-volume-font = 2;
-            };
-          }
-        );
+          ramp-volume-0 = "";
+          ramp-volume-1 = "";
+          ramp-volume-2 = "";
+          ramp-volume-font = 2;
+        };
+      };
       script = "polybar main &";
     };
   };
