@@ -60,6 +60,6 @@ let baseSize = config.desktop.fontSize;
     direnv.enable = true;
   };
 
-  xsession.windowManager.i3.config.terminal = "${pkgs.rxvt-unicode-unwrapped}/bin/urxvt -e ${pkgs.tmux}/bin/tmux";
-
+  xsession.windowManager.i3.config.terminal =
+    "${config.programs.urxvt.package}/bin/urxvt -e ${config.programs.tmux.package}/bin/tmux";
 }
