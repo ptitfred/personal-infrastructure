@@ -89,13 +89,13 @@ in
           screenschange-reload = true;
         };
 
-        "module/cpu" = {
+        "module/cpu" = let label = "%{T2}%{T-} %percentage%%"; in {
           type = "internal/cpu";
           interval = "0.5";
           warn-percentage = 95;
           format = monitorOnClick "<label>";
-          label = "%{T2}%{T-} %percentage%%";
-          label-warn = "%{T2}%{T-} %percentage%%";
+          inherit label;
+          label-warn = label;
           label-warn-foreground = config.desktop.warnColor;
         };
 
