@@ -55,6 +55,11 @@ let baseSize = config.desktop.fontSize;
       fonts = [
         (toXFT { name = "Monospace"; size = baseSize +1; })
       ];
+      keybindings = {
+        "Shift-Control-C" = "eval:selection_to_clipboard";
+        "Shift-Control-V" = "eval:paste_clipboard";
+      };
+      iso14755 = false;
     };
 
     direnv.enable = true;
