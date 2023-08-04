@@ -10,6 +10,7 @@ let baseSize = config.desktop.fontSize;
       bat
       file
       tree
+      noto-fonts-emoji
     ];
 
     sessionVariables = {
@@ -59,6 +60,7 @@ let baseSize = config.desktop.fontSize;
               [
                 "Monospace"
                 "Material Symbols Outlined"
+                "Noto Color Emoji"
               ];
       keybindings = {
         "Shift-Control-C" = "eval:selection_to_clipboard";
