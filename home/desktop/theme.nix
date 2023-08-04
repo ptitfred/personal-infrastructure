@@ -24,8 +24,8 @@ in
       description = ''
         Color in hexadecimal form
       '';
-      default = "#cccccc";
-      example = "#cccccc";
+      default = "#aaaaaa";
+      example = "#aaaaaa";
     };
 
     desktop.warnColor = mkOption {
