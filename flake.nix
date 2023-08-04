@@ -11,7 +11,7 @@
 
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
-    ptitfred-posix-toolbox .url = "github:ptitfred/posix-toolbox/move-to-flakes";
+    ptitfred-posix-toolbox .url = "github:ptitfred/posix-toolbox";
 
     ptitfred-haddocset = {
       url = "github:ptitfred/haddocset";
