@@ -23,13 +23,14 @@ let bottom = true;
 
     materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
 
+    isPhysicalHost = ! config.desktop.virtual-machine;
+    hasGithub = builtins.isString config.desktop.github.token;
+
     modules-right =
       let inherit (lib.strings) optionalString;
 
-          hasGithub = builtins.isString config.desktop.github.token;
           github = optionalString hasGithub "github";
 
-          isPhysicalHost = ! config.desktop.virtual-machine;
           physicalHost = optionalString isPhysicalHost "wifi audio backlight battery";
        in "${github} cpu memory storage ${physicalHost} date";
 in
@@ -158,7 +159,7 @@ in
           time = "%H:%M:%S";
           label = "%date%  %time%";
         };
-      } // lib.optionalAttrs (builtins.isString config.desktop.github.token) {
+      } // lib.optionalAttrs hasGithub {
         "module/github" = {
           type = "internal/github";
 
@@ -172,7 +173,7 @@ in
           label-offline = "%{T2}%{T-} hors ligne";
           label-offline-foreground = config.desktop.disabledColor;
         };
-      } // lib.optionalAttrs (! config.desktop.virtual-machine) {
+      } // lib.optionalAttrs isPhysicalHost {
         "module/battery" = let defaultLabel = "%time%"; in {
           type = "internal/battery";
 
