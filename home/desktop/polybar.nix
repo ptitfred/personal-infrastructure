@@ -23,6 +23,15 @@ let bottom = true;
 
     materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
 
+    modules-right =
+      let inherit (lib.strings) optionalString;
+
+          hasGithub = builtins.isString config.desktop.github.token;
+          github = optionalString hasGithub "github";
+
+          isPhysicalHost = ! config.desktop.virtual-machine;
+          physicalHost = optionalString isPhysicalHost "wifi audio backlight battery";
+       in "${github} cpu memory storage ${physicalHost} date";
 in
 {
   options = with lib; {
@@ -50,6 +59,15 @@ in
       type = types.str;
       default = "intel_backlight";
     };
+
+    desktop.github.username = mkOption {
+      type = types.str;
+    };
+    desktop.github.token = mkOption {
+      type = types.nullOr types.str;
+      description = "Path to a file containing your Github API token. See https://github.com/settings/tokens/new?scopes=notifications&description=Notifier+for+Polybar.";
+      default = null;
+    };
   };
 
   config = {
@@ -69,7 +87,7 @@ in
           radius = 6;
           width = "100%";
           modules-left = "i3";
-          modules-right = if config.desktop.virtual-machine then "cpu memory storage date" else "cpu memory storage wifi audio backlight battery date";
+          inherit modules-right;
           background = "#99000000";
           padding = 3;
           border-size = config.desktop.spacing;
@@ -139,6 +157,20 @@ in
           date = "%Y-%m-%d";
           time = "%H:%M:%S";
           label = "%date%  %time%";
+        };
+      } // lib.optionalAttrs (builtins.isString config.desktop.github.token) {
+        "module/github" = {
+          type = "internal/github";
+
+          user = config.desktop.github.username;
+          token = "\${file:${config.desktop.github.token}}";
+
+          empty-notifications = false;
+          interval = 10;
+
+          label = "%{T2}%{T-} %notifications%";
+          label-offline = "%{T2}%{T-} hors ligne";
+          label-offline-foreground = config.desktop.disabledColor;
         };
       } // lib.optionalAttrs (! config.desktop.virtual-machine) {
         "module/battery" = let defaultLabel = "%time%"; in {
