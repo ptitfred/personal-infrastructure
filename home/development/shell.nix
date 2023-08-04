@@ -52,9 +52,14 @@ let baseSize = config.desktop.fontSize;
 
     urxvt = {
       enable = true;
-      fonts = [
-        (toXFT { name = "Monospace"; size = baseSize +1; })
-      ];
+      package = pkgs.rxvt-unicode-emoji;
+      fonts =
+        let f = name: toXFT { inherit name; size = baseSize + 1; };
+         in map f
+              [
+                "Monospace"
+                "Material Symbols Outlined"
+              ];
       keybindings = {
         "Shift-Control-C" = "eval:selection_to_clipboard";
         "Shift-Control-V" = "eval:paste_clipboard";
