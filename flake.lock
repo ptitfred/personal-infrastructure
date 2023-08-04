@@ -72,6 +72,22 @@
         "type": "github"
       }
     },
+    "nixos-22_11": {
+      "locked": {
+        "lastModified": 1688392541,
+        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1690148897,
@@ -79,6 +95,22 @@
         "owner": "nixos",
         "repo": "nixpkgs",
         "rev": "ac1acba43b2f9db073943ff5ed883ce7e8a40a2c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1690835256,
+        "narHash": "sha256-SZy/Nvwbf6CorhEsvmjqgjoYNLnRfaKVZMfSnpUDPnc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b7cde1c47b7316f6138a2b36ef6627f3d16d645c",
         "type": "github"
       },
       "original": {
@@ -121,17 +153,22 @@
       }
     },
     "ptitfred-posix-toolbox": {
-      "flake": false,
+      "inputs": {
+        "nixos-22_11": "nixos-22_11",
+        "nixpkgs": "nixpkgs_2",
+        "trapd00r-ls-colors": "trapd00r-ls-colors"
+      },
       "locked": {
-        "lastModified": 1682967803,
-        "narHash": "sha256-q9IEHdJucsmXlxSr3d0pZcSgtu+ycqQO6NfSRBWZBRQ=",
+        "lastModified": 1691044560,
+        "narHash": "sha256-r+17UCCL1dMMM4RlvLAIGEHfc9MlxrR0LOD5e4hu1iE=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "95d6eeadb8731c48f4bfb25039dd18929b5ee499",
+        "rev": "63fedf493b190f7eb90350292bceb79c1daffcea",
         "type": "github"
       },
       "original": {
         "owner": "ptitfred",
+        "ref": "move-to-flakes",
         "repo": "posix-toolbox",
         "type": "github"
       }
@@ -183,6 +220,23 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "trapd00r-ls-colors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609339936,
+        "narHash": "sha256-6DnZgWXlQ1+focJGvhlVvgo97owDCj5w2zydF2ZiV8Q=",
+        "owner": "trapd00r",
+        "repo": "LS_COLORS",
+        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trapd00r",
+        "repo": "LS_COLORS",
+        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
         "type": "github"
       }
     }
