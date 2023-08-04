@@ -11,10 +11,7 @@
 
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
-    ptitfred-posix-toolbox = {
-      url = "github:ptitfred/posix-toolbox";
-      flake = false;
-    };
+    ptitfred-posix-toolbox .url = "github:ptitfred/posix-toolbox/move-to-flakes";
 
     ptitfred-haddocset = {
       url = "github:ptitfred/haddocset";
@@ -38,7 +35,6 @@
         # 22.11 still available when needed
         previous = inputs.previous.legacyPackages.${system};
 
-        posix-toolbox = self.callPackage "${inputs.ptitfred-posix-toolbox}/nix/default.nix" {};
         haddocset = self.callPackage inputs.ptitfred-haddocset {};
         postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
         inherit (previous-pkgs) nix-linter;
@@ -54,7 +50,10 @@
         { ... }:
         {
           imports = [ ./workstation.nix ];
-          nixpkgs.overlays = [ overlay ];
+          nixpkgs.overlays = [
+            inputs.ptitfred-posix-toolbox.overlay
+            overlay
+          ];
         };
 
       mkConfiguration = module:
