@@ -171,7 +171,7 @@ in
           empty-notifications = false;
           interval = 10;
 
-          label = "https://github.com/notifications" "%{T3}%{T-} %notifications%";
+          label = "%{T3}%{T-} %notifications%";
           label-offline = "%{T3}%{T-} hors ligne";
           label-offline-foreground = config.desktop.disabledColor;
         };
