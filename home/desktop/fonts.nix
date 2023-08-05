@@ -13,7 +13,7 @@ let material-symbols =
       };
 in
 {
-  home.packages = [ pkgs.roboto material-symbols ];
+  home.packages = [ pkgs.roboto material-symbols pkgs.font-awesome ];
 
   fonts.fontconfig.enable = true;
 }
