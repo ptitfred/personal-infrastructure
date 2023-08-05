@@ -22,6 +22,7 @@ let bottom = true;
       "%{A1:${program}:}${label}%{A}";
 
     materialSymbolsOutlinedPolybar = "Material Symbols Outlined:size=${toString baseSize};${if baseSize <= 10 then "3" else "4"}";
+    fontAwesomePolybar = "FontAwesome6Brands:size=${toString baseSize};${if baseSize <= 10 then "2" else "3"}";
 
     isPhysicalHost = ! config.desktop.virtual-machine;
     hasGithub = builtins.isString config.desktop.github.token;
@@ -83,6 +84,7 @@ in
         "bar/main" = {
           font-0 = toPolybar roboto + ";2";
           font-1 = materialSymbolsOutlinedPolybar;
+          font-2 = fontAwesomePolybar;
           inherit bottom;
           height = "${toString (builtins.ceil (baseSize * 2.2))}pt";
           radius = 6;
@@ -169,8 +171,8 @@ in
           empty-notifications = false;
           interval = 10;
 
-          label = "%{T2}%{T-} %notifications%";
-          label-offline = "%{T2}%{T-} hors ligne";
+          label = "https://github.com/notifications" "%{T3}%{T-} %notifications%";
+          label-offline = "%{T3}%{T-} hors ligne";
           label-offline-foreground = config.desktop.disabledColor;
         };
       } // lib.optionalAttrs isPhysicalHost {
