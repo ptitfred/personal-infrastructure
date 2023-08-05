@@ -45,6 +45,7 @@ let baseSize = config.desktop.fontSize;
       keyMode = "vi";
       shortcut = "a";
       escapeTime = 0;
+      baseIndex = 1;
       plugins = with pkgs.tmuxPlugins; [
         continuum
         prefix-highlight
