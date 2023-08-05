@@ -48,14 +48,18 @@ let baseSize = config.desktop.fontSize;
       baseIndex = 1;
       plugins = with pkgs.tmuxPlugins; [
         continuum
+        power-theme
         prefix-highlight
-        sysstat
-        tmux-colors-solarized
       ];
 
       extraConfig = ''
+        # split in current directory
         bind '"' split-window -v -c "#{pane_current_path}"
         bind %   split-window -h -c "#{pane_current_path}"
+
+        # power theme configuration
+        set -g @tmux_power_theme '${config.desktop.mainColor}'
+        set -g @tmux_power_prefix_highlight_pos 'LR'
       '';
     };
 
