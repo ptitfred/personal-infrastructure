@@ -1,5 +1,7 @@
 colorscheme gruvbox
 
+let g:airline_powerline_fonts = 1
+
 set tabstop=2
 set shiftwidth=2
 
