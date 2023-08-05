@@ -25,4 +25,5 @@ jobs:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
     - run: mkdir -p ~/.local/state/nix/profiles # required as of 23.05 ; not sure why though...
-    - run: nix run home-manager/release-23.05 -- build --flake .#test
+    - run: nix run home-manager/release-23.05 -- build --flake .#test-virtual-machine
+    - run: nix run home-manager/release-23.05 -- build --flake .#test-laptop
