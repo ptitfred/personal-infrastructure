@@ -190,10 +190,10 @@ in
           empty-notifications = false;
           interval = 10;
 
-          label = browseOnClick "https://github.com/notifications" "%{T3}%{T-} %notifications%";
+          label = browseOnClick "https://github.com/notifications" "%{T3}%{T-}  %notifications%";
 
           label-offline = {
-            text = "%{T3}%{T-} hors ligne";
+            text = "%{T3}%{T-}  hors ligne";
             foreground = config.desktop.disabledColor;
           };
         };
