@@ -67,7 +67,8 @@
 
       lib = { inherit mkConfiguration; };
 
-      homeConfigurations.test = mkConfiguration tests/home.nix;
+      homeConfigurations.test-virtual-machine = mkConfiguration tests/virtual-machine.nix;
+      homeConfigurations.test-laptop          = mkConfiguration tests/laptop.nix;
 
       packages.${system} =
         let tools = {

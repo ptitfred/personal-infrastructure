@@ -80,7 +80,7 @@ in
     services.polybar = {
       enable = true;
       package = pkgs.polybarFull;
-      config = {
+      settings = {
         "bar/main" = {
           font-0 = toPolybar roboto + ";2";
           font-1 = materialSymbolsOutlinedPolybar;
@@ -102,8 +102,9 @@ in
           locale = "fr_FR.UTF-8";
           tray-position = "none";
           line-size = 3;
-          cursor-click  = "pointer";
-          cursor-scroll = "ns-resize";
+
+          cursor.click  = "pointer";
+          cursor.scroll = "ns-resize";
         };
 
         "settings" = {
@@ -116,8 +117,10 @@ in
           warn-percentage = 95;
           format = monitorOnClick "<label>";
           inherit label;
-          label-warn = label;
-          label-warn-foreground = config.desktop.warnColor;
+          label-warn = {
+            text = label;
+            foreground = config.desktop.warnColor;
+          };
         };
 
         "module/memory" = {
@@ -137,20 +140,33 @@ in
         "module/i3" = let padding = 2; in {
           type = "internal/i3";
           strip-wsnumbers = true;
-          label-focused = "%name%";
-          label-focused-foreground = "#ffffff";
-          label-focused-background = "#3f3f3f";
-          label-focused-underline = config.desktop.mainColor; # "#fba922";
-          label-focused-padding = padding;
-          label-unfocused = "%name%";
-          label-unfocused-padding = padding;
-          label-urgent = "%name% [%index%]";
-          label-urgent-foreground = palette.vivid.white;
-          label-urgent-background = palette.mate.cyan;
-          label-urgent-padding = padding;
-          label-separator = "|";
-          label-separator-foreground = config.desktop.mainColor;
-          label-separator-padding = 1;
+
+          label-focused = {
+            text = "%name%";
+            foreground = "#ffffff";
+            background = "#3f3f3f";
+            underline = config.desktop.mainColor; # "#fba922";
+            inherit padding;
+          };
+
+          label-unfocused = {
+            text = "%name%";
+            inherit padding;
+          };
+
+          label-urgent = {
+            text = "%name% [%index%]";
+            foreground = palette.vivid.white;
+            background = palette.mate.cyan;
+            inherit padding;
+          };
+
+          label-separator = {
+            text = "|";
+            foreground = config.desktop.mainColor;
+            padding = 1;
+          };
+
           wrapping-scroll = false;
         };
 
@@ -172,49 +188,50 @@ in
           interval = 10;
 
           label = "%{T3}%{T-} %notifications%";
-          label-offline = "%{T3}%{T-} hors ligne";
-          label-offline-foreground = config.desktop.disabledColor;
+
+          label-offline = {
+            text = "%{T3}%{T-} hors ligne";
+            foreground = config.desktop.disabledColor;
+          };
         };
       } // lib.optionalAttrs isPhysicalHost {
         "module/battery" = let defaultLabel = "%time%"; in {
           type = "internal/battery";
 
-          format-charging               = "<animation-charging> <label-charging>";
+          format-charging = "<animation-charging> <label-charging>";
           # So sad we can't have ramps specifics for charging and discharging
-          animation-charging-0          = "";
-          animation-charging-1          = "";
-          animation-charging-2          = "";
-          animation-charging-3          = "";
-          animation-charging-4          = "";
-          animation-charging-5          = "";
-          animation-charging-6          = "";
-          animation-charging-font       = 2;
-          animation-charging-framerate  = 750;
-          animation-charging-foreground = config.desktop.activeColor;
-          label-charging                = defaultLabel;
+          animation-charging = {
+            text       = [ "" "" "" "" "" "" "" ];
+            font       = 2;
+            framerate  = 750;
+            foreground = config.desktop.activeColor;
+          };
+          label-charging = defaultLabel;
 
           format-discharging = "<ramp-capacity> <label-discharging>";
-          ramp-capacity-0    = "";
-          ramp-capacity-1    = "";
-          ramp-capacity-2    = "";
-          ramp-capacity-3    = "";
-          ramp-capacity-4    = "";
-          ramp-capacity-5    = "";
-          ramp-capacity-6    = "";
-          ramp-capacity-font = 2;
-          label-discharging  = defaultLabel;
+          ramp-capacity = {
+            text = [ "" "" "" "" "" "" "" ];
+            font = 2;
+          };
+          label-discharging = defaultLabel;
 
-          format-full            = "<ramp-capacity> <label-full>";
-          format-full-foreground = config.desktop.activeColor;
-          label-full             = "chargée";
+          format-full = {
+            text       = "<ramp-capacity> <label-full>";
+            foreground = config.desktop.activeColor;
+          };
+          label-full = "chargée";
 
-          format-low               = "<animation-low> <label-low>";
-          format-low-foreground    = config.desktop.warnColor;
-          animation-low-0          = "";
-          animation-low-1          = " ";
-          animation-low-font       = 2;
-          animation-low-framerate  = 1000;
-          label-low                = defaultLabel;
+          format-low = {
+            text       = "<animation-low> <label-low>";
+            foreground = config.desktop.warnColor;
+          };
+
+          animation-low = {
+            text      = [ "" " " ];
+            font      = 2;
+            framerate = 1000;
+          };
+          label-low = defaultLabel;
 
           time-format = "%H:%M";
           poll-interval = 1;
@@ -225,32 +242,30 @@ in
           type = "internal/backlight";
           inherit (config.desktop.backlight) card;
           enable-scroll = true;
+
           format = toggleRedshiftOnClick "<ramp> <label>";
           label = "%percentage%%";
-          ramp-0 = "";
-          ramp-1 = "";
-          ramp-2 = "";
-          ramp-3 = "";
-          ramp-4 = "";
-          ramp-5 = "";
-          ramp-6 = "";
-          ramp-font = 2;
+          ramp = {
+            text = [ "" "" "" "" "" "" "" ];
+            font = 2;
+          };
         };
 
         "module/wifi" = {
           type = "internal/network";
           interface-type = "wireless";
-          click-left = "";
+
           format-connected = "<ramp-signal> <label-connected>";
-          label-connected    = editConnectionsOnClick "%essid%";
-          label-disconnected = editConnectionsOnClick "%{T2}%{T-} déconnecté";
-          label-disconnected-foreground = config.desktop.disabledColor;
-          ramp-signal-0 = "";
-          ramp-signal-1 = "";
-          ramp-signal-2 = "";
-          ramp-signal-3 = "";
-          ramp-signal-4 = "";
-          ramp-signal-font = 2;
+          label-connected = editConnectionsOnClick "%essid%";
+          ramp-signal = {
+            text = [ "" "" "" "" "" ];
+            font = 2;
+          };
+
+          label-disconnected = {
+            text       = editConnectionsOnClick "%{T2}%{T-} déconnecté";
+            foreground = config.desktop.disabledColor;
+          };
         };
 
         "module/audio" = {
@@ -258,13 +273,15 @@ in
 
           format-volume = "<ramp-volume> <label-volume>";
 
-          label-muted = "%{T2}%{T-} sourdine";
-          label-muted-foreground = config.desktop.disabledColor;
+          ramp-volume = {
+            text = [ "" "" "" ];
+            font = 2;
+          };
 
-          ramp-volume-0 = "";
-          ramp-volume-1 = "";
-          ramp-volume-2 = "";
-          ramp-volume-font = 2;
+          label-muted = {
+            text = "%{T2}%{T-} sourdine";
+            foreground = config.desktop.disabledColor;
+          };
         };
       };
       script = "polybar main &";
