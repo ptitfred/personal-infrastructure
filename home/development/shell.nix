@@ -2,6 +2,7 @@
 
 let baseSize = config.desktop.fontSize;
     inherit (import ../fonts.nix { inherit baseSize; }) toXFT;
+    patched-monospace = pkgs.callPackage ./patched-monospace.nix {};
  in
 
 {
@@ -11,6 +12,7 @@ let baseSize = config.desktop.fontSize;
       file
       tree
       noto-fonts-emoji
+      patched-monospace
     ];
 
     sessionVariables = {
@@ -58,7 +60,7 @@ let baseSize = config.desktop.fontSize;
         let f = name: toXFT { inherit name; size = baseSize + 1; };
          in map f
               [
-                "Monospace"
+                "DejaVuSansM Nerd Font Mono Plus Font Awesome Plus Font Awesome Extension"
                 "Material Symbols Outlined"
                 "Noto Color Emoji"
               ];
