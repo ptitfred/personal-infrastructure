@@ -1,4 +1,4 @@
-{ inputs, infrastructure, ... }:
+{ infrastructure, ... }:
 {
   deployment.tags = [ "web" ];
 
@@ -7,21 +7,12 @@
     configuration/personal-infrastructure
     morph-utils/monitor-nginx.nix
     services/website.nix
-    services/freelancing.nix
   ];
 
   services.personal-website = {
     enable = true;
     inherit (infrastructure) domain aliases;
   };
-
-  services.freelancing =
-    if isNull infrastructure.freelancing
-    then { enable = false; }
-    else {
-      enable = true;
-      inherit (infrastructure.freelancing inputs) domain root extraConfig aliases;
-    };
 
   personal-infrastructure = {
     inherit (infrastructure) acme-email;
