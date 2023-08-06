@@ -15,5 +15,6 @@ in
     shellcheck
     posix-toolbox.wait-tcp
     faketimed-zeal
+    just
   ];
 }
