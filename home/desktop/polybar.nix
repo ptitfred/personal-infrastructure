@@ -175,10 +175,9 @@ in
 
         "module/date" = {
           type = "internal/date";
-          internal = 5;
           date = "%Y-%m-%d";
-          time = "%H:%M:%S";
-          label = "%date%  %time%";
+          time = "%H:%M";
+          label = "%{T2}%{T-}  %date%  %time%";
         };
       } // lib.optionalAttrs hasGithub {
         "module/github" = {
