@@ -60,6 +60,9 @@ let baseSize = config.desktop.fontSize;
         # power theme configuration
         set -g @tmux_power_theme '${config.desktop.mainColor}'
         set -g @tmux_power_prefix_highlight_pos 'LR'
+
+        # disable automatic renaming
+        set-option -wg automatic-rename off
       '';
     };
 
