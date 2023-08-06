@@ -20,9 +20,13 @@ function forNode {
   nvd diff "$remoteSystem" "$(colmena eval -E "{ nodes, ... }: nodes.$target.config.system.build.toplevel" 2>/dev/null | jq . -r)"
 }
 
-if [[ $# -gt 0 && -n "$1" ]]
+if [[ $# -gt 0 ]]
 then
-  forNode "$1"
+  echo "For nodes $*"
+  for target in "$@"
+  do
+    forNode "$target"
+  done
 else
   echo "All nodes"
   listNodes | forNodes

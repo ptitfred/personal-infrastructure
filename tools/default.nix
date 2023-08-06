@@ -1,9 +1,11 @@
 { callPackage
 , nix-linter
+, symlinkJoin
 }:
 
-{
-  lint         = callPackage ./lint.nix     { inherit nix-linter; };
-  metadata     = callPackage ./metadata     {};
-  pending-diff = callPackage ./pending-diff {};
-}
+let tools = {
+      lint         = callPackage ./lint.nix     { inherit nix-linter; };
+      metadata     = callPackage ./metadata     {};
+      pending-diff = callPackage ./pending-diff {};
+    };
+in tools // { default = symlinkJoin { name = "tools"; paths = builtins.attrValues tools; }; }
