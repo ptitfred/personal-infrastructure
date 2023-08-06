@@ -11,7 +11,6 @@ let infrastructure =
         wg-peers = [];
         resolver = { homepage-02 = "127.0.0.1"; };
         matomo-hostname = "matomo.localhost";
-        freelancing = null;
       };
 
     secret = filename: hostname: {
