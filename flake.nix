@@ -25,13 +25,18 @@
       inputs.nixpkgs.follows = "previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
       inputs.easy-purescript-nix.follows = "easy-purescript-nix";
     };
+
+    power-theme = {
+      url = "github:wfxr/tmux-power";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, previous, ... }:
     let
       system = "x86_64-linux";
 
-      overlay = self: _: {
+      overlay = self: previous: {
         # 22.11 still available when needed
         previous = inputs.previous.legacyPackages.${system};
 
@@ -40,6 +45,9 @@
         inherit (previous-pkgs) nix-linter;
         inherit (inputs.spago2nix.packages.${system}) spago2nix;
         easy-ps = inputs.easy-purescript-nix.packages.${system};
+        tmuxPlugins = previous.tmuxPlugins // {
+          power-theme = previous.tmuxPlugins.power-theme.overrideAttrs (_: { src = inputs.power-theme; });
+        };
       };
 
       pkgs = import nixpkgs { inherit system; };
