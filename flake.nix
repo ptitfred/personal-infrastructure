@@ -18,6 +18,11 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager-base.url = "github:ptitfred/home-manager";
+
+    scram-sha-256 = {
+      url = "github:supercaracal/scram-sha-256";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ nixpkgs, previous, ... }:
@@ -39,10 +44,17 @@
           let mkNode = name: { inherit name; path = test-infra.${name}; };
               nodes = lib.nodesFromHive test-hive;
            in pkgs.linkFarm test-hive.meta.description (map mkNode nodes);
+
+        scram-sha-256 = pkgs.buildGoModule {
+          name = "scram-sha-256";
+          src = inputs.scram-sha-256;
+          vendorSha256 = "sha256-qNJSCLMPdWgK/eFPmaYBcgH3P6jHBqQeU4gR6kE/+AE=";
+        };
+
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
 
-          packages.${system} = tools;
+          packages.${system} = tools // { inherit scram-sha-256; };
 
           inherit lib colmena tests test-hive;
         };

@@ -8,5 +8,6 @@
     ./nix-cache.nix
     ./security.nix
     ./wireguard.nix
+    ./postgresql.nix
   ];
 }
