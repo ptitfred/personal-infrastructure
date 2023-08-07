@@ -5,9 +5,15 @@ let cfg = config.personal-infrastructure.postgresql;
 
     options = {
       enable = lib.mkEnableOption "Postgresql service with user & db provisioning";
+
       users = lib.mkOption {
         type = lib.types.attrsOf userType;
         default = {};
+      };
+
+      available-on-tissue = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
       };
     };
 
@@ -34,13 +40,21 @@ let cfg = config.personal-infrastructure.postgresql;
     service = {
       enable = true;
       inherit authentication ensureDatabases ensureUsers;
+      settings.listen_addresses =
+        if cfg.available-on-tissue
+        then lib.mkForce "localhost,${config.personal-infrastructure.tissue.ip}"
+        else "localhost";
     };
 
     authentication = lib.strings.concatMapStrings authenticate (builtins.attrNames users);
 
-    authenticate = userName: ''
-      local all ${userName} scram-sha-256
-    '';
+    authenticate = userName:
+      ''
+        local all ${userName}                                                scram-sha-256
+      '' +
+      lib.strings.optionalString cfg.available-on-tissue ''
+        host  all ${userName} ${config.personal-infrastructure.tissue.ip}/24 scram-sha-256
+      '';
 
     ensureDatabases = lib.lists.unique (lib.lists.concatMap (u: u.databases) (builtins.attrValues users));
 
@@ -83,5 +97,7 @@ in
   config = lib.mkIf cfg.enable {
     services.postgresql = service;
     systemd.services.postgresql.postStart = setPasswords;
+    networking.firewall.interfaces."tissue".allowedTCPPorts =
+      lib.mkIf cfg.available-on-tissue [ config.services.postgresql.port ];
   };
 }
