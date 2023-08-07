@@ -3,9 +3,13 @@
   deployment.tags = [ "infra" ];
 
   imports = [
-    hosts/homepage-03.nix
-    configuration/personal-infrastructure
+    ../../nixos/hardware/ovhcloud
+    ../../nixos/personal-infrastructure
   ];
+
+  networking.hostName = "homepage-03";
+
+  system.stateVersion = "22.05";
 
   personal-infrastructure = {
     inherit (infrastructure) acme-email;
