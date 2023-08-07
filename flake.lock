@@ -451,7 +451,24 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "personal-homepage": "personal-homepage",
-        "previous": "previous_3"
+        "previous": "previous_3",
+        "scram-sha-256": "scram-sha-256"
+      }
+    },
+    "scram-sha-256": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670309617,
+        "narHash": "sha256-pD4zhLvmhIbIxer6UlP+TBZigym5F9cVFHQaWCtSFuA=",
+        "owner": "supercaracal",
+        "repo": "scram-sha-256",
+        "rev": "675ce0375e96a22723eb0551eb7ed4676672155a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "supercaracal",
+        "repo": "scram-sha-256",
+        "type": "github"
       }
     },
     "spago2nix": {
