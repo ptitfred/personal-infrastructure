@@ -31,8 +31,9 @@ let cfg = config.personal-infrastructure.postgresql;
         };
 
         initialPassword = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           description = "Password hashed with scram-sha-256.";
+          default = null;
         };
       };
     };
@@ -49,12 +50,18 @@ let cfg = config.personal-infrastructure.postgresql;
     authentication = lib.strings.concatMapStrings authenticate (builtins.attrNames users);
 
     authenticate = userName:
-      ''
-        local all ${userName}                                                scram-sha-256
-      '' +
-      lib.strings.optionalString cfg.available-on-tissue ''
-        host  all ${userName} ${config.personal-infrastructure.tissue.ip}/24 scram-sha-256
-      '';
+      if builtins.isString users.${userName}.initialPassword
+      then
+        ''
+          local all ${userName}                                                scram-sha-256
+        '' +
+        lib.strings.optionalString cfg.available-on-tissue ''
+          host  all ${userName} ${config.personal-infrastructure.tissue.ip}/24 scram-sha-256
+        ''
+      else
+        ''
+          local all ${userName} peer
+        '';
 
     ensureDatabases = lib.lists.unique (lib.lists.concatMap (u: u.databases) (builtins.attrValues users));
 
@@ -87,9 +94,10 @@ let cfg = config.personal-infrastructure.postgresql;
       pkgs.writeText "set-passwords.sql"
       (lib.strings.concatStrings (lib.attrsets.mapAttrsToList mkAlterRoleStatement users));
 
-    mkAlterRoleStatement = name: def: ''
-      ALTER ROLE "${name}" WITH PASSWORD '${def.initialPassword}';
-    '';
+    mkAlterRoleStatement = name: def:
+      lib.strings.optionalString (builtins.isString def.initialPassword) ''
+        ALTER ROLE "${name}" WITH PASSWORD '${def.initialPassword}';
+      '';
 in
 {
   options.personal-infrastructure.postgresql = options;
