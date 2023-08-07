@@ -1,13 +1,18 @@
 { infrastructure, ... }:
+
 {
   deployment.tags = [ "web" ];
 
   imports = [
-    hosts/homepage-02.nix
-    configuration/personal-infrastructure
-    morph-utils/monitor-nginx.nix
-    services/website.nix
+    ../../nixos/hardware/gandicloud.nix
+    ../../nixos/personal-infrastructure
+    ../../nixos/morph-utils/monitor-nginx.nix
+    ../../nixos/services/website.nix
   ];
+
+  networking.hostName = "homepage-02";
+
+  system.stateVersion = "22.05";
 
   services.personal-website = {
     enable = true;
