@@ -96,7 +96,16 @@ let cfg = config.personal-infrastructure.postgresql;
 
     mkAlterRoleStatement = name: def:
       lib.strings.optionalString (builtins.isString def.initialPassword) ''
-        ALTER ROLE "${name}" WITH PASSWORD '${def.initialPassword}';
+        DO $do$
+        BEGIN
+          IF EXISTS (SELECT * FROM pg_shadow WHERE usename = '${name}' AND passwd IS null)
+          THEN
+            RAISE NOTICE 'Setting password for user ${name}';
+            ALTER ROLE "${name}" WITH PASSWORD '${def.initialPassword}';
+          ELSE
+            RAISE NOTICE 'Nothing to do for user ${name}';
+          END IF;
+        END $do$;
       '';
 in
 {
