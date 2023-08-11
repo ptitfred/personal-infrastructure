@@ -47,8 +47,25 @@ let baseSize = config.desktop.fontSize;
       escapeTime = 0;
       baseIndex = 1;
       plugins = with pkgs.tmuxPlugins; [
-        continuum
-        power-theme
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '60' # minutes
+          '';
+        }
+        {
+          plugin = power-theme;
+          extraConfig = ''
+            set -g @tmux_power_theme '${config.desktop.mainColor}'
+
+            set -g @tmux_power_prefix_highlight_pos 'LR'
+
+            set -g @tmux_power_show_upload_speed true
+            set -g @tmux_power_show_download_speed true
+          '';
+        }
+        net-speed
         prefix-highlight
       ];
 
@@ -56,10 +73,6 @@ let baseSize = config.desktop.fontSize;
         # split in current directory
         bind '"' split-window -v -c "#{pane_current_path}"
         bind %   split-window -h -c "#{pane_current_path}"
-
-        # power theme configuration
-        set -g @tmux_power_theme '${config.desktop.mainColor}'
-        set -g @tmux_power_prefix_highlight_pos 'LR'
 
         # disable automatic renaming
         set-option -wg automatic-rename off
