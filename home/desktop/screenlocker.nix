@@ -20,7 +20,7 @@ in
 
   config = {
     services.screen-locker = lib.mkIf (! (config.desktop.virtual-machine)) {
-      enable = true;
+      enable = lib.mkDefault false;
       inactiveInterval = config.desktop.locker-interval;
       inherit lockCmd;
     };
