@@ -28,5 +28,8 @@ let orange = "#ffb52a";
         '';
       };
     };
+
+    services.fwupd.enable = true;
+    services.upower.enable = true;
   };
 }
