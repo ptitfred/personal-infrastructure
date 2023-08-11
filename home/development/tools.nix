@@ -9,5 +9,6 @@
     posix-toolbox.wait-tcp
     zeal
     just
+    ripgrep
   ];
 }
