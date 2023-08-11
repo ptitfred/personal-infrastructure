@@ -6,8 +6,8 @@
     enable = true;
     settings = {
       global = {
-        width = 300;
-        height = 300;
+        width = 450;
+        height = 450;
         offset = "32x32";
         origin = "top-right";
         transparency = 5;
