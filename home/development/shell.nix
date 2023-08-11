@@ -47,7 +47,13 @@ let baseSize = config.desktop.fontSize;
       escapeTime = 0;
       baseIndex = 1;
       plugins = with pkgs.tmuxPlugins; [
-        continuum
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '60' # minutes
+          '';
+        }
         {
           plugin = power-theme;
           extraConfig = ''
