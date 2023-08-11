@@ -52,9 +52,14 @@ let baseSize = config.desktop.fontSize;
           plugin = power-theme;
           extraConfig = ''
             set -g @tmux_power_theme '${config.desktop.mainColor}'
+
             set -g @tmux_power_prefix_highlight_pos 'LR'
+
+            set -g @tmux_power_show_upload_speed true
+            set -g @tmux_power_show_download_speed true
           '';
         }
+        net-speed
         prefix-highlight
       ];
 
