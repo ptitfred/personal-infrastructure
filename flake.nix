@@ -70,6 +70,14 @@
           modules = [ workstation module ];
         };
 
+      mkCheck = name: script:
+        pkgs.runCommand name {} ''
+          mkdir -p $out
+          ${script}
+        '';
+
+      mkChecks = pkgs.lib.attrsets.mapAttrs mkCheck;
+
     in {
       homeManagerModules = { inherit workstation; };
 
@@ -89,6 +97,10 @@
          in tools // {
               default = pkgs.linkFarm "tools" tools;
             };
+
+      checks.${system} = mkChecks {
+        "lint" = "${lint}/bin/lint ${./.}";
+      };
 
       apps.${system} = {
         lint = {

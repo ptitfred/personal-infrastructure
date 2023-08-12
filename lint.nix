@@ -7,6 +7,18 @@ writeShellApplication {
   runtimeInputs = [ nix-linter ];
   text = ''
     set -e
-    find . -type f -name "*.nix" -exec nix-linter {} + && echo "Everything is fine!"
+
+    src="."
+    if [ $# -ge 1 ]
+    then
+      src="$1"
+    fi
+
+    if [ -z "$src" ]
+    then
+      src="."
+    fi
+
+    find "$src" -type f -name "*.nix" -exec nix-linter {} + && echo "Everything is fine!"
   '';
 }
