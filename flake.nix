@@ -43,6 +43,7 @@
             inputs.ptitfred-posix-toolbox.overlays.linter
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
+            (final: _: { rxvt-unicode-emoji-truecolor = final.callPackage pkgs/rxvt-truecolor.nix { nixpkgs = inputs.previous; }; })
           ];
         };
 
@@ -71,6 +72,7 @@
             };
           };
 
+
           checks.${system} =
             let local-lint = "${pkgs.posix-toolbox.nix-linter}/bin/nix-linter ${./.}";
             in { inherit (tests) tests; } // helpers.mkChecks { lint = local-lint; };
@@ -88,7 +90,7 @@
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;
-            inherit (pkgs) lix-updater matomo-updater obsidian-updater;
+            inherit (pkgs) lix-updater matomo-updater obsidian-updater rxvt-unicode-emoji-truecolor;
           };
         };
 }

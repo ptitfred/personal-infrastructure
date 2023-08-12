@@ -80,7 +80,7 @@ let baseSize = config.desktop.fontSize;
 
     urxvt = {
       enable = true;
-      package = pkgs.rxvt-unicode-emoji;
+      package = pkgs.rxvt-unicode-emoji-truecolor;
       fonts =
         let f = name: toXFT { inherit name; size = baseSize + 1; };
          in map f
