@@ -51,11 +51,21 @@
           vendorSha256 = "sha256-qNJSCLMPdWgK/eFPmaYBcgH3P6jHBqQeU4gR6kE/+AE=";
         };
 
+        mkCheck = name: script:
+          pkgs.runCommand name {} ''
+            mkdir -p $out
+            ${script}
+          '';
+
+        mkChecks = pkgs.lib.attrsets.mapAttrs mkCheck;
+
      in {
           devShells.${system}.default = pkgs.mkShell { buildInputs = [ inputs.colmena.packages.${system}.colmena pkgs.pwgen ]; };
 
           packages.${system} = tools // { inherit scram-sha-256; };
 
           inherit lib colmena tests test-hive;
+
+          checks.${system} = { inherit tests; } // mkChecks { lint = "${tools.lint}/bin/lint ${./.}"; };
         };
 }
