@@ -4,7 +4,7 @@ let orange = "#ffb52a";
     user = config.workstation.user;
 
     inherit (inputs.home-manager-base.packages.x86_64-linux) backgrounds;
-    background = "${backgrounds}/pexels-sohail-nachiti-807598.jpg";
+    background = "${backgrounds}/pexels-pok-rie-2049422.jpg";
  in
 {
   options.workstation.user = lib.mkOption { type = lib.types.str; };
