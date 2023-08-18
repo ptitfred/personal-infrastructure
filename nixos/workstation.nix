@@ -14,7 +14,7 @@ let orange = "#ffb52a";
       inherit background;
 
       greeters.mini = {
-        enable = true;
+        enable = false;
         inherit user;
         extraConfig = ''
           [greeter]
