@@ -1,7 +1,10 @@
 { inputs, pkgs, ... }:
+
+let hm = inputs.home-manager-base.inputs.home-manager;
+ in
 {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
+    hm.nixosModules.home-manager
   ];
-  environment.systemPackages = [ inputs.home-manager.packages.${pkgs.system}.home-manager ];
+  environment.systemPackages = [ hm.packages.${pkgs.system}.home-manager ];
 }
