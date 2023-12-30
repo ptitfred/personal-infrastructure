@@ -40,7 +40,7 @@ let cfg = config.personal-infrastructure.postgresql;
 
     service = {
       enable = true;
-      inherit authentication ensureDatabases ensureUsers;
+      inherit authentication ensureDatabases ensureUsers initialScript;
       settings.listen_addresses =
         if cfg.available-on-tissue
         then lib.mkForce "localhost,${config.personal-infrastructure.tissue.ip}"
@@ -69,16 +69,18 @@ let cfg = config.personal-infrastructure.postgresql;
 
     buildUser = name: def: {
       inherit name;
-      ensurePermissions = ensurePermissions def;
-      ensureClauses     = ensureClauses     def;
+      ensureClauses = ensureClauses def;
     };
 
-    ensurePermissions = def: lib.lists.foldr buildPermission {} def.databases;
+    initialScript =
+      pkgs.writeText "init-sql-script"
+        (lib.strings.concatStrings (lib.attrsets.mapAttrsToList grantUserDatabases users));
 
-    buildPermission = database: acc:
-      acc // {
-        "DATABASE ${database}" = "ALL PRIVILEGES";
-      };
+    grantUserDatabases = userName: def:
+      lib.strings.concatMapStrings (grantUserDatabase userName) def.databases;
+
+    grantUserDatabase = userName: db:
+      "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ${db} TO ${userName};";
 
     ensureClauses = def: {
       inherit (def) superuser;
