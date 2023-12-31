@@ -5,7 +5,7 @@
     packages = with pkgs; [
       purescript
       purescript-psa
-      spago
+      easy-ps.spago
       spago2nix
       easy-ps.purty
     ];
