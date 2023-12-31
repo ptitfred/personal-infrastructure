@@ -2,27 +2,19 @@
   description = "Personal infrastructure";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
     colmena.url = "github:zhaofengli/colmena";
-    colmena.inputs.nixpkgs.follows = "nixpkgs";
-
-    personal-homepage.url = "github:ptitfred/personal-homepage";
-
+    # colmena.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
     home-manager-base.url = "github:ptitfred/home-manager";
+    personal-homepage.url = "github:ptitfred/personal-homepage";
 
-    scram-sha-256 = {
-      url = "github:supercaracal/scram-sha-256";
-      flake = false;
-    };
+    scram-sha-256.url = "github:supercaracal/scram-sha-256";
+    scram-sha-256.flake = false;
   };
 
   outputs = inputs@{ nixpkgs, previous, ... }:
