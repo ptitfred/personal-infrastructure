@@ -92,7 +92,7 @@ lua << EOF
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',     '<cmd>lua vim.lsp.buf.hover()<CR>',          opts)
   end
 
-  lsp.hls.setup({
+  lsp.hls.setup {
     settings = {
       haskell = {
         formattingProvider = "stylish-haskell"
@@ -103,5 +103,18 @@ lua << EOF
       -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
     }
-  })
+  }
+  lsp.rust_analyzer.setup{
+    on_attach = on_attach,
+    settings = {
+      ['rust_analyzer'] = {
+        checkOnSave = {
+          command = "clippy";
+        },
+        diagnostics = {
+          enable = true;
+        }
+      }
+    }
+  }
 EOF
