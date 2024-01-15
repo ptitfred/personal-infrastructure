@@ -14,7 +14,12 @@
   programs.neovim = {
     enable = true;
     vimAlias = true;
-    extraConfig = builtins.readFile ./neovim-config.vim;
+    extraConfig = ''
+      ${builtins.readFile ./neovim-config.vim}
+      lua << EOF
+        ${builtins.readFile ./neovim-config.lua}
+      EOF
+    '';
     plugins =
       with pkgs.vimPlugins;
         [
