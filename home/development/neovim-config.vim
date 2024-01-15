@@ -149,13 +149,14 @@ lua << EOF
   }
   lsp.rust_analyzer.setup{
     on_attach = on_attach,
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     settings = {
       ['rust_analyzer'] = {
         checkOnSave = {
           command = "clippy";
         },
-        diagnostics = {
-          enable = true;
+        editor = {
+          formatOnType = true;
         }
       }
     }
