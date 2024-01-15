@@ -24,12 +24,14 @@
       with pkgs.vimPlugins;
         [
           cmp-nvim-lsp
+          cmp-nvim-lsp-signature-help
           comment-nvim
           gruvbox
           vim-airline
           vim-autoformat
           vim-polyglot
           vim-vsnip
+          lspkind-nvim
           nvim-autopairs
           nvim-cmp
           nvim-lspconfig

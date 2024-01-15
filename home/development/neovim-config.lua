@@ -1,8 +1,8 @@
 require('nvim-autopairs').setup({ map_cr = true })
 
 local cmp = require'cmp'
-
-cmp.setup({
+local lspkind = require('lspkind')
+cmp.setup {
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -13,26 +13,35 @@ cmp.setup({
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  mapping = cmp.mapping.preset.insert {
+    ['<C-b>']     = cmp.mapping.scroll_docs(-4),
+    ['<C-f>']     = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  }),
-  sources = cmp.config.sources({
+    ['<C-e>']     = cmp.mapping.abort(),
+    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>']      = cmp.mapping.confirm({ select = true }),
+  },
+  sources = cmp.config.sources {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },     -- For vsnip users.
-    -- { name = 'luasnip' },   -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' },    -- For snippy users.
-  }, {
+    { name = 'vsnip' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'buffer' },
-  })
-})
+  },
+  formatting = {
+    format = lspkind.cmp_format {
+      mode = 'text',
+      maxwidth = 50,
+      ellipsis_char = '…',
+      show_labelDetails = true,
+      before = function(entry, vim_item)
+        return vim_item
+      end
+    }
+  }
+}
 
 local lsp = require('lspconfig')
 
@@ -42,29 +51,30 @@ local on_attach = function(_, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...)
   end
 
-    -- Enable completion triggered by <c-x><c-o>
+  -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { buffer = bufnr, noremap = true, silent = true }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+  local list_workspace_folders = function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end
+  vim.keymap.set('n', 'gD',        vim.lsp.buf.declaration, opts)
+  vim.keymap.set('n', 'gd',        vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'K',         vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 'gi',        vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "ga",        vim.lsp.buf.code_action, opts)
+  vim.keymap.set('n', '<C-k>',     vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, opts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+  vim.keymap.set('n', '<space>wl', list_workspace_folders, opts)
+  vim.keymap.set('n', '<space>D',  vim.lsp.buf.type_definition, opts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  vim.keymap.set('n', 'gr',        vim.lsp.buf.references, opts)
+  vim.keymap.set('n', '<space>e',  vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '[d',        vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', ']d',        vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', '<space>q',  vim.diagnostic.setloclist, opts)
 end
 
 lsp.hls.setup {
