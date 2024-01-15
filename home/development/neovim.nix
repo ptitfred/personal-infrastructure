@@ -25,6 +25,7 @@
           nvim-autopairs
           nvim-cmp
           nvim-lspconfig
+          hover-nvim
           telescope-nvim
           telescope-fzf-native-nvim
         ];
