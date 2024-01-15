@@ -18,10 +18,12 @@
     plugins =
       with pkgs.vimPlugins;
         [
+          cmp-nvim-lsp
           gruvbox
           vim-airline
           vim-autoformat
           vim-polyglot
+          vim-vsnip
           nvim-autopairs
           nvim-cmp
           nvim-lspconfig

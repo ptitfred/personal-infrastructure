@@ -68,6 +68,40 @@ command! Fjson call DoPrettyJSON()
 lua << EOF
   require('nvim-autopairs').setup({ map_cr = true })
 
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' },     -- For vsnip users.
+      -- { name = 'luasnip' },   -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' },    -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
   local lsp = require('lspconfig')
 
   local opts = { noremap=true, silent=true }
@@ -151,4 +185,14 @@ lua << EOF
   -- Mouse support
   vim.keymap.set('n', '<MouseMove>', hover.hover_mouse, { desc = "hover.nvim (mouse)" })
   vim.o.mousemoveevent = true
+
+  -- Set completeopt to have a better completion experience
+  -- :help completeopt
+  -- menuone: popup even when there's only one match
+  -- noinsert: Do not insert text until a selection is made
+  -- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
+  vim.o.completeopt = "menuone,noinsert,noselect"
+
+  -- Avoid showing extra messages when using completion
+  vim.opt.shortmess = vim.opt.shortmess + "c"
 EOF
