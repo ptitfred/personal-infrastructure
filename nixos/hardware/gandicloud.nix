@@ -16,5 +16,8 @@
       wantedBy = [ "multi-user.target" ];
       serviceConfig.Restart = "always";
     };
+
+    # This is required since 23.11 ; I'm not sure why. Maybe Gandi changed something in their VMs.
+    boot.loader.grub.device = lib.mkForce "nodev";
   };
 }
