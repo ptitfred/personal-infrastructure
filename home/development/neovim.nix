@@ -24,6 +24,7 @@
       with pkgs.vimPlugins;
         [
           cmp-nvim-lsp
+          comment-nvim
           gruvbox
           vim-airline
           vim-autoformat

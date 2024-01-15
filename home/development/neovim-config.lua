@@ -137,3 +137,5 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 
 -- Avoid showing extra messages when using completion
 vim.opt.shortmess = vim.opt.shortmess + "c"
+
+require('Comment').setup()
