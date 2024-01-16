@@ -146,10 +146,16 @@ hover.setup {
 }
 
 -- Setup keymaps
-vim.keymap.set("n", "K",  hover.hover,        {desc = "hover.nvim"}         )
-vim.keymap.set("n", "gK", hover.hover_select, {desc = "hover.nvim (select)"})
-vim.keymap.set("n", "<C-p>", function() hover.hover_switch("previous") end, {desc = "hover.nvim (previous source)"})
-vim.keymap.set("n", "<C-n>", function() hover.hover_switch("next") end, {desc = "hover.nvim (next source)"})
+local hover_previous_source = function ()
+  hover.hover_switch("previous")
+end
+local hover_next_source = function ()
+  hover.hover_switch("next")
+end
+vim.keymap.set("n", "K",     hover.hover,           {desc = "hover.nvim"                  })
+vim.keymap.set("n", "gK",    hover.hover_select,    {desc = "hover.nvim (select)"         })
+vim.keymap.set("n", "<C-p>", hover_previous_source, {desc = "hover.nvim (previous source)"})
+vim.keymap.set("n", "<C-n>", hover_next_source,     {desc = "hover.nvim (next source)"    })
 
 -- Mouse support
 vim.keymap.set('n', '<MouseMove>', hover.hover_mouse, { desc = "hover.nvim (mouse)" })
