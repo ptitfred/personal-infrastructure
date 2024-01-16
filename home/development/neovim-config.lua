@@ -99,6 +99,23 @@ lsp.rust_analyzer.setup{
       },
       editor = {
         formatOnType = true;
+      },
+      completion = {
+        snippets = {
+          custom = {
+            ['thread spawn'] = {
+              prefix = { "spawn", "tspawn" },
+              body = {
+                "thread::spawn(move || {",
+                "\t$0",
+                "});",
+              },
+              description = "Insert a thread::spawn call",
+              requires = "std::thread",
+              scope = "expr",
+            }
+          }
+        }
       }
     }
   }
