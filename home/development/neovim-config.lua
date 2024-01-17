@@ -95,7 +95,7 @@ lsp.rust_analyzer.setup{
   on_attach = on_attach,
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
   settings = {
-    ['rust_analyzer'] = {
+    ['rust-analyzer'] = {
       checkOnSave = {
         command = "clippy";
       },
