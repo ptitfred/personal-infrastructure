@@ -9,7 +9,7 @@
     ":e" = "vim";
   };
 
-  home.packages = [ pkgs.xclip pkgs.libxml2 ];
+  home.packages = [ pkgs.xclip pkgs.libxml2 pkgs.gh ];
 
   programs.neovim = {
     enable = true;
