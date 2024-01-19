@@ -9,5 +9,6 @@
     ./purescript.nix
     ./javascript.nix
     ./tools.nix
+    ./rust.nix
   ];
 }
