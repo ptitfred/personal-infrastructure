@@ -132,6 +132,7 @@ lsp.rust_analyzer.setup{
   }
 }
 lsp.marksman.setup{}
+lsp.lua_ls.setup{}
 
 local hover = require('hover')
 hover.setup {
