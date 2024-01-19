@@ -131,8 +131,12 @@ lsp.rust_analyzer.setup{
     }
   }
 }
-lsp.marksman.setup{}
-lsp.lua_ls.setup{}
+lsp.marksman.setup {
+  on_attach = on_attach,
+}
+lsp.lua_ls.setup {
+  on_attach = on_attach,
+}
 
 local hover = require('hover')
 hover.setup {
