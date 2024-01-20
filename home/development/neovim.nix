@@ -23,8 +23,14 @@
     plugins =
       with pkgs.vimPlugins;
         [
+          cmp-buffer
+          cmp-cmdline
+          cmp-git
           cmp-nvim-lsp
           cmp-nvim-lsp-signature-help
+          cmp-omni
+          cmp-path
+          cmp-spell
           comment-nvim
           gruvbox
           vim-airline
