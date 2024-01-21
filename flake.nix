@@ -11,7 +11,7 @@
     nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
 
     home-manager-base.url = "github:ptitfred/home-manager";
-    personal-homepage.url = "github:ptitfred/personal-homepage/post/retro-2023";
+    personal-homepage.url = "github:ptitfred/personal-homepage";
 
     scram-sha-256.url = "github:supercaracal/scram-sha-256";
     scram-sha-256.flake = false;
