@@ -372,16 +372,16 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1703351344,
-        "narHash": "sha256-9FEelzftkE9UaJ5nqxidaJJPEhe9TPhbypLHmc2Mysc=",
+        "lastModified": 1703467016,
+        "narHash": "sha256-/5A/dNPhbQx/Oa2d+Get174eNI3LERQ7u6WTWOlR1eQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7790e078f8979a9fcd543f9a47427eeaba38f268",
+        "rev": "d02d818f22c777aa4e854efc3242ec451e5d462a",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-23.05",
+        "ref": "nixos-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -396,15 +396,16 @@
         "previous": "previous_2"
       },
       "locked": {
-        "lastModified": 1704027896,
-        "narHash": "sha256-I72jfe1qR2aO9PRrORI0hthj9Sy3t3xEbZGMRD5w3lA=",
+        "lastModified": 1705799661,
+        "narHash": "sha256-uadDj0c293tS9FiRn/FnDFuEiB7HPipUNcNUpY2HtPI=",
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "3f9f48dbbf4e51fa1b0de306843c31797c4e42f4",
+        "rev": "0230e259bd3e9dae66c1811edaddf19b57665962",
         "type": "github"
       },
       "original": {
         "owner": "ptitfred",
+        "ref": "post/retro-2023",
         "repo": "personal-homepage",
         "type": "github"
       }
@@ -416,11 +417,11 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors"
       },
       "locked": {
-        "lastModified": 1691145276,
-        "narHash": "sha256-r+17UCCL1dMMM4RlvLAIGEHfc9MlxrR0LOD5e4hu1iE=",
+        "lastModified": 1704027259,
+        "narHash": "sha256-4jUNSWHLG6EFDA++iYlQ2nhYW8/WaPMTzW3mXFoZH50=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "172424024ecdc1420f96beac86bfc77a7651cdf3",
+        "rev": "1b4f21f7bb92c796923fe122814dad8aa6632714",
         "type": "github"
       },
       "original": {
