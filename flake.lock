@@ -428,11 +428,11 @@
         "previous": "previous_2"
       },
       "locked": {
-        "lastModified": 1706024743,
-        "narHash": "sha256-i4HE382l+dpW8S8YRLgbe1cvYObXE2e3Lve3QuqMI0o=",
+        "lastModified": 1706104688,
+        "narHash": "sha256-Q0l5wi7WFOXGIPo4vogaLlmiZPh8Zq+0UctPMXC2MBg=",
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "6acdeeb403db12c3e427603f52e7d5ffcfc9ef6d",
+        "rev": "91382e7d6bad05fe087cda3c7246feeb812ee121",
         "type": "github"
       },
       "original": {
