@@ -30,6 +30,8 @@
       url = "github:wfxr/tmux-power";
       flake = false;
     };
+
+    nil.url = "github:oxalica/nil";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, previous, ... }:
@@ -60,6 +62,7 @@
           imports = [ ./workstation.nix ];
           nixpkgs.overlays = [
             inputs.ptitfred-posix-toolbox.overlay
+            inputs.nil.overlays.nil
             overlay
           ];
         };

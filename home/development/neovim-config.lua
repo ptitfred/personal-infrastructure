@@ -173,6 +173,10 @@ lsp.lua_ls.setup {
     },
   },
 }
+lsp.nil_ls.setup {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+}
 
 local hover = require('hover')
 hover.setup {

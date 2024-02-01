@@ -9,7 +9,14 @@
     ":e" = "vim";
   };
 
-  home.packages = [ pkgs.xclip pkgs.libxml2 pkgs.gh pkgs.marksman pkgs.lua-language-server ];
+  home.packages = [
+    pkgs.xclip
+    pkgs.libxml2
+    pkgs.gh
+    pkgs.marksman
+    pkgs.lua-language-server
+    pkgs.nil
+  ];
 
   programs.neovim = {
     enable = true;
