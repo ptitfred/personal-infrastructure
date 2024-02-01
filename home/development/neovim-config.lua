@@ -225,3 +225,6 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 vim.opt.shortmess = vim.opt.shortmess + "c"
 
 require('Comment').setup()
+
+require('telescope').setup {}
+require('telescope').load_extension('ui-select')

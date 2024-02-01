@@ -44,6 +44,7 @@
           hover-nvim
           telescope-nvim
           telescope-fzf-native-nvim
+          telescope-ui-select-nvim
         ];
   };
 }
