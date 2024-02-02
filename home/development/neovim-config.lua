@@ -114,6 +114,7 @@ lsp.hls.setup {
     }
   },
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   flags = {
     -- This will be the default in neovim 0.7+
     debounce_text_changes = 150,
@@ -161,9 +162,11 @@ lsp.rust_analyzer.setup{
 }
 lsp.marksman.setup {
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
 lsp.lua_ls.setup {
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   settings = {
     Lua = {
       diagnostics = {
