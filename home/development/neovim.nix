@@ -16,6 +16,8 @@
     pkgs.marksman
     pkgs.lua-language-server
     pkgs.nil
+    pkgs.nodePackages.bash-language-server
+    pkgs.shellcheck
   ];
 
   programs.neovim = {
