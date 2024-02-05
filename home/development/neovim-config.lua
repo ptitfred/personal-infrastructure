@@ -24,24 +24,52 @@ cmp.setup {
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ['<CR>']      = cmp.mapping.confirm({ select = true }),
   },
-  sources = cmp.config.sources {
+  sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'nvim_lsp_signature_help' },
+  }, {
     { name = 'buffer' },
-  },
+  }),
   formatting = {
     format = lspkind.cmp_format {
-      mode = 'text',
+      -- mode = 'text',
       maxwidth = 50,
       ellipsis_char = '…',
       show_labelDetails = true,
-      before = function(entry, vim_item)
+      before = function(_, vim_item)
         return vim_item
       end
     }
   }
 }
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':'
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 local lsp = require('lspconfig')
 
@@ -86,6 +114,7 @@ lsp.hls.setup {
     }
   },
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   flags = {
     -- This will be the default in neovim 0.7+
     debounce_text_changes = 150,
@@ -133,9 +162,11 @@ lsp.rust_analyzer.setup{
 }
 lsp.marksman.setup {
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
 lsp.lua_ls.setup {
   on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   settings = {
     Lua = {
       diagnostics = {
@@ -144,6 +175,14 @@ lsp.lua_ls.setup {
       },
     },
   },
+}
+lsp.nil_ls.setup {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+}
+require'lspconfig'.bashls.setup {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
 
 local hover = require('hover')
@@ -197,3 +236,16 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 vim.opt.shortmess = vim.opt.shortmess + "c"
 
 require('Comment').setup()
+
+require('telescope').setup {
+  extensions = {
+    lsp_handlers = {
+      code_action = {
+        telescope = require('telescope.themes').get_dropdown {},
+      },
+    },
+  },
+}
+
+require('telescope').load_extension('lsp_handlers')
+require('telescope').load_extension('ui-select')
