@@ -41,6 +41,7 @@
           cmp-path
           cmp-spell
           comment-nvim
+          fidget-nvim
           gruvbox
           vim-airline
           vim-autoformat

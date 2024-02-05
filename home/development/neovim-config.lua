@@ -1,4 +1,5 @@
 require('nvim-autopairs').setup({ map_cr = true })
+require('fidget').setup {}
 
 local cmp = require'cmp'
 local lspkind = require('lspkind')
