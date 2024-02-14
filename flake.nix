@@ -32,6 +32,8 @@
     };
 
     nil.url = "github:oxalica/nil";
+
+    wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, previous, ... }:
@@ -63,6 +65,7 @@
           nixpkgs.overlays = [
             inputs.ptitfred-posix-toolbox.overlay
             inputs.nil.overlays.nil
+            inputs.wgsl-analyzer.overlays.${system}.default
             overlay
           ];
         };

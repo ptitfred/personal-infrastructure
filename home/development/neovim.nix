@@ -18,6 +18,7 @@
     pkgs.nil
     pkgs.nodePackages.bash-language-server
     pkgs.shellcheck
+    pkgs.wgsl-analyzer
   ];
 
   programs.neovim = {
@@ -56,6 +57,7 @@
           telescope-fzf-native-nvim
           telescope-lsp-handlers-nvim
           telescope-ui-select-nvim
+          vim-glsl
         ];
   };
 }
