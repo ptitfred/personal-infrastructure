@@ -196,6 +196,11 @@ lsp.wgsl_analyzer.setup {
   on_attach = on_attach,
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+}
 
 local hover = require('hover')
 hover.setup {

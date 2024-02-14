@@ -57,7 +57,9 @@
           telescope-fzf-native-nvim
           telescope-lsp-handlers-nvim
           telescope-ui-select-nvim
-          vim-glsl
+          nvim-treesitter
+          nvim-treesitter-parsers.wgsl
+          nvim-treesitter-parsers.wgsl_bevy
         ];
   };
 }
