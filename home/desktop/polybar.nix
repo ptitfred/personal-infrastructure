@@ -271,7 +271,7 @@ in
         };
 
         "module/audio" = {
-          type = "internal/alsa";
+          type = "internal/pulseaudio";
 
           format-volume = "<ramp-volume> <label-volume>";
 
