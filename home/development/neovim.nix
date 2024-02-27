@@ -18,6 +18,7 @@
     pkgs.nil
     pkgs.nodePackages.bash-language-server
     pkgs.shellcheck
+    pkgs.wgsl-analyzer
   ];
 
   programs.neovim = {
@@ -41,6 +42,7 @@
           cmp-path
           cmp-spell
           comment-nvim
+          fidget-nvim
           gruvbox
           vim-airline
           vim-autoformat
@@ -55,6 +57,9 @@
           telescope-fzf-native-nvim
           telescope-lsp-handlers-nvim
           telescope-ui-select-nvim
+          nvim-treesitter
+          nvim-treesitter-parsers.wgsl
+          nvim-treesitter-parsers.wgsl_bevy
         ];
   };
 }
