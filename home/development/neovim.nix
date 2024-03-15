@@ -19,6 +19,7 @@
     pkgs.nodePackages.bash-language-server
     pkgs.shellcheck
     pkgs.wgsl-analyzer
+    pkgs.elixir-ls
   ];
 
   programs.neovim = {
