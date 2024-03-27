@@ -94,7 +94,7 @@
 
       packages.${system} =
         let tools = {
-              screenshot         = pkgs.callPackage home/desktop/screenshot          {};
+              rofi-screenshot    = pkgs.callPackage home/desktop/rofi-screenshot     {};
               backgrounds        = pkgs.callPackage home/desktop/backgrounds         {};
               toggle-redshift    = pkgs.callPackage home/desktop/toggle-redshift.nix {};
               focus-by-classname = pkgs.callPackage home/desktop/focus-by-classname  {};

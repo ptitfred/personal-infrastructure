@@ -2,8 +2,9 @@
 
 let palette = import ../palette.nix;
 
-    screenshot = pkgs.callPackage ./screenshot {};
-    screenshotCmd = "${screenshot}/bin/screenshot";
+    rofi-screenshot = pkgs.callPackage ./rofi-screenshot {};
+    start-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot";
+    stop-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot -s";
 
     inherit (import ../fonts.nix { baseSize = config.desktop.fontSize; }) roboto toI3 toGTK;
 
@@ -89,7 +90,8 @@ in
                 mkBindRelease = key: command: {
                   "--release ${modifier}+${key}" = "exec ${command}";
                 };
-                bindings = mkBindRelease "x"     screenshotCmd
+                bindings = mkBindRelease "x"       start-rofi-screenshot
+                        // mkBindRelease "Shift+x" stop-rofi-screenshot
                         // bindWorkspaces workspaces
                         // config.desktop.i3-extra-bindings;
              in lib.mkOptionDefault bindings;
