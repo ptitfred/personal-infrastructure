@@ -185,6 +185,11 @@ lsp.bashls.setup {
   on_attach = on_attach,
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
+lsp.elixirls.setup {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  cmd = { "elixir-ls" },
+}
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = "*.wgsl",
