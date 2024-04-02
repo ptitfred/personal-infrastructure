@@ -16,7 +16,7 @@
 
   services.personal-website = {
     enable = true;
-    inherit (infrastructure) domain aliases;
+    inherit (infrastructure) domain aliases redirections;
   };
 
   personal-infrastructure = {

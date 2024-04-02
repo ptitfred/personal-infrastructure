@@ -2,6 +2,12 @@ let infrastructure =
       {
         domain = "test.localhost";
         aliases = [ "localhost" "test2.localhost" ];
+        redirections = [
+          {
+            path = "/example";
+            target = "https://example.org";
+          }
+        ];
         acme-email = "acme@localhost";
         safe-ips = [ "1.1.1.1" ];
         ssh-keys = {
