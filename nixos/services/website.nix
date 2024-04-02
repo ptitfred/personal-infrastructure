@@ -27,6 +27,13 @@ let
         };
       };
 
+  mkRedirection = { path, target }: "rewrite ^${path}$ ${target} permanent;";
+
+  extraConfig = ''
+    ${nginx.extraConfig}
+    ${lib.strings.concatMapStringsSep "\n" mkRedirection cfg.redirections}
+  '';
+
   hostingHost =
     {
       ${cfg.domain} = {
@@ -35,17 +42,29 @@ let
 
         locations."/" = {
           root = brotlify { src = nginx.root; };
-          inherit (nginx) extraConfig;
+          inherit extraConfig;
         };
 
         locations."/${screenshotsSubdirectory}/" = {
           root = "/var/lib/${assetsDirectory}";
-          inherit (nginx) extraConfig;
         };
       };
     };
 
   virtualHosts = foldr mkRedirect hostingHost cfg.aliases;
+
+  redirection = types.submodule {
+    options = {
+      path = mkOption {
+        type = types.str;
+        default = false;
+      };
+      target = mkOption {
+        type = types.str;
+        default = false;
+      };
+    };
+  };
 in
   {
     imports = [
@@ -72,6 +91,14 @@ in
         type = types.listOf types.str;
         description = ''
           CNAMEs to respond to by redirecting to the domain set at `services.personal-website.domain`.
+        '';
+        default = [];
+      };
+
+      redirections = mkOption {
+        type = types.listOf redirection;
+        description = ''
+          Extra URL redirections to inject and that you might not want to have publicly committed.
         '';
         default = [];
       };
