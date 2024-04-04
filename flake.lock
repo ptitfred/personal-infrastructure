@@ -26,11 +26,11 @@
         "flake-utils": "flake-utils"
       },
       "locked": {
-        "lastModified": 1696584097,
-        "narHash": "sha256-a9Hhqf/Fi0FkjRTcQr3pYDhrO9A9tdOkaeVgD23Cdrk=",
+        "lastModified": 1710161569,
+        "narHash": "sha256-lcIRIOFCdIWEGyKyG/tB4KvxM9zoWuBRDxW+T+mvIb0=",
         "owner": "justinwoo",
         "repo": "easy-purescript-nix",
-        "rev": "d5fe5f4b210a0e4bac42ae0c159596a49c5eb016",
+        "rev": "117fd96acb69d7d1727df95b6fde9d8715e031fc",
         "type": "github"
       },
       "original": {
@@ -115,11 +115,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705476964,
-        "narHash": "sha256-W5OK1fnj4qdn1HWOlxV2S3YiUvfaVjQM5ldWVpGV1fs=",
+        "lastModified": 1710888565,
+        "narHash": "sha256-s9Hi4RHhc6yut4EcYD50sZWRDKsugBJHSbON8KFwoTw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "85c3b600f660abd86e94cbcd1c46733943197a07",
+        "rev": "f33900124c23c4eca5831b9b5eb32ea5894375ce",
         "type": "github"
       },
       "original": {
@@ -232,11 +232,11 @@
     "power-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1699434176,
-        "narHash": "sha256-HOUnLm2GSvJkCxK9ofM5p2I9xpF6Se44/8a/bkwrnmw=",
+        "lastModified": 1708415603,
+        "narHash": "sha256-1hjQXC7261DiwrZ54PiwMLJM62srmP8koPNnTEp2zdI=",
         "owner": "wfxr",
         "repo": "tmux-power",
-        "rev": "1d73c304573b3ae369567d2ef635f0e1c3de7ecc",
+        "rev": "2e362c50e5772ba1d13a00628baba558b4220f41",
         "type": "github"
       },
       "original": {
