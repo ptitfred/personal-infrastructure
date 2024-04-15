@@ -15,6 +15,11 @@ let cfg = config.personal-infrastructure.postgresql;
         type = lib.types.bool;
         default = false;
       };
+
+      detailed-logging = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
     };
 
     userType = lib.types.submodule {
@@ -45,6 +50,8 @@ let cfg = config.personal-infrastructure.postgresql;
         if cfg.available-on-tissue
         then lib.mkForce "localhost,${config.personal-infrastructure.tissue.ip}"
         else "localhost";
+      settings.log_statement = lib.mkIf cfg.detailed-logging "all";
+      settings.client_min_messages = lib.mkIf cfg.detailed-logging "log";
     };
 
     authentication = lib.strings.concatMapStrings authenticate (builtins.attrNames users);
