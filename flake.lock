@@ -576,11 +576,11 @@
     "scram-sha-256": {
       "flake": false,
       "locked": {
-        "lastModified": 1695003585,
-        "narHash": "sha256-gl1nNAxhLRQj2PqMeucqxEBW4IWZ+3Lgy0S+6XaCrgM=",
+        "lastModified": 1707702753,
+        "narHash": "sha256-nhibZDnImP0KIwt8cX4073n4jr3TSfATIBV9h4mKx1M=",
         "owner": "supercaracal",
         "repo": "scram-sha-256",
-        "rev": "1d192031130bbafef3e4d8fcd7bd66809bb0abf7",
+        "rev": "ae445ef3db29ca5c2325270fee553f001d921a01",
         "type": "github"
       },
       "original": {
