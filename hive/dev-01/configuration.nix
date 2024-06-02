@@ -28,22 +28,23 @@
     # Enable the X11 windowing system.
     enable = true;
 
-    displayManager = {
-      sddm.enable = lib.mkForce false;
-      lightdm.enable = true;
-      autoLogin.enable = lib.mkForce false;
-    };
+    displayManager.lightdm.enable = true;
 
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
     };
 
-    layout = "fr";
+    xkb.layout = "fr";
+  };
+
+  services.displayManager = {
+    sddm.enable = lib.mkForce false;
+    autoLogin.enable = lib.mkForce false;
   };
 
   # Configure keymap in X11
-  # services.xserver.layout = "fr";
+  # services.xserver.xkb.layout = "fr";
   # services.xserver.xkbOptions = {
   #   "eurosign:e";
   #   "caps:escape" # map caps to escape.
