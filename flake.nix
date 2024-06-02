@@ -2,7 +2,7 @@
   description = "Personal infrastructure";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
     colmena.url = "github:zhaofengli/colmena";
