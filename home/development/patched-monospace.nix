@@ -10,7 +10,7 @@ runCommand "patched-monospace" {
   mkdir -p $out/share/fonts/truetype
   nerd-font-patcher --outputdir $out/share/fonts/truetype \
     --mono \
-    --fontawesome --fontawesomeextension \
+    --fontawesome --fontawesomeext \
     --powerline --powerlineextra \
     ${dejavu_fonts}/share/fonts/truetype/DejaVuSansMono.ttf
 ''
