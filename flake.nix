@@ -2,7 +2,7 @@
   description = "Personal infrastructure";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
     colmena.url = "github:zhaofengli/colmena";
@@ -40,7 +40,7 @@
         scram-sha-256 = pkgs.buildGoModule {
           name = "scram-sha-256";
           src = inputs.scram-sha-256;
-          vendorSha256 = "sha256-qNJSCLMPdWgK/eFPmaYBcgH3P6jHBqQeU4gR6kE/+AE=";
+          vendorHash = "sha256-HjyD30RFf5vnZ8CNU1s3sTTyCof1yD8cdVWC7cLwjic=";
         };
 
         mkCheck = name: script:
