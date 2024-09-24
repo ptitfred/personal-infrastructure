@@ -286,11 +286,11 @@
         "wgsl-analyzer": "wgsl-analyzer"
       },
       "locked": {
-        "lastModified": 1722867019,
-        "narHash": "sha256-I5Fx668v0no/rSW8F3xwl79sCm0Ru36Q6kUNEv2p4vw=",
+        "lastModified": 1727181704,
+        "narHash": "sha256-wyR3u6hbmJ8QwpcxJriyexGj5Qb4FFXEVvKc//sqd3Q=",
         "owner": "ptitfred",
         "repo": "home-manager",
-        "rev": "b312b78f20882b7d23bccd0ca82f323d3b5b74f9",
+        "rev": "7387cf13126b4ea47991502740a4b7f337f8e932",
         "type": "github"
       },
       "original": {
