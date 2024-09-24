@@ -1,8 +1,8 @@
 { pkgs, lib, ... }:
 
 let obsidian = pkgs.callPackage ./obsidian.nix {
-      version = "1.5.3";
-      sha256 = "sha256-F7nqWOeBGGSmSVNTpcx3lHRejSjNeM2BBqS9tsasTvg=";
+      version = "1.6.7";
+      sha256 = "sha256-ok1fedN8+OXBisFpVXbKRW2OhE4o9MC9lJmtMMST6V8=";
     };
 in
 {
