@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }:
 
-let hm = inputs.home-manager-base.inputs.home-manager;
+let hm = inputs.home-manager;
  in
 {
   imports = [

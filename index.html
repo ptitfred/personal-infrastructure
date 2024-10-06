@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Palette Xresources (for urxvt)</title>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        background-color: #263640cc;
+      }
+      .palette {
+        margin: 6px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        max-height: 390px;
+        max-width: 250px;
+      }
+
+      [data-horizontal].palette {
+        flex-direction: row;
+        max-width: unset;
+        max-height: unset;
+      }
+
+      .palette div {
+        background-color: attr(data-color color);
+        height: 30px;
+        width: 120px;
+        margin: 6px;
+        border: 3px solid #263640;
+      }
+      .palette div::after {
+        content: attr(data-name);
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        top: 2px;
+        position: relative;
+        left: 8px;
+        color: #263640;
+      }
+      .palette div[data-flip] {
+        border-color: #afbfbf;
+      }
+      .palette div[data-flip]::after {
+        color: #afbfbf;
+      }
+    </style>
+  </head>
+  <body>
+
+    <p>
+
+      <div class='palette' data-horizontal>
+        <div style='background-color: #93a1a1' data-name='*.foreground'></div>
+        <div style='background-color: #141c21' data-name='*.background' data-flip></div>
+        <div style='background-color: #afbfbf' data-name='*.cursorColor'></div>
+      </div>
+
+      <div class='palette'>
+        <div style='background-color: #263640' data-name='*.color0' data-flip></div>
+        <div style='background-color: #d12f2c' data-name='*.color1'></div>
+        <div style='background-color: #819400' data-name='*.color2'></div>
+        <div style='background-color: #b08500' data-name='*.color3'></div>
+        <div style='background-color: #2587cc' data-name='*.color4'></div>
+        <div style='background-color: #696ebf' data-name='*.color5'></div>
+        <div style='background-color: #289c93' data-name='*.color6'></div>
+        <div style='background-color: #bfbaac' data-name='*.color7'></div>
+        <div style='background-color: #4a697d' data-name='*.color8'></div>
+        <div style='background-color: #fa3935' data-name='*.color9'></div>
+        <div style='background-color: #a4bd00' data-name='*.color10'></div>
+        <div style='background-color: #d9a400' data-name='*.color11'></div>
+        <div style='background-color: #2ca2f5' data-name='*.color12'></div>
+        <div style='background-color: #8086e8' data-name='*.color13'></div>
+        <div style='background-color: #33c5ba' data-name='*.color14'></div>
+        <div style='background-color: #fdf6e3' data-name='*.color15'></div>
+      </div>
+
+    </p>
+
+  </body>
+</html>
