@@ -1,12 +1,11 @@
-{ lib, runCommand, symlinkJoin, ... }:
-
+{ lib, runCommand, linkFarm, ... }:
 
 let dropOverrides =
       let dropOverride = name: _: ! builtins.elem name [ "override" "overrideDerivation"];
        in lib.attrsets.filterAttrs dropOverride;
 
     bundleTools = tools:
-      let default = symlinkJoin { name = "tools"; paths = builtins.attrValues tools; };
+      let default = linkFarm "tools" tools;
       in tools // { inherit default; };
 
     mkCheck = name: script:
