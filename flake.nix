@@ -2,45 +2,31 @@
   description = "Personal infrastructure & Home Manager configuration";
 
   inputs = {
+    # nix package sets
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
 
-    colmena.url = "github:zhaofengli/colmena";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-    nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
-
+    # personal projects
     personal-homepage.url = "github:ptitfred/personal-homepage";
-
-    scram-sha-256.url = "github:supercaracal/scram-sha-256";
-    scram-sha-256.flake = false;
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    ptitfred-haddocset.url = "github:ptitfred/haddocset";
+    ptitfred-haddocset.flake = false;
     ptitfred-posix-toolbox .url = "github:ptitfred/posix-toolbox";
 
-    ptitfred-haddocset = {
-      url = "github:ptitfred/haddocset";
-      flake = false;
-    };
-
+    # external dependencies
+    colmena.url = "github:zhaofengli/colmena";
     easy-purescript-nix.url = "github:justinwoo/easy-purescript-nix";
-
-    spago2nix = {
-      url = "github:justinwoo/spago2nix";
-      inputs.nixpkgs.follows = "previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
-      inputs.easy-purescript-nix.follows = "easy-purescript-nix";
-    };
-
-    power-theme = {
-      url = "github:wfxr/tmux-power";
-      flake = false;
-    };
-
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nil.url = "github:oxalica/nil";
-
+    nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+    power-theme.url = "github:wfxr/tmux-power";
+    power-theme.flake = false;
+    scram-sha-256.url = "github:supercaracal/scram-sha-256";
+    scram-sha-256.flake = false;
+    spago2nix.url = "github:justinwoo/spago2nix";
+    spago2nix.inputs.easy-purescript-nix.follows = "easy-purescript-nix";
+    spago2nix.inputs.nixpkgs.follows = "previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
     wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
