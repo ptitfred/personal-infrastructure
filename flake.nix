@@ -44,6 +44,8 @@
           ];
         };
 
+        colmena = pkgs.callPackage ./hive { inherit inputs; };
+        lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
         home = pkgs.callPackage ./home { inherit inputs system; };
 
         tools =
@@ -52,11 +54,6 @@
           );
 
         helpers = pkgs.callPackage ./helpers.nix {};
-
-        lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
-
-        colmena = pkgs.callPackage ./hive { inherit inputs; };
-
         tests = pkgs.callPackage ./tests { inherit colmena inputs lib; };
 
      in {
