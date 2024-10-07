@@ -44,7 +44,7 @@
     wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
-  outputs = inputs@{ nixpkgs, previous, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, previous, ... }:
     let system = "x86_64-linux";
         pkgs = import nixpkgs {
           inherit system;
@@ -57,38 +57,12 @@
         previous-pkgs = import previous { inherit system; };
         lint = previous-pkgs.callPackage ./lint.nix {};
 
-        workstation =
-          { ... }:
-          {
-            imports = [ ./workstation.nix ];
-            nixpkgs.overlays = [
-              inputs.ptitfred-posix-toolbox.overlay
-              inputs.nil.overlays.nil
-              inputs.wgsl-analyzer.overlays.default
-              hm-overlay
-            ];
-          };
-
-        hm-overlay = self: previous: {
-          # 22.11 still available when needed
-          previous = inputs.previous.legacyPackages.${system};
-
-          haddocset = self.callPackage inputs.ptitfred-haddocset {};
-          postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
-          inherit (previous-pkgs) nix-linter;
-          inherit (inputs.spago2nix.packages.${system}) spago2nix;
-          easy-ps = inputs.easy-purescript-nix.packages.${system};
-          tmuxPlugins = previous.tmuxPlugins // {
-            power-theme = previous.tmuxPlugins.power-theme.overrideAttrs (_: { src = inputs.power-theme; });
-          };
-        };
-
-        hm-pkgs = import nixpkgs { inherit system; };
+        home = pkgs.callPackage ./home { inherit inputs system; };
 
         tools =
           dropOverrides (
             pkgs.callPackage ./tools {} //
-            hm-pkgs.callPackage home/tools.nix {}
+            home.tools
           );
 
         dropOverrides =
@@ -99,7 +73,7 @@
           let default = pkgs.symlinkJoin { name = "tools"; paths = builtins.attrValues tools; };
           in tools // { inherit default; };
 
-        lib = pkgs.callPackage ./lib.nix {} // { inherit mkHomeConfiguration; };
+        lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
 
         colmena = pkgs.callPackage ./hive.nix { inherit inputs; };
 
@@ -125,12 +99,6 @@
 
         mkChecks = pkgs.lib.attrsets.mapAttrs mkCheck;
 
-        mkHomeConfiguration = module:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = hm-pkgs;
-            modules = [ workstation module ];
-          };
-
      in {
           devShells.${system}.default = pkgs.mkShell {
             buildInputs = [
@@ -138,10 +106,10 @@
             ];
           };
 
-          homeManagerModules = { inherit workstation; };
+          homeManagerModules = { inherit (home) workstation; };
 
-          homeConfigurations.test-virtual-machine = mkHomeConfiguration tests/virtual-machine.nix;
-          homeConfigurations.test-laptop          = mkHomeConfiguration tests/laptop.nix;
+          homeConfigurations.test-virtual-machine = home.mkHomeConfiguration tests/virtual-machine.nix;
+          homeConfigurations.test-laptop          = home.mkHomeConfiguration tests/laptop.nix;
 
           packages.${system} = bundle-tools tools // { inherit scram-sha-256; };
 
