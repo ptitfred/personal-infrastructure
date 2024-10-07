@@ -71,14 +71,23 @@
 
         colmena = pkgs.callPackage ./hive.nix { inherit inputs; };
 
-        test-hive = lib.stackHives [ colmena (import tests/infra.nix) ];
-        test-infra = (inputs.colmena.lib.makeHive test-hive).toplevel;
+        tests = pkgs.callPackage ./tests { inherit colmena inputs lib; };
 
-        tests =
-          let mkNode = name: { inherit name; path = test-infra.${name}; };
-              nodes = lib.nodesFromHive test-hive;
-           in pkgs.linkFarm test-hive.meta.description (map mkNode nodes);
      in {
+          inherit lib colmena;
+          inherit (tests) homeConfigurations tests test-hive;
+
+          apps.${system} = {
+            lint = {
+              type = "app";
+              program = "${tools.lint}/bin/lint";
+            };
+          };
+
+          checks.${system} =
+            let local-lint = "${tools.lint}/bin/lint ${./.}";
+            in { inherit (tests) tests; } // helpers.mkChecks { lint = local-lint; };
+
           devShells.${system}.default = pkgs.mkShell {
             buildInputs = [
               inputs.colmena.packages.${system}.colmena pkgs.pwgen
@@ -88,22 +97,6 @@
 
           homeManagerModules = { inherit (home) workstation; };
 
-          homeConfigurations.test-virtual-machine = home.mkHomeConfiguration tests/virtual-machine.nix;
-          homeConfigurations.test-laptop          = home.mkHomeConfiguration tests/laptop.nix;
-
           packages.${system} = helpers.bundleTools tools;
-
-          inherit lib colmena tests test-hive;
-
-          checks.${system} =
-            let local-lint = "${tools.lint}/bin/lint ${./.}";
-            in { inherit tests; } // helpers.mkChecks { lint = local-lint; };
-
-          apps.${system} = {
-            lint = {
-              type = "app";
-              program = "${tools.lint}/bin/lint";
-            };
-          };
         };
 }
