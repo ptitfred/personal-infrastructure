@@ -44,12 +44,12 @@
     wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
-  outputs = inputs@{ nixpkgs, previous, ... }:
+  outputs = inputs:
     let system = "x86_64-linux";
 
-        previous-pkgs = import previous { inherit system; };
+        previous-pkgs = import inputs.previous { inherit system; };
 
-        pkgs = import nixpkgs {
+        pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
             inputs.personal-homepage.overlays.default
