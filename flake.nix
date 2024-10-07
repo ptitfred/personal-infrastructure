@@ -62,7 +62,7 @@
 
         tools =
           helpers.dropOverrides (
-            pkgs.callPackage ./tools {} // home.tools
+            pkgs.callPackage ./tools { inherit inputs; } // home.tools
           );
 
         helpers = pkgs.callPackage ./helpers.nix {};
@@ -78,17 +78,11 @@
           let mkNode = name: { inherit name; path = test-infra.${name}; };
               nodes = lib.nodesFromHive test-hive;
            in pkgs.linkFarm test-hive.meta.description (map mkNode nodes);
-
-        scram-sha-256 = pkgs.buildGoModule {
-          name = "scram-sha-256";
-          src = inputs.scram-sha-256;
-          vendorHash = "sha256-HjyD30RFf5vnZ8CNU1s3sTTyCof1yD8cdVWC7cLwjic=";
-        };
-
      in {
           devShells.${system}.default = pkgs.mkShell {
             buildInputs = [
               inputs.colmena.packages.${system}.colmena pkgs.pwgen
+              tools.scram-sha-256
             ];
           };
 
@@ -97,7 +91,7 @@
           homeConfigurations.test-virtual-machine = home.mkHomeConfiguration tests/virtual-machine.nix;
           homeConfigurations.test-laptop          = home.mkHomeConfiguration tests/laptop.nix;
 
-          packages.${system} = helpers.bundleTools tools // { inherit scram-sha-256; };
+          packages.${system} = helpers.bundleTools tools;
 
           inherit lib colmena tests test-hive;
 
