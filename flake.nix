@@ -69,7 +69,7 @@
 
         lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
 
-        colmena = pkgs.callPackage ./hive.nix { inherit inputs; };
+        colmena = pkgs.callPackage ./hive { inherit inputs; };
 
         tests = pkgs.callPackage ./tests { inherit colmena inputs lib; };
 
