@@ -61,17 +61,11 @@
         home = pkgs.callPackage ./home { inherit inputs system; };
 
         tools =
-          dropOverrides (
+          helpers.dropOverrides (
             pkgs.callPackage ./tools {} // home.tools
           );
 
-        dropOverrides =
-          let dropOverride = name: _: ! builtins.elem name [ "override" "overrideDerivation"];
-           in pkgs.lib.attrsets.filterAttrs dropOverride;
-
-        bundle-tools = tools:
-          let default = pkgs.symlinkJoin { name = "tools"; paths = builtins.attrValues tools; };
-          in tools // { inherit default; };
+        helpers = pkgs.callPackage ./helpers.nix {};
 
         lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
 
@@ -91,14 +85,6 @@
           vendorHash = "sha256-HjyD30RFf5vnZ8CNU1s3sTTyCof1yD8cdVWC7cLwjic=";
         };
 
-        mkCheck = name: script:
-          pkgs.runCommand name {} ''
-            mkdir -p $out
-            ${script}
-          '';
-
-        mkChecks = pkgs.lib.attrsets.mapAttrs mkCheck;
-
      in {
           devShells.${system}.default = pkgs.mkShell {
             buildInputs = [
@@ -111,13 +97,13 @@
           homeConfigurations.test-virtual-machine = home.mkHomeConfiguration tests/virtual-machine.nix;
           homeConfigurations.test-laptop          = home.mkHomeConfiguration tests/laptop.nix;
 
-          packages.${system} = bundle-tools tools // { inherit scram-sha-256; };
+          packages.${system} = helpers.bundleTools tools // { inherit scram-sha-256; };
 
           inherit lib colmena tests test-hive;
 
           checks.${system} =
             let local-lint = "${tools.lint}/bin/lint ${./.}";
-            in { inherit tests; } // mkChecks { lint = local-lint; };
+            in { inherit tests; } // helpers.mkChecks { lint = local-lint; };
 
           apps.${system} = {
             lint = {
