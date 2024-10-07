@@ -6,9 +6,13 @@ help:
 tools:
   nix build
 
-# Test the hive configuration
+# Test the hive and various home-manager configurations
 test:
+  # Test the hive configuration
   nix build .#tests
+  # Test various home-manager configurations
+  nix run home-manager/release-24.05 -- build --flake .#test-virtual-machine
+  nix run home-manager/release-24.05 -- build --flake .#test-laptop
 
 # Lint the nix files
 lint:

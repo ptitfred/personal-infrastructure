@@ -1,11 +1,8 @@
-{ callPackage
-, nix-linter
-, symlinkJoin
-}:
+{ callPackage, inputs }:
 
-let tools = {
-      lint         = callPackage ./lint.nix     { inherit nix-linter; };
-      metadata     = callPackage ./metadata     {};
-      pending-diff = callPackage ./pending-diff {};
-    };
-in tools // { default = symlinkJoin { name = "tools"; paths = builtins.attrValues tools; }; }
+{
+  lint          = callPackage ./lint.nix     {};
+  metadata      = callPackage ./metadata     {};
+  pending-diff  = callPackage ./pending-diff {};
+  scram-sha-256 = callPackage ./scram-sha-256.nix { inherit inputs; };
+}
