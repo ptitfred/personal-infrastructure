@@ -1,9 +1,6 @@
-{ inputs, system, ... }:
+{ callPackage, pkgs, inputs, system, ... }:
 
-let hm-pkgs = import inputs.nixpkgs { inherit system; };
-    previous-pkgs = import inputs.previous { inherit system; };
-
-    workstation =
+let workstation =
       { ... }:
       {
         imports = [ ./workstation.nix ];
@@ -21,7 +18,7 @@ let hm-pkgs = import inputs.nixpkgs { inherit system; };
 
       haddocset = self.callPackage inputs.ptitfred-haddocset {};
       postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
-      inherit (previous-pkgs) nix-linter;
+      inherit (pkgs) nix-linter;
       inherit (inputs.spago2nix.packages.${system}) spago2nix;
       easy-ps = inputs.easy-purescript-nix.packages.${system};
       tmuxPlugins = previous.tmuxPlugins // {
@@ -31,11 +28,11 @@ let hm-pkgs = import inputs.nixpkgs { inherit system; };
 
     mkHomeConfiguration = module:
       inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = hm-pkgs;
+        inherit pkgs;
         modules = [ workstation module ];
       };
 in
   {
     inherit workstation mkHomeConfiguration;
-    tools = hm-pkgs.callPackage ./tools.nix {};
+    tools = callPackage ./tools.nix {};
   }

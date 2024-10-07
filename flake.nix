@@ -46,23 +46,23 @@
 
   outputs = inputs@{ nixpkgs, previous, ... }:
     let system = "x86_64-linux";
+
+        previous-pkgs = import previous { inherit system; };
+
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
             inputs.personal-homepage.overlays.default
             (_: _: { inherit (tools) backgrounds; })
+            (_: _: { nix-linter = previous-pkgs.nix-linter; })
           ];
         };
-
-        previous-pkgs = import previous { inherit system; };
-        lint = previous-pkgs.callPackage ./lint.nix {};
 
         home = pkgs.callPackage ./home { inherit inputs system; };
 
         tools =
           dropOverrides (
-            pkgs.callPackage ./tools {} //
-            home.tools
+            pkgs.callPackage ./tools {} // home.tools
           );
 
         dropOverrides =
@@ -116,13 +116,13 @@
           inherit lib colmena tests test-hive;
 
           checks.${system} =
-            let local-lint = "${lint}/bin/lint ${./.}";
+            let local-lint = "${tools.lint}/bin/lint ${./.}";
             in { inherit tests; } // mkChecks { lint = local-lint; };
 
           apps.${system} = {
             lint = {
               type = "app";
-              program = "${lint}/bin/lint";
+              program = "${tools.lint}/bin/lint";
             };
           };
         };
