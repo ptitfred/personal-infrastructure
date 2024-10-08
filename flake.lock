@@ -449,16 +449,16 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1703467016,
-        "narHash": "sha256-/5A/dNPhbQx/Oa2d+Get174eNI3LERQ7u6WTWOlR1eQ=",
+        "lastModified": 1728193676,
+        "narHash": "sha256-PbDWAIjKJdlVg+qQRhzdSor04bAPApDqIv2DofTyynk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d02d818f22c777aa4e854efc3242ec451e5d462a",
+        "rev": "ecbc1ca8ffd6aea8372ad16be9ebbb39889e55b6",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-23.11",
+        "ref": "nixos-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -593,11 +593,11 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1704027259,
-        "narHash": "sha256-4jUNSWHLG6EFDA++iYlQ2nhYW8/WaPMTzW3mXFoZH50=",
+        "lastModified": 1728383275,
+        "narHash": "sha256-6Zi2t1f/Da1LhxgAyp+PFPKjeF/mYKGNuOwfhP3xXeo=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "1b4f21f7bb92c796923fe122814dad8aa6632714",
+        "rev": "61b7b6be53d4b560300244ed8395010b41bf896b",
         "type": "github"
       },
       "original": {
