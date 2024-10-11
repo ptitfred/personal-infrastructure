@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ baseHive, pkgs, ... }:
 
 let stackHives = hives:
       let inherit (pkgs.lib) lists attrsets;
@@ -13,7 +13,9 @@ let stackHives = hives:
        in builtins.removeAttrs (lists.foldl mergeHostname { inherit meta; } hostnames) [ "override" "overrideDerivation" ];
 
     nodesFromHive = hive: builtins.attrNames (builtins.removeAttrs hive [ "meta" ]);
+
+    mkHive = hive: stackHives [ baseHive hive ];
 in
 {
-  inherit stackHives nodesFromHive;
+  inherit stackHives nodesFromHive mkHive;
 }

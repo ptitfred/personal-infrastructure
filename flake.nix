@@ -44,14 +44,14 @@
         colmena = pkgs.callPackage ./hive { inherit inputs; };
         home = pkgs.callPackage ./home { inherit inputs system; };
 
-        lib = pkgs.callPackage ./lib {} // { inherit (home) mkHomeConfiguration; };
+        lib = pkgs.callPackage ./lib { baseHive = colmena; } // { inherit (home) mkHomeConfiguration; };
         helpers = pkgs.callPackage lib/helpers.nix {};
 
         tools =
           helpers.dropOverrides (
             pkgs.callPackage ./tools { inherit inputs; } // home.tools
           );
-        tests = pkgs.callPackage ./tests { inherit colmena inputs lib; };
+        tests = pkgs.callPackage ./tests { inherit inputs lib; };
 
      in {
           inherit lib colmena;
