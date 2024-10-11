@@ -45,15 +45,15 @@
         };
 
         colmena = pkgs.callPackage ./hive { inherit inputs; };
-        lib = pkgs.callPackage ./lib.nix {} // { inherit (home) mkHomeConfiguration; };
         home = pkgs.callPackage ./home { inherit inputs system; };
+
+        lib = pkgs.callPackage ./lib {} // { inherit (home) mkHomeConfiguration; };
+        helpers = pkgs.callPackage lib/helpers.nix {};
 
         tools =
           helpers.dropOverrides (
             pkgs.callPackage ./tools { inherit inputs; } // home.tools
           );
-
-        helpers = pkgs.callPackage ./helpers.nix {};
         tests = pkgs.callPackage ./tests { inherit colmena inputs lib; };
 
      in {
