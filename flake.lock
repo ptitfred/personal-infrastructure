@@ -573,16 +573,19 @@
     },
     "ptitfred-posix-toolbox": {
       "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
         "nixos-22_11": "nixos-22_11_2",
         "nixpkgs": "nixpkgs_7",
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1728383275,
-        "narHash": "sha256-6Zi2t1f/Da1LhxgAyp+PFPKjeF/mYKGNuOwfhP3xXeo=",
+        "lastModified": 1728683822,
+        "narHash": "sha256-9Gx9+/+NHiFIKIhodw0kp2bpeUknt90Vg+h41ZzHSiw=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "61b7b6be53d4b560300244ed8395010b41bf896b",
+        "rev": "267f01d370e31f50ac43a540c815980d62dd534a",
         "type": "github"
       },
       "original": {

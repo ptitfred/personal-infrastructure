@@ -5,7 +5,6 @@ let workstation =
       {
         imports = [ ./workstation.nix ];
         nixpkgs.overlays = [
-          inputs.ptitfred-posix-toolbox.overlay
           inputs.nil.overlays.nil
           inputs.wgsl-analyzer.overlays.default
           hm-overlay
@@ -28,7 +27,11 @@ let workstation =
     mkHomeConfiguration = module:
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ workstation module ];
+        modules = [
+          inputs.ptitfred-posix-toolbox.homeManagerModules.default
+          workstation
+          module
+        ];
       };
 in
   {
