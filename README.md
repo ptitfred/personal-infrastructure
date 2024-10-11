@@ -1,5 +1,7 @@
 # system and home-manager configuration
 
+Currently based on nixos-24.05 and home-manager-24.05 (both must be consistent).
+
 ## Usage via Flakes
 
 This project only support flakes.
