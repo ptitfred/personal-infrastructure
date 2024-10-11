@@ -19,7 +19,6 @@ let workstation =
       haddocset = self.callPackage inputs.ptitfred-haddocset {};
       postgresql_12_postgis = self.postgresql_12.withPackages (p: [ p.postgis ]);
       inherit (pkgs) nix-linter;
-      inherit (inputs.spago2nix.packages.${system}) spago2nix;
       easy-ps = inputs.easy-purescript-nix.packages.${system};
       tmuxPlugins = previous.tmuxPlugins // {
         power-theme = previous.tmuxPlugins.power-theme.overrideAttrs (_: { src = inputs.power-theme; });

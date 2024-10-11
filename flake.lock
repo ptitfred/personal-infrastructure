@@ -190,21 +190,6 @@
       }
     },
     "flake-utils_5": {
-      "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_6": {
       "inputs": {
         "systems": "systems_5"
       },
@@ -621,7 +606,6 @@
         "ptitfred-haddocset": "ptitfred-haddocset",
         "ptitfred-posix-toolbox": "ptitfred-posix-toolbox",
         "scram-sha-256": "scram-sha-256",
-        "spago2nix": "spago2nix",
         "wgsl-analyzer": "wgsl-analyzer"
       }
     },
@@ -659,30 +643,6 @@
       "original": {
         "owner": "supercaracal",
         "repo": "scram-sha-256",
-        "type": "github"
-      }
-    },
-    "spago2nix": {
-      "inputs": {
-        "easy-purescript-nix": [
-          "easy-purescript-nix"
-        ],
-        "flake-utils": "flake-utils_5",
-        "nixpkgs": [
-          "previous"
-        ]
-      },
-      "locked": {
-        "lastModified": 1718609943,
-        "narHash": "sha256-GLnirXQM8CIdsgWU+bwy70ozmGztGyOkXxxvRelvy/c=",
-        "owner": "justinwoo",
-        "repo": "spago2nix",
-        "rev": "86f2cef73eb5b90d04d0897aa8c0384593adf9c4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "justinwoo",
-        "repo": "spago2nix",
         "type": "github"
       }
     },
@@ -832,7 +792,7 @@
     "wgsl-analyzer": {
       "inputs": {
         "crane": "crane",
-        "flake-utils": "flake-utils_6",
+        "flake-utils": "flake-utils_5",
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {

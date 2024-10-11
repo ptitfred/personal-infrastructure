@@ -24,9 +24,6 @@
     power-theme.flake = false;
     scram-sha-256.url = "github:supercaracal/scram-sha-256";
     scram-sha-256.flake = false;
-    spago2nix.url = "github:justinwoo/spago2nix";
-    spago2nix.inputs.easy-purescript-nix.follows = "easy-purescript-nix";
-    spago2nix.inputs.nixpkgs.follows = "previous"; # FIXME get back to 23.05 once spago2nix drop nodejs-14
     wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
