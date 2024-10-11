@@ -1,6 +1,6 @@
-{ colmena, inputs, lib, linkFarm }:
+{ inputs, lib, linkFarm }:
 
-let test-hive = lib.stackHives [ colmena (import ./infra.nix) ];
+let test-hive = lib.mkHive (import ./infra.nix);
     test-infra = (inputs.colmena.lib.makeHive test-hive).toplevel;
 
     tests =

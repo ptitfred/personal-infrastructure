@@ -25,7 +25,7 @@ Example flake.nix to use this project as a base (this is very close to what I do
     # Declare colmena configurations (system).
     # See colmena documentation how to declare a set of hosts:
     # <https://colmena.cli.rs/unstable/tutorial/index.html#basic-configuration>
-    colmena = infra.lib.stackHives [ infra.colmena ./system.nix ];
+    colmena = infra.lib.mkHive (import ./system.nix);
   };
 }
 ```

@@ -6,7 +6,6 @@
       purescript
       purescript-psa
       easy-ps.spago
-      spago2nix
       easy-ps.purty
     ];
   };

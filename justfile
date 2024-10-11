@@ -2,6 +2,9 @@
 help:
   just -l
 
+code:
+  $EDITOR flake.nix
+
 # Build the tools
 tools:
   nix build
