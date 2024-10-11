@@ -9,4 +9,6 @@
     ./network.nix
     ./others.nix
   ];
+
+  posix-toolbox.enable = true;
 }

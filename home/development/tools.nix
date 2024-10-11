@@ -6,7 +6,6 @@
     httpie
     jq
     shellcheck
-    posix-toolbox.wait-tcp
     zeal
     just
     ripgrep

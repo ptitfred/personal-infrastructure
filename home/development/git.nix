@@ -1,18 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  home.packages = with pkgs; [
-    posix-toolbox.git-bubbles
-    posix-toolbox.git-checkout-log
-    posix-toolbox.git-tree
-  ];
-
-  programs.bash = {
-    initExtra = ''
-      source ${pkgs.posix-toolbox.git-ps1}/share/posix-toolbox/git-ps1
-    '';
-  };
-
   programs.git = {
     enable = true;
 
