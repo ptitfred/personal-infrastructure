@@ -124,6 +124,6 @@ in
     services.postgresql = service;
     systemd.services.postgresql.postStart = setPasswords;
     networking.firewall.interfaces."tissue".allowedTCPPorts =
-      lib.mkIf cfg.available-on-tissue [ config.services.postgresql.port ];
+      lib.mkIf cfg.available-on-tissue [ config.services.postgresql.settings.port ];
   };
 }
