@@ -2,9 +2,11 @@
   description = "Personal infrastructure & Home Manager configuration";
 
   inputs = {
-    # nix package sets
+    # package sets, currently on 24.05
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # personal projects
     personal-homepage.url = "github:ptitfred/personal-homepage";
@@ -15,8 +17,6 @@
     # external dependencies
     colmena.url = "github:zhaofengli/colmena";
     easy-purescript-nix.url = "github:justinwoo/easy-purescript-nix";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nil.url = "github:oxalica/nil";
     nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
     nixos-hardware.url = "github:nixos/nixos-hardware";
