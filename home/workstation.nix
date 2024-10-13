@@ -10,5 +10,5 @@
     ./others.nix
   ];
 
-  posix-toolbox.enable = true;
+  ptitfred.posix-toolbox.enable = true;
 }
