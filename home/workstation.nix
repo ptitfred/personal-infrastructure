@@ -10,5 +10,8 @@
     ./others.nix
   ];
 
-  ptitfred.posix-toolbox.enable = true;
+  ptitfred.posix-toolbox = {
+    enable = true;
+    git-bubbles.remote-name = "mine";
+  };
 }

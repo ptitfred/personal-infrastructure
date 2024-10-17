@@ -581,15 +581,16 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1728821076,
-        "narHash": "sha256-wd6tldIDRchDlSc/U+NRLTWIZfpGa47QEw1Yor5GKeg=",
+        "lastModified": 1729155043,
+        "narHash": "sha256-KPUZ8KZGQ/ljpIa1jerlKn5Wksx9BltX5TNUK4XGg2Y=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "243a7857edc807ce204d585c58f256f0ebc526ac",
+        "rev": "0a8795ac218674edabfc6c4b19093b89f3b041db",
         "type": "github"
       },
       "original": {
         "owner": "ptitfred",
+        "ref": "git-bubbles-configuration",
         "repo": "posix-toolbox",
         "type": "github"
       }
