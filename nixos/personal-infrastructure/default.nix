@@ -1,7 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   imports = [
+    inputs.lix-module.nixosModules.default
     ./acme.nix
     ./fail2ban.nix
     ./matomo.nix
