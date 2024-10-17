@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.personal-infrastructure.nix-cache;
@@ -22,7 +22,7 @@ in
 
   config = lib.mkIf cfg.enable {
     services.nix-serve.enable = true;
-    services.nix-serve.package = pkgs.nix-serve-ng;
+    # services.nix-serve.package = pkgs.nix-serve-ng;
     services.nix-serve.secretKeyFile = "${config.deployment.keys.nix-serve-private-key.destDir}/nix-serve-private-key";
 
     services.nix-serve.bindAddress = if isPrivate then config.personal-infrastructure.tissue.ip else "127.0.0.1";

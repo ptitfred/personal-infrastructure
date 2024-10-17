@@ -8,6 +8,10 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Lix <https://lix.systems/add-to-config/>
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+
     # personal projects
     personal-homepage.url = "github:ptitfred/personal-homepage";
     ptitfred-haddocset.url = "github:ptitfred/haddocset";
