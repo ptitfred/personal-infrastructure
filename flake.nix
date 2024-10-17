@@ -19,7 +19,6 @@
     colmena.url = "github:zhaofengli/colmena";
     easy-purescript-nix.url = "github:justinwoo/easy-purescript-nix";
     nil.url = "github:oxalica/nil";
-    nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     power-theme.url = "github:wfxr/tmux-power";
     power-theme.flake = false;
