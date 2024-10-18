@@ -41,6 +41,7 @@
           inherit system;
           overlays = [
             inputs.ptitfred-personal-homepage.overlays.default
+            inputs.ptitfred-posix-toolbox.overlays.linter
             (_: _: { inherit (tools) backgrounds; })
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
           ];
@@ -65,12 +66,12 @@
           apps.${system} = {
             lint = {
               type = "app";
-              program = "${tools.lint}/bin/lint";
+              program = "${pkgs.posix-toolbox.nix-linter}/bin/nix-linter";
             };
           };
 
           checks.${system} =
-            let local-lint = "${tools.lint}/bin/lint ${./.}";
+            let local-lint = "${pkgs.posix-toolbox.nix-linter}/bin/nix-linter ${./.}";
             in { inherit (tests) tests; } // helpers.mkChecks { lint = local-lint; };
 
           devShells.${system}.default = pkgs.mkShell {
