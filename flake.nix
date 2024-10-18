@@ -13,7 +13,8 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     # personal projects
-    personal-homepage.url = "github:ptitfred/personal-homepage";
+    ptitfred-personal-homepage.url = "github:ptitfred/personal-homepage";
+    ptitfred-personal-homepage.inputs.nixpkgs.follows = "nixpkgs";
     ptitfred-haddocset.url = "github:ptitfred/haddocset";
     ptitfred-haddocset.flake = false;
     ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox";
@@ -39,7 +40,7 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
-            inputs.personal-homepage.overlays.default
+            inputs.ptitfred-personal-homepage.overlays.default
             (_: _: { inherit (tools) backgrounds; })
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
           ];
