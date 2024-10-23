@@ -5,6 +5,13 @@ let script = pkgs.callPackage ./package.nix {};
 
     repositoryDefinition = lib.types.submodule {
       options = {
+        checkCommand = lib.mkOption {
+          type = lib.types.path;
+          default = pkgs.writeShellScript "noop" ''
+            echo Checks skipped
+          '';
+        };
+
         gitRemoteUrl = lib.mkOption {
           type = lib.types.str;
         };
@@ -47,7 +54,7 @@ let script = pkgs.callPackage ./package.nix {};
           Type = "oneshot";
           ExecStart = "${script}/bin/flake-updater";
           Environment = toEnvironment {
-            inherit (options) githubTokenFile gitRemoteUrl localWorkingCopy;
+            inherit (options) githubTokenFile gitRemoteUrl localWorkingCopy checkCommand;
           };
         };
 

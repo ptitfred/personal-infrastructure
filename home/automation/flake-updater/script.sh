@@ -35,7 +35,8 @@ git commit -F "$logs" -- flake.lock
 other_diffs=$(git status -s | wc -l)
 if [ "$other_diffs" == "0" ]; then
   cat "$logs"
-  just checks
+  # shellcheck disable=SC2154
+  $checkCommand
   git push --force-with-lease github HEAD
   popd
   rm -rf "$dir" "$logs"
