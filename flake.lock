@@ -573,15 +573,16 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1729529135,
-        "narHash": "sha256-S7lsybsm8pTZnOgDf/eKKdzE6YsIkrfUgMhfIPXDca8=",
+        "lastModified": 1729714897,
+        "narHash": "sha256-ifNn2ufQfBbJ8wm3oXjUY9yioUaSGR+Oe+K4xCqUP4w=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "edc18044dace0916b882c82cd35c662fab8c445f",
+        "rev": "f818ec7551039e36735648acb9530ad5750abb48",
         "type": "github"
       },
       "original": {
         "owner": "ptitfred",
+        "ref": "fix-nix-linter-packaging",
         "repo": "posix-toolbox",
         "type": "github"
       }
