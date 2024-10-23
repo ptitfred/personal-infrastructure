@@ -4,6 +4,7 @@
   imports = [
     ./nix.nix
     ./home-manager.nix
+    ./automation
     ./desktop
     ./development
     ./network.nix
