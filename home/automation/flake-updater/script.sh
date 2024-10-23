@@ -13,6 +13,12 @@ nix --version
 git clone "$localWorkingCopy" "$dir"
 pushd "$dir"
 
+function cleanup {
+  popd
+  rm -rf "$dir" "$logs"
+  exit "$1"
+}
+
 # shellcheck disable=SC2154
 git remote add github "$gitRemoteUrl"
 git fetch github
@@ -31,20 +37,17 @@ nix flake update | tee -a "$logs"
 echo "\`\`\`" >> "$logs"
 
 git add -u flake.lock
-git commit -F "$logs" -- flake.lock
+git commit -F "$logs" -- flake.lock || cleanup 0
+
 other_diffs=$(git status -s | wc -l)
 if [ "$other_diffs" == "0" ]; then
   cat "$logs"
   # shellcheck disable=SC2154
   $checkCommand
   git push --force-with-lease github HEAD
-  popd
-  rm -rf "$dir" "$logs"
-  exit 0
+  cleanup 0
 else
   echo "Other diffs detected, can't update blindly:"
   git status -s
-  popd
-  rm -rf "$dir" "$logs"
-  exit 1
+  cleanup 1
 fi
