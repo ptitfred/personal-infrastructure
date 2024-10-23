@@ -17,7 +17,7 @@
     ptitfred-personal-homepage.inputs.nixpkgs.follows = "nixpkgs";
     ptitfred-haddocset.url = "github:ptitfred/haddocset";
     ptitfred-haddocset.flake = false;
-    ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox";
+    ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox/fix-nix-linter-packaging";
     ptitfred-posix-toolbox.inputs.home-manager.follows = "home-manager";
 
     # external dependencies
