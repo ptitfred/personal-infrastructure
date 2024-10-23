@@ -37,6 +37,8 @@ let script = pkgs.callPackage ./package.nix {};
 
     description = "Updates flake inputs for a given repository";
 
+    mkServiceDescription = name: "Updates flake inputs the ${name} repository";
+
     mkName = name: "flake-updater-${name}";
 
     toEnvironment = lib.attrsets.mapAttrsToList (name: value: "${name}=${value}");
@@ -45,7 +47,7 @@ let script = pkgs.callPackage ./package.nix {};
       name = mkName name;
       value = {
         Unit = {
-          Description = description;
+          Description = mkServiceDescription name;
           After  = [ "default-pre.target" ];
           PartOf = [ "default.target" ];
         };
@@ -65,7 +67,7 @@ let script = pkgs.callPackage ./package.nix {};
     mkTimer = name: options: {
       name = mkName name;
       value = {
-        Unit.Description = description;
+        Unit.Description = mkServiceDescription name;
         Timer.OnUnitActiveSec = options.interval;
         Install.WantedBy = [ "timers.target" ];
       };
