@@ -5,6 +5,11 @@ let script = pkgs.callPackage ./package.nix {};
 
     repositoryDefinition = lib.types.submodule {
       options = {
+        baseBranch = lib.mkOption {
+          type = lib.types.str;
+          default = "main";
+        };
+
         checkCommand = lib.mkOption {
           type = lib.types.path;
           default = pkgs.writeShellScript "noop" ''
@@ -22,6 +27,11 @@ let script = pkgs.callPackage ./package.nix {};
 
         localWorkingCopy = lib.mkOption {
           type = lib.types.str;
+        };
+
+        prBranch = lib.mkOption {
+          type = lib.types.str;
+          default = "automated-inputs-update";
         };
 
         interval = lib.mkOption {
@@ -56,7 +66,7 @@ let script = pkgs.callPackage ./package.nix {};
           Type = "oneshot";
           ExecStart = "${script}/bin/flake-updater";
           Environment = toEnvironment {
-            inherit (options) githubTokenFile gitRemoteUrl localWorkingCopy checkCommand;
+            inherit (options) baseBranch githubTokenFile gitRemoteUrl prBranch localWorkingCopy checkCommand;
           };
         };
 
