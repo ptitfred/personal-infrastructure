@@ -1,11 +1,25 @@
 set -e
 
 # shellcheck disable=SC2154
-NIX_CONFIG="extra-access-tokens = github.com=$(cat "$githubTokenFile")"
+GITHUB_TOKEN=$(cat "$githubTokenFile")
+export GITHUB_TOKEN
+
+NIX_CONFIG="extra-access-tokens = github.com=${GITHUB_TOKEN}"
 export NIX_CONFIG
 
+if [ -n "$baseBranch" ]
+then
+  baseBranch="main"
+fi
+
+if [ -n "$prBranch" ]
+then
+  prBranch="automated-inputs-update"
+fi
+
 dir=$(mktemp -d)
-logs=$(mktemp)
+commit_message=$(mktemp)
+flake_update_logs=$(mktemp)
 
 nix --version
 
@@ -15,7 +29,7 @@ pushd "$dir"
 
 function cleanup {
   popd
-  rm -rf "$dir" "$logs"
+  rm -rf "$dir" "$commit_message" "$flake_update_logs"
   exit "$1"
 }
 
@@ -23,28 +37,33 @@ function cleanup {
 git remote add github "$gitRemoteUrl"
 git fetch github
 
-git branch automated-inputs-update github/main
-git checkout automated-inputs-update
+git branch "$prBranch" "github/${baseBranch}"
+git checkout "$prBranch"
+
+nix flake update 2>> "$flake_update_logs"
+
+title="Automated flake inputs updated"
 
 {
-  echo "Automated inputs updated"
+  echo "$title"
   echo ""
   echo "Changes:"
   echo ""
   echo "\`\`\`"
-} > "$logs"
-nix flake update | tee -a "$logs"
-echo "\`\`\`" >> "$logs"
+  tail -3 <"$flake_update_logs" | head -1 | sed 's/@nix//' | jq .msg -r | grep -v "warning"
+  echo "\`\`\`"
+} > "$commit_message"
 
 git add -u flake.lock
-git commit -F "$logs" -- flake.lock || cleanup 0
+git commit -F "$commit_message" -- flake.lock || cleanup 0
 
 other_diffs=$(git status -s | wc -l)
 if [ "$other_diffs" == "0" ]; then
-  cat "$logs"
   # shellcheck disable=SC2154
   $checkCommand
+
   git push --force-with-lease github HEAD
+  gh pr create --base "${baseBranch}" --head "$prBranch" --title "$title" --body "$commit_message" || echo "PR already present."
   cleanup 0
 else
   echo "Other diffs detected, can't update blindly:"
