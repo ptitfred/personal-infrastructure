@@ -84,6 +84,6 @@
 
           homeManagerModules = { inherit (home) workstation; };
 
-          packages.${system} = helpers.bundleTools tools;
+          packages.${system} = helpers.bundleTools tools // { inherit (tests) integration-tests; };
         };
 }
