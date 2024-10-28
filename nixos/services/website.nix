@@ -16,16 +16,20 @@ let
 
   mkRedirect = alias: vhosts: vhosts // redirect alias;
 
-  redirect =
-    alias:
-      {
-        "${alias}" = {
-          forceSSL = true;
-          enableACME = true;
-          acmeFallbackHost = cfg.domain;
-          globalRedirect = cfg.domain;
-        };
-      };
+  vhostRedirectionBaseDefinition = {
+    forceSSL = cfg.secure;
+    enableACME = cfg.secure;
+    globalRedirect = cfg.domain;
+  };
+
+  vhostRedirectionOptionalDefinition =
+    if cfg.secure
+    then { acmeFallbackHost = cfg.domain; }
+    else {};
+
+  redirect = alias: {
+    "${alias}" = vhostRedirectionBaseDefinition // vhostRedirectionOptionalDefinition;
+  };
 
   mkRedirection = { path, target }: "rewrite ^${path}$ ${target} permanent;";
 
@@ -37,8 +41,8 @@ let
   hostingHost =
     {
       ${cfg.domain} = {
-        forceSSL = true;
-        enableACME = true;
+        forceSSL = cfg.secure;
+        enableACME = lib.mkIf cfg.secure true;
 
         locations."/" = {
           root = brotlify { src = nginx.root; };
@@ -80,6 +84,14 @@ in
         '';
       };
 
+      secure = mkOption {
+        type = types.bool;
+        default = true;
+        description = ''
+          If enabled, sets up HTTPs and enforces it. Defaults to true.
+        '';
+      };
+
       domain = mkOption {
         type = types.str;
         description = ''
@@ -113,7 +125,7 @@ in
         brotliSupport = true;
       };
 
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = if cfg.secure then [ 80 443 ] else [ 80 ];
 
       systemd.services.homepage-screenshots = {
         description = "Utility to take screenshots at deployment.";
@@ -136,6 +148,8 @@ in
         };
       };
 
-      security.acme.certs.${cfg.domain}.extraDomainNames = cfg.aliases;
+      security.acme.certs.${cfg.domain} = lib.mkIf cfg.secure {
+        extraDomainNames = lib.mkIf cfg.secure cfg.aliases;
+      };
     };
   }

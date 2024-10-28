@@ -23,3 +23,7 @@ lint:
 
 # Like the CI would do
 checks: lint tools test
+
+# Integrations (not run by default locally)
+integration-tests:
+  nix build .#integration-tests

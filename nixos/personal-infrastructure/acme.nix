@@ -8,7 +8,7 @@ in
 {
   options.personal-infrastructure = {
     acme-email = mkOption {
-      type = types.str;
+      type = types.nullOr types.str;
       default = null;
     };
   };
