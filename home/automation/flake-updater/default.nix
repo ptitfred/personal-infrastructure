@@ -78,7 +78,7 @@ let script = pkgs.callPackage ./package.nix {};
       name = mkName name;
       value = {
         Unit.Description = mkServiceDescription name;
-        Timer.OnUnitActiveSec = options.interval;
+        Timer.OnCalendar = options.interval;
         Timer.Persistent = true;
         Install.WantedBy = [ "timers.target" ];
       };
