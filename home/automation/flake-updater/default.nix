@@ -35,7 +35,7 @@ let script = pkgs.callPackage ./package.nix {};
         };
 
         interval = lib.mkOption {
-          default = "24h";
+          default = "daily";
           type = lib.types.str;
           example = "12h";
           description = ''
@@ -79,6 +79,7 @@ let script = pkgs.callPackage ./package.nix {};
       value = {
         Unit.Description = mkServiceDescription name;
         Timer.OnUnitActiveSec = options.interval;
+        Timer.Persistent = true;
         Install.WantedBy = [ "timers.target" ];
       };
     };
