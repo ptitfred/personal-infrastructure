@@ -27,3 +27,6 @@ checks: lint tools test
 # Integrations (not run by default locally)
 integration-tests:
   nix build .#integration-tests
+
+update-obsidian:
+  nix run .#obsidian-updater

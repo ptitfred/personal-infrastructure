@@ -60,6 +60,8 @@
           );
         tests = pkgs.callPackage ./tests { inherit inputs lib; };
 
+        obsidian-updater = pkgs.callPackage home/obsidian/updater.nix {};
+
      in {
           inherit lib colmena;
           inherit (tests) homeConfigurations tests test-hive;
@@ -84,6 +86,9 @@
 
           homeManagerModules = { inherit (home) workstation; };
 
-          packages.${system} = helpers.bundleTools tools // { inherit (tests) integration-tests; };
+          packages.${system} = helpers.bundleTools tools // {
+            inherit (tests) integration-tests;
+            inherit obsidian-updater;
+          };
         };
 }
