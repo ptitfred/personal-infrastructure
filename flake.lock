@@ -9,11 +9,11 @@
         "stable": "stable"
       },
       "locked": {
-        "lastModified": 1731249827,
-        "narHash": "sha256-04iOZoJ0D+y3xhZtaCgSBOz8T4hED7oMVkuAOzXT8vU=",
+        "lastModified": 1731527002,
+        "narHash": "sha256-dI9I6suECoIAmbS4xcrqF8r2pbmed8WWm5LIF1yWPw8=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "a2193487bcf70bbb998ad1a25a4ff02b8d55db7a",
+        "rev": "e3ad42138015fcdf2524518dd564a13145c72ea1",
         "type": "github"
       },
       "original": {
@@ -384,11 +384,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1731403644,
-        "narHash": "sha256-T9V7CTucjRZ4Qc6pUEV/kpgNGzQbHWfGcfK6JJLfUeI=",
+        "lastModified": 1731797098,
+        "narHash": "sha256-UhWmEZhwJZmVZ1jfHZFzCg+ZLO9Tb/v3Y6LC0UNyeTo=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "f6581f1c3b137086e42a08a906bdada63045f991",
+        "rev": "672ac2ac86f7dff2f6f3406405bddecf960e0db6",
         "type": "github"
       },
       "original": {
@@ -431,6 +431,22 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1731797254,
+        "narHash": "sha256-df3dJApLPhd11AlueuoN0Q4fHo/hagP75LlM5K1sz9g=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e8c38b73aeb218e27163376a2d617e61a2ad9b59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1731239293,
         "narHash": "sha256-q2yjIWFFcTzp5REWQUOU9L6kHdCDmFDpqeix86SOvDc=",
         "owner": "nixos",
@@ -445,29 +461,13 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
-      "locked": {
-        "lastModified": 1730327045,
-        "narHash": "sha256-xKel5kd1AbExymxoIfQ7pgcX6hjw9jCgbiBjiUfSVJ8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "080166c15633801df010977d9d7474b4a6c549d7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1730741070,
-        "narHash": "sha256-edm8WG19kWozJ/GqyYx2VjW99EdhjKwbY3ZwdlPAAlo=",
+        "lastModified": 1731797254,
+        "narHash": "sha256-df3dJApLPhd11AlueuoN0Q4fHo/hagP75LlM5K1sz9g=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d063c1dd113c91ab27959ba540c0d9753409edf3",
+        "rev": "e8c38b73aeb218e27163376a2d617e61a2ad9b59",
         "type": "github"
       },
       "original": {
@@ -501,11 +501,11 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors"
       },
       "locked": {
-        "lastModified": 1730714793,
-        "narHash": "sha256-7rbUcQDvY231LaM1zgp6ciCAdnn8TibfMh9f55MVARo=",
+        "lastModified": 1731407174,
+        "narHash": "sha256-9K7WAsPJVZbCeJoJltnFA1Olxc+uuC9YJKQNSN0Rsw8=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "a543d43898b6b6d69121630d96e0ad2df3853b86",
+        "rev": "d981feee1fdba91c93b524c230f5ceb4b3c3ac1b",
         "type": "github"
       },
       "original": {
@@ -572,11 +572,11 @@
         "posix-toolbox": "posix-toolbox"
       },
       "locked": {
-        "lastModified": 1730737773,
-        "narHash": "sha256-lEnwdsPpg66q2WpVGR30nwEXIdOuBkwQiSzRi+mrzF8=",
+        "lastModified": 1731515596,
+        "narHash": "sha256-d4e28RxtQu3eUSgfSEUDESwCkiX5Zaxo5XlVc9OOwCg=",
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "5f96b319cdc409892392885a99ee4ada9023b204",
+        "rev": "bb1a78387852c800f861654251edddbc824726f7",
         "type": "github"
       },
       "original": {
@@ -595,11 +595,11 @@
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1730912555,
-        "narHash": "sha256-bdil2mbKDONFzq9MltLi/yh2JAY/MBKByLAmZz0wF5Y=",
+        "lastModified": 1731925134,
+        "narHash": "sha256-spEUZexvrIWGydujwFJX4fLAt6csr1dUVpR0Kf8CeFg=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "9e55ac052a9c3758f53aa2c57019e8111349dcc0",
+        "rev": "7f016c813e569effc75bd5537fde6bbd6c7cefa8",
         "type": "github"
       },
       "original": {
