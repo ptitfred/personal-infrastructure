@@ -3,18 +3,17 @@
 
   inputs = {
     # package sets, currently on 24.05
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Lix <https://lix.systems/add-to-config/>
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     # personal projects
     ptitfred-personal-homepage.url = "github:ptitfred/personal-homepage";
-    ptitfred-personal-homepage.inputs.nixpkgs.follows = "nixpkgs";
     ptitfred-haddocset.url = "github:ptitfred/haddocset";
     ptitfred-haddocset.flake = false;
     ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox";
