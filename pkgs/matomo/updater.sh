@@ -18,7 +18,7 @@ JSON
 
   git add "$target_file"
 
-  git commit -m "Obsidian v${target_version}" -- "$target_file"
+  git commit -m "Matomo v${target_version}" -- "$target_file"
 else
   echo All good
 fi
