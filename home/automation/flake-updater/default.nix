@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let script = pkgs.callPackage ./package.nix {};
-    cfg = config.ptitfred.automation.flake-updater;
+let cfg = config.ptitfred.automation.flake-updater;
 
     repositoryDefinition = lib.types.submodule {
       options = {
@@ -64,7 +63,7 @@ let script = pkgs.callPackage ./package.nix {};
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${script}/bin/flake-updater";
+          ExecStart = "${pkgs.flake-updater}/bin/flake-updater";
           Environment = toEnvironment {
             inherit (options) baseBranch githubTokenFile gitRemoteUrl prBranch localWorkingCopy checkCommand;
           };

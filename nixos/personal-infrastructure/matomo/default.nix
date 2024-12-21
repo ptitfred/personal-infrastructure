@@ -3,8 +3,6 @@
 with lib;
 
 let cfg = config.personal-infrastructure.matomo;
-
-    package = pkgs.callPackage ./package.nix (builtins.fromJSON (builtins.readFile ./version.json));
 in
 {
   options.personal-infrastructure.matomo = {
@@ -22,7 +20,7 @@ in
   config = mkIf cfg.enable {
     services.matomo = {
       enable = true;
-      inherit package;
+      package = pkgs.matomo;
       nginx = {};
       inherit (cfg) hostname;
     };

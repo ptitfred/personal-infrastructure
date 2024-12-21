@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 
-let obsidian = pkgs.callPackage ./obsidian {};
-in
 {
   home.packages = with pkgs; [
       qemu

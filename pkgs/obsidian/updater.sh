@@ -4,7 +4,7 @@ filename="obsidian-${version}.tar.gz";
 url="https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/${filename}";
 hash="$(nix-prefetch-url "$url")"
 
-target_file=home/obsidian/version.json
+target_file="pkgs/obsidian/version.json"
 
 jq . > "$target_file" <<- JSON
   {
