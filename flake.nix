@@ -44,8 +44,11 @@
             inputs.ptitfred-posix-toolbox.overlays.linter
             (_: _: { inherit (tools) backgrounds; })
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
+            overlay
           ];
         };
+
+        overlay = import pkgs/overlay.nix;
 
         colmena = pkgs.callPackage ./hive { inherit inputs; };
         home = pkgs.callPackage ./home { inherit inputs system; };
@@ -59,8 +62,8 @@
           );
         tests = pkgs.callPackage ./tests { inherit inputs lib; };
 
-        obsidian-updater = pkgs.callPackage home/obsidian/updater.nix {};
-        matomo-updater = pkgs.callPackage nixos/personal-infrastructure/matomo/updater.nix {};
+        obsidian-updater = pkgs.callPackage pkgs/obsidian/updater.nix {};
+        matomo-updater = pkgs.callPackage pkgs/matomo/updater.nix {};
 
      in {
           inherit lib colmena;
@@ -85,6 +88,8 @@
           };
 
           homeManagerModules = { inherit (home) workstation; };
+
+          overlays.default = overlay;
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;

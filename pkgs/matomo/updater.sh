@@ -1,4 +1,4 @@
-target_file="nixos/personal-infrastructure/matomo/version.json"
+target_file="pkgs/matomo/version.json"
 
 target_version=$(http https://builds.matomo.org/LATEST_5X)
 
