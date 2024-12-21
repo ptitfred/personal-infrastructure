@@ -30,3 +30,6 @@ integration-tests:
 
 update-obsidian:
   nix run .#obsidian-updater
+
+update-matomo:
+  nix run .#matomo-updater
