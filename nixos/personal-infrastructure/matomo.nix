@@ -4,8 +4,8 @@ with lib;
 
 let cfg = config.personal-infrastructure.matomo;
 
-    version = "5.1.2";
-    hash = "sha256-6kR6OOyqwQfV+pRqHO+VMLM1eZQb0om65EilAnIlW9U=";
+    version = "5.2.1";
+    hash = "sha256-5glMwwIG0Uo8bu904u40FUa+yaUlrQe1nUCkv9/ATks=";
 
     # matomo_5 in nixpkgs is at 5.1.1 as of this commit
     package = pkgs.matomo_5.overrideAttrs {
