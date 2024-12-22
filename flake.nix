@@ -42,7 +42,6 @@
             inputs.lix-module.overlays.default
             inputs.ptitfred-personal-homepage.overlays.default
             inputs.ptitfred-posix-toolbox.overlays.linter
-            (_: _: { inherit (tools) backgrounds; })
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
           ];

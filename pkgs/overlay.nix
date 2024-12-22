@@ -9,4 +9,6 @@ let load = directory:
       flake-updater = final.callPackage ./flake-updater {};
       matomo   = load ./matomo   {};
       obsidian = load ./obsidian { inherit (prev) obsidian; };
+
+      backgrounds = final.callPackage ./backgrounds {};
     }
