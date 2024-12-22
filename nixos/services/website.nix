@@ -128,11 +128,11 @@ in
       networking.firewall.allowedTCPPorts = if cfg.secure then [ 80 443 ] else [ 80 ];
 
       systemd.services.homepage-screenshots = {
-        description = "Utility to take screenshots at deployment.";
+        description = "Utility to take screenshots.";
 
         after    = [ "nginx.service" ];
         requires = [ "nginx.service" ];
-        wantedBy = [ "default.target" ];
+        partOf = [ "default.target" ];
 
         script = ''
           mkdir -p /var/lib/${assetsDirectory}/${screenshotsSubdirectory}
@@ -146,6 +146,12 @@ in
           Group = "nginx";
           Type = "oneshot";
         };
+      };
+
+      systemd.timers.homepage-screenshots = {
+        description = "Utility to take screenshots.";
+        timerConfig.OnCalendar = "02:00:00";
+        wantedBy = [ "timers.target" ];
       };
 
       security.acme.certs.${cfg.domain} = lib.mkIf cfg.secure {
