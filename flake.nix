@@ -89,7 +89,7 @@
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;
-            inherit (pkgs) obsidian-updater matomo-updater;
+            inherit (pkgs) lix-updater matomo-updater obsidian-updater;
           };
         };
 }

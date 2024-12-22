@@ -29,5 +29,6 @@ integration-tests:
   nix build .#integration-tests
 
 update-extras:
+  nix run .#lix-updater
   nix run .#obsidian-updater
   nix run .#matomo-updater
