@@ -2,7 +2,7 @@ package_name="$1"
 target_version="$2"
 url="$3"
 
-echo "Checking ${package_name}..."
+echo "Checking ${package_name}…"
 
 target_file="pkgs/${package_name}/version.json"
 
