@@ -61,9 +61,6 @@
           );
         tests = pkgs.callPackage ./tests { inherit inputs lib; };
 
-        obsidian-updater = pkgs.callPackage pkgs/obsidian/updater.nix {};
-        matomo-updater = pkgs.callPackage pkgs/matomo/updater.nix {};
-
      in {
           inherit lib colmena;
           inherit (tests) homeConfigurations tests test-hive;
@@ -92,8 +89,7 @@
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;
-            inherit obsidian-updater;
-            inherit matomo-updater;
+            inherit (pkgs) obsidian-updater matomo-updater;
           };
         };
 }

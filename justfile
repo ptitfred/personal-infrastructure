@@ -28,8 +28,6 @@ checks: lint tools test
 integration-tests:
   nix build .#integration-tests
 
-update-obsidian:
+update-extras:
   nix run .#obsidian-updater
-
-update-matomo:
   nix run .#matomo-updater
