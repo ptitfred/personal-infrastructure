@@ -114,6 +114,8 @@ in
         '';
         default = [];
       };
+
+      screenshots = mkEnableOption "screenshots" // { default = true; };
     };
 
     config = mkIf cfg.enable {
@@ -127,7 +129,7 @@ in
 
       networking.firewall.allowedTCPPorts = if cfg.secure then [ 80 443 ] else [ 80 ];
 
-      systemd.services.homepage-screenshots = {
+      systemd.services.homepage-screenshots = mkIf cfg.screenshots {
         description = "Utility to take screenshots.";
 
         after    = [ "nginx.service" ];
@@ -148,7 +150,7 @@ in
         };
       };
 
-      systemd.timers.homepage-screenshots = {
+      systemd.timers.homepage-screenshots = mkIf cfg.screenshots {
         description = "Utility to take screenshots.";
         timerConfig.OnCalendar = "02:00:00";
         wantedBy = [ "timers.target" ];
