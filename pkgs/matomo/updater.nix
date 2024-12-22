@@ -1,8 +1,7 @@
-# Lix for nix-prefetch-url
-{ writeShellApplication, httpie, jq, lix }:
+{ writeShellApplication, generic-updater, httpie }:
 
 writeShellApplication {
-  name = "obsidian-updater";
-  runtimeInputs = [ httpie jq lix ];
+  name = "matomo-updater";
+  runtimeInputs = [ generic-updater httpie ];
   text = builtins.readFile ./updater.sh;
 }

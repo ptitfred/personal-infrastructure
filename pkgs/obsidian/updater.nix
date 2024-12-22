@@ -1,8 +1,7 @@
-# Lix for nix-prefetch-url
-{ writeShellApplication, gh, jq, lix }:
+{ writeShellApplication, generic-updater, gh, jq }:
 
 writeShellApplication {
   name = "obsidian-updater";
-  runtimeInputs = [ gh jq lix ];
+  runtimeInputs = [ generic-updater gh jq ];
   text = builtins.readFile ./updater.sh;
 }
