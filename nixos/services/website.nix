@@ -148,6 +148,11 @@ in
           Group = "nginx";
           Type = "oneshot";
         };
+
+        environment = {
+          XDG_CONFIG_HOME = "/tmp/.chromium";
+          XDG_CACHE_HOME = "/tmp/.chromium";
+        };
       };
 
       systemd.timers.homepage-screenshots = mkIf cfg.screenshots {
