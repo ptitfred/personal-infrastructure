@@ -40,7 +40,6 @@
           inherit system;
           overlays = [
             inputs.lix-module.overlays.default
-            inputs.ptitfred-personal-homepage.overlays.default
             inputs.ptitfred-posix-toolbox.overlays.linter
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay

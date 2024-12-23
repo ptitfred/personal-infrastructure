@@ -26,7 +26,7 @@ checks: lint tools test
 
 # Integrations (not run by default locally)
 integration-tests:
-  nix build .#integration-tests
+  nix build --print-build-logs .#integration-tests
 
 update-extras:
   nix run .#lix-updater

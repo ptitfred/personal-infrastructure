@@ -1,4 +1,4 @@
-{ infrastructure, ... }:
+{ inputs, infrastructure, ... }:
 
 {
   deployment.tags = [ "web" ];
@@ -7,14 +7,15 @@
     ../../nixos/hardware/gandicloud.nix
     ../../nixos/personal-infrastructure
     ../../nixos/morph-utils/monitor-nginx.nix
-    ../../nixos/services/website.nix
+    ../../nixos/services/web.nix
+    inputs.ptitfred-personal-homepage.nixosModules.default
   ];
 
   networking.hostName = "homepage-02";
 
   system.stateVersion = "22.05";
 
-  services.personal-website = {
+  services.ptitfred.personal-homepage = {
     enable = true;
     inherit (infrastructure) domain aliases redirections;
   };
