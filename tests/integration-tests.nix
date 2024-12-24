@@ -2,7 +2,7 @@
 , httpie
 , cores
 , memorySize
-, pkgs
+, nixosTest
 }:
 
 let secret = filename: hostname: {
@@ -15,7 +15,7 @@ let secret = filename: hostname: {
     wg-private-key = secret "wg-private-key";
 in
 
-pkgs.testers.runNixOSTest({...}: {
+nixosTest {
   name = "personal-integration-servers";
   nodes.server_01 = { config, ... }: {
     # Configuration of the VM
@@ -33,16 +33,18 @@ pkgs.testers.runNixOSTest({...}: {
       # Fortunately it's as easy as the following:
       inputs.colmena.nixosModules.deploymentOptions
 
+      ../nixos/services/web.nix
+      inputs.ptitfred-personal-homepage.nixosModules.default
+
       # Root modules exposed by this repository
       ../nixos/personal-infrastructure
-      ../nixos/services/website.nix
     ];
 
     # Configuration related to the tested modules:
 
     deployment.keys = wg-private-key config.networking.hostName;
 
-    services.personal-website = {
+    services.ptitfred.personal-homepage = {
       enable = true;
       domain = "long.test.localhost";
       aliases = [ "test.localhost" ];
@@ -64,4 +66,4 @@ pkgs.testers.runNixOSTest({...}: {
   };
 
   testScript = builtins.readFile ./integration-test.py;
-})
+}
