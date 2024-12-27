@@ -586,11 +586,11 @@
         "posix-toolbox": "posix-toolbox"
       },
       "locked": {
-        "lastModified": 1735061976,
-        "narHash": "sha256-yFjbO7Kk24lnJ7IkANBIFWCNGtOrD70oYP1KsOkSh4A=",
+        "lastModified": 1735336018,
+        "narHash": "sha256-HOSZbdnCZVXNJlbz/7p7VG4oQZwtBrSzMK1vJBqp+CQ=",
         "owner": "ptitfred",
         "repo": "personal-homepage",
-        "rev": "b5239322769ee27b0713b92110bedd8e87859110",
+        "rev": "6c179c89e4fbda7cbea1fb4cda68276824db45ef",
         "type": "github"
       },
       "original": {
