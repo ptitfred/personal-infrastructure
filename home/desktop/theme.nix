@@ -95,9 +95,9 @@ in
     xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile ./colors.css;
 
     xresources.properties = with palette; {
-      "*.foreground"  = special.foreground;
-      "*.background"  = special.background;
-      "*.cursorColor" = special.cursorColor;
+      "URxvt*foreground"  = special.foreground;
+      "URxvt*background"  = special.background;
+      "URxvt*cursorColor" = special.cursorColor;
 
       "*.color0"  = mate.black;
       "*.color1"  = mate.red;
