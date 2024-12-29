@@ -39,7 +39,8 @@ in
     # Enable the X11 windowing system.
     enable = true;
 
-    displayManager.lightdm.enable = true;
+    displayManager.gdm.enable = true;
+    displayManager.lightdm.enable = false;
 
     windowManager.i3 = {
       enable = true;
