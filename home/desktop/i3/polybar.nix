@@ -2,11 +2,11 @@
 
 let bottom = true;
 
-    palette = import ../palette.nix;
+    palette = import ../../palette.nix;
 
     baseSize = config.desktop.fontSize;
 
-    inherit (import ../fonts.nix { inherit baseSize; }) roboto toPolybar;
+    inherit (import ../../fonts.nix { inherit baseSize; }) roboto toPolybar;
 
     toggle-redshift = pkgs.callPackage ./toggle-redshift.nix {};
 
@@ -76,11 +76,11 @@ in
   };
 
   config = {
-    desktop.exec-on-login = [
+    desktop.exec-on-login = lib.mkIf (config.desktop.windowManager == "i3") [
       "systemctl --user restart polybar.service"
     ];
 
-    services.polybar = {
+    services.polybar = lib.mkIf (config.desktop.windowManager == "i3") {
       enable = true;
       package = pkgs.polybarFull;
       settings = {

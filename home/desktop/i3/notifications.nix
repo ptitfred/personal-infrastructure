@@ -1,8 +1,8 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
-  home.packages = [ pkgs.libnotify ];
+  home.packages = lib.mkIf (config.desktop.windowManager == "i3") [ pkgs.libnotify ];
 
-  services.dunst = {
+  services.dunst = lib.mkIf (config.desktop.windowManager == "i3") {
     enable = true;
     settings = {
       global = {

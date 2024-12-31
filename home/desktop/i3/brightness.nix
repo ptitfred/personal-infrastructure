@@ -9,7 +9,7 @@ let changeBrightness = variant: "exec --no-startup-id ${pkgs.light}/bin/light ${
     default = 5;
   };
 
-  config = lib.mkIf (! config.desktop.virtual-machine) {
+  config = lib.mkIf (! config.desktop.virtual-machine && config.desktop.windowManager == "i3") {
     desktop.i3-extra-bindings = {
       "XF86MonBrightnessUp"   = changeBrightness "-A";
       "XF86MonBrightnessDown" = changeBrightness "-U";

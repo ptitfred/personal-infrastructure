@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let palette = import ../palette.nix;
+let palette = import ../../palette.nix;
 
     rofi-screenshot = pkgs.callPackage ./rofi-screenshot {};
     start-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot";
     stop-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot -s";
 
-    inherit (import ../fonts.nix { baseSize = config.desktop.fontSize; }) roboto toI3 toGTK;
+    inherit (import ../../fonts.nix { baseSize = config.desktop.fontSize; }) roboto toI3 toGTK;
 
     mkWorkspace = index: name: { inherit index name; };
 
@@ -20,6 +20,18 @@ let palette = import ../palette.nix;
     capture       = mkWorkspace 9 "Capture";
 in
 {
+  imports = [
+    ./audio.nix
+    ./brightness.nix
+    ./picom.nix
+    ./notifications.nix
+    ./polybar.nix
+    ./random-background.nix
+    ./redshift.nix
+    ./screenlocker.nix
+    ./wifi.nix
+  ];
+
   options = with lib; {
     desktop.spacing = mkOption {
       type = types.int;
@@ -40,7 +52,7 @@ in
   };
 
   config = {
-    xsession.windowManager.i3 = {
+    xsession.windowManager.i3 = lib.mkIf (config.desktop.windowManager == "i3") {
       enable = true;
       config =
         let font = toGTK roboto;

@@ -17,7 +17,7 @@
   };
 
   config = {
-    services.redshift = lib.mkIf (! (config.desktop.virtual-machine)) {
+    services.redshift = lib.mkIf (! (config.desktop.virtual-machine) && config.desktop.windowManager == "i3") {
       enable = true;
       settings = {
         redshift = {
