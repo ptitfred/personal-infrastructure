@@ -9,6 +9,14 @@ let orange = "#ffb52a";
   options.workstation.user = lib.mkOption { type = lib.types.str; };
 
   config = {
+    services.xserver.displayManager.gdm = {
+      settings = {
+        greeter = {
+          Include = user;
+        };
+      };
+    };
+
     services.xserver.displayManager.lightdm = {
       inherit background;
 
