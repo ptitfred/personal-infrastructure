@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let baseSize = config.desktop.fontSize;
-    inherit (import ../fonts.nix { inherit baseSize; }) toXFT;
+    assets = import ../assets { inherit baseSize; };
     patched-monospace = pkgs.callPackage ./patched-monospace.nix {};
  in
 
@@ -82,7 +82,7 @@ let baseSize = config.desktop.fontSize;
       enable = true;
       package = pkgs.rxvt-unicode-emoji;
       fonts =
-        let f = name: toXFT { inherit name; size = baseSize + 1; };
+        let f = name: assets.fonts.toXFT { inherit name; size = baseSize + 1; };
          in map f
               [
                 "DejaVuSansM Nerd Font Mono Plus Font Awesome Plus Font Awesome Extension"

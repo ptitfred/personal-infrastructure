@@ -2,11 +2,10 @@
 
 let bottom = true;
 
-    palette = import ../../palette.nix;
-
     baseSize = config.desktop.fontSize;
 
-    inherit (import ../../fonts.nix { inherit baseSize; }) roboto toPolybar;
+    assets = import ../../assets { inherit baseSize; };
+    inherit (assets.fonts) roboto toPolybar;
 
     toggle-redshift = pkgs.callPackage ./toggle-redshift.nix {};
 
@@ -159,8 +158,8 @@ in
 
           label-urgent = {
             text = "%name% [%index%]";
-            foreground = palette.vivid.white;
-            background = palette.mate.cyan;
+            foreground = assets.palette.vivid.white;
+            background = assets.palette.mate.cyan;
             inherit padding;
           };
 

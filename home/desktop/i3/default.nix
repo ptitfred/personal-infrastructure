@@ -1,12 +1,11 @@
 { config, lib, pkgs, ... }:
 
-let palette = import ../../palette.nix;
+let assets = import ../../assets { baseSize = config.desktop.fontSize; };
+    inherit (assets.fonts) roboto toI3 toGTK;
 
     rofi-screenshot = pkgs.callPackage ./rofi-screenshot {};
     start-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot";
     stop-rofi-screenshot = "${rofi-screenshot}/bin/rofi-screenshot -s";
-
-    inherit (import ../../fonts.nix { baseSize = config.desktop.fontSize; }) roboto toI3 toGTK;
 
     mkWorkspace = index: name: { inherit index name; };
 
@@ -74,16 +73,16 @@ in
           fonts = toI3 roboto;
           workspaceAutoBackAndForth = true;
 
-          colors = {
+          colors = with assets.palette; {
             focused = lib.mkOptionDefault {
-              border      = lib.mkForce palette.special.background;
-              childBorder = lib.mkForce palette.special.background;
+              border      = lib.mkForce special.background;
+              childBorder = lib.mkForce special.background;
               indicator   = lib.mkForce config.desktop.mainColor;
-              background = lib.mkForce palette.special.background;
+              background = lib.mkForce special.background;
               text = lib.mkForce config.desktop.mainColor;
             };
             unfocused = lib.mkOptionDefault {
-              text = lib.mkForce palette.mate.white;
+              text = lib.mkForce mate.white;
             };
           };
 
