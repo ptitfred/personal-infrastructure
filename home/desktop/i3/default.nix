@@ -50,8 +50,8 @@ in
     };
   };
 
-  config = {
-    xsession.windowManager.i3 = lib.mkIf (config.desktop.windowManager == "i3") {
+  config = lib.mkIf (config.desktop.windowManager == "i3") {
+    xsession.windowManager.i3 = {
       enable = true;
       config =
         let font = toGTK roboto;
@@ -73,16 +73,16 @@ in
           fonts = toI3 roboto;
           workspaceAutoBackAndForth = true;
 
-          colors = with assets.palette; {
+          colors = with assets; {
             focused = lib.mkOptionDefault {
-              border      = lib.mkForce special.background;
-              childBorder = lib.mkForce special.background;
+              border      = lib.mkForce palette.special.background;
+              childBorder = lib.mkForce palette.special.background;
               indicator   = lib.mkForce config.desktop.mainColor;
-              background = lib.mkForce special.background;
+              background = lib.mkForce palette.special.background;
               text = lib.mkForce config.desktop.mainColor;
             };
             unfocused = lib.mkOptionDefault {
-              text = lib.mkForce mate.white;
+              text = lib.mkForce palette.mate.white;
             };
           };
 

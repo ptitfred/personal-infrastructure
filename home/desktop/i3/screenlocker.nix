@@ -18,17 +18,17 @@ in
     };
   };
 
-  config = {
-    services.screen-locker = lib.mkIf (config.desktop.windowManager == "i3" && ! (config.desktop.virtual-machine)) {
+  config = lib.mkIf (config.desktop.windowManager == "i3") {
+    services.screen-locker = lib.mkIf (! config.desktop.virtual-machine) {
       enable = lib.mkDefault false;
       inactiveInterval = config.desktop.locker-interval;
       inherit lockCmd;
     };
 
-    desktop.i3-extra-bindings = lib.mkIf (config.desktop.windowManager == "i3") { ${binding} = "exec ${lockCmd}"; };
+    desktop.i3-extra-bindings.${binding} = "exec ${lockCmd}";
 
     # This is required to make xss-lock work
-    xsession.enable = config.desktop.windowManager == "i3";
-    xsession.importedVariables = lib.mkIf (config.desktop.windowManager == "i3") [ "XDG_SEAT" "XDG_SEAT_PATH" ];
+    xsession.enable = true;
+    xsession.importedVariables = [ "XDG_SEAT" "XDG_SEAT_PATH" ];
   };
 }

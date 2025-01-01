@@ -74,12 +74,12 @@ in
     };
   };
 
-  config = {
-    desktop.exec-on-login = lib.mkIf (config.desktop.windowManager == "i3") [
+  config = lib.mkIf (config.desktop.windowManager == "i3") {
+    desktop.exec-on-login = [
       "systemctl --user restart polybar.service"
     ];
 
-    services.polybar = lib.mkIf (config.desktop.windowManager == "i3") {
+    services.polybar = {
       enable = true;
       package = pkgs.polybarFull;
       settings = {
@@ -156,10 +156,10 @@ in
             inherit padding;
           };
 
-          label-urgent = {
+          label-urgent = with assets; {
             text = "%name% [%index%]";
-            foreground = assets.palette.vivid.white;
-            background = assets.palette.mate.cyan;
+            foreground = palette.vivid.white;
+            background = palette.mate.cyan;
             inherit padding;
           };
 
