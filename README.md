@@ -1,6 +1,6 @@
 # system and home-manager configuration
 
-Currently based on nixos-24.05 and home-manager-24.05 (both must be consistent).
+Currently based on nixos-24.11 and home-manager-24.11 (both must be consistent).
 
 ## Usage via Flakes
 
@@ -19,7 +19,7 @@ Example flake.nix to use this project as a base (this is very close to what I do
     # See home-manager documentation how to declare a configuration:
     # <https://nix-community.github.io/home-manager/index.xhtml#sec-usage-configuration>
     # You can declare multiple home configurations and later use one with:
-    # $ nix run home-manager/release-24.05 -- build --flake .#frederic
+    # $ nix run home-manager/release-24.11 -- build --flake .#frederic
     homeConfigurations.frederic = infra.lib.mkHomeConfiguration ./home-frederic.nix;
 
     # Declare colmena configurations (system).

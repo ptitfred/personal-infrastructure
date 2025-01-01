@@ -14,8 +14,8 @@ test:
   # Test the hive configuration
   nix build .#tests
   # Test various home-manager configurations
-  nix run home-manager/release-24.05 -- build --flake .#test-virtual-machine
-  nix run home-manager/release-24.05 -- build --flake .#test-laptop
+  nix run home-manager/release-24.11 -- build --flake .#test-virtual-machine
+  nix run home-manager/release-24.11 -- build --flake .#test-laptop
 
 # Lint the nix files
 lint:
