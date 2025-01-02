@@ -2,7 +2,7 @@
   description = "Personal infrastructure & Home Manager configuration";
 
   inputs = {
-    # package sets, currently on 24.05
+    # package sets, currently on 24.11
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
     home-manager.url = "github:nix-community/home-manager/release-24.11";

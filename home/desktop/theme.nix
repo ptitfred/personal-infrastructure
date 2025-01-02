@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
-let palette = import ../palette.nix;
+let assets = import ../assets { baseSize = config.desktop.fontSize; };
+    inherit (assets.fonts) roboto toGTK;
 
-    inherit (import ../fonts.nix { baseSize = config.desktop.fontSize; }) roboto toGTK;
 in
 {
   options = with lib; {
@@ -94,7 +94,7 @@ in
 
     xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile ./colors.css;
 
-    xresources.properties = with palette; {
+    xresources.properties = with assets.palette; {
       "URxvt*foreground"  = special.foreground;
       "URxvt*background"  = special.background;
       "URxvt*cursorColor" = special.cursorColor;

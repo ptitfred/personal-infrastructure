@@ -3,17 +3,8 @@
 {
   imports = [
     ./firefox.nix
-    ./notifications.nix
-    ./brightness.nix
-    ./audio.nix
-    ./wifi.nix
-    ./polybar.nix
-    ./screenlocker.nix
-    ./redshift.nix
-    ./random-background.nix
-    ./picom.nix
-    ./i3.nix
     ./fonts.nix
+    ./i3
     ./theme.nix
   ];
 
@@ -21,6 +12,11 @@
     desktop.virtual-machine = mkOption {
       type = types.bool;
       default = false;
+    };
+
+    desktop.windowManager = mkOption {
+      type = types.str;
+      default = "i3";
     };
   };
 

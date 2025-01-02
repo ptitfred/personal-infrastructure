@@ -2,11 +2,10 @@
 
 let bottom = true;
 
-    palette = import ../palette.nix;
-
     baseSize = config.desktop.fontSize;
 
-    inherit (import ../fonts.nix { inherit baseSize; }) roboto toPolybar;
+    assets = import ../../assets { inherit baseSize; };
+    inherit (assets.fonts) roboto toPolybar;
 
     toggle-redshift = pkgs.callPackage ./toggle-redshift.nix {};
 
@@ -75,7 +74,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf (config.desktop.windowManager == "i3") {
     desktop.exec-on-login = [
       "systemctl --user restart polybar.service"
     ];
@@ -157,7 +156,7 @@ in
             inherit padding;
           };
 
-          label-urgent = {
+          label-urgent = with assets; {
             text = "%name% [%index%]";
             foreground = palette.vivid.white;
             background = palette.mate.cyan;

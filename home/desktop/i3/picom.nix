@@ -1,7 +1,7 @@
-{ ... }:
+{ config, lib, ... }:
 
 {
-  services.picom = {
+  services.picom = lib.mkIf (config.desktop.windowManager == "i3") {
     enable = true;
     activeOpacity = 0.95;
 

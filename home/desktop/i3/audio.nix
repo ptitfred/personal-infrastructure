@@ -9,7 +9,7 @@ let mixer = command: "exec --no-startup-id ${pkgs.alsa-utils}/bin/amixer set Mas
     default = 5;
   };
 
-  config = lib.mkIf (! config.desktop.virtual-machine) {
+  config = lib.mkIf (! config.desktop.virtual-machine && config.desktop.windowManager == "i3") {
     desktop.i3-extra-bindings = {
       "XF86AudioRaiseVolume" = mixer "${step}%+";
       "XF86AudioLowerVolume" = mixer "${step}%-";
