@@ -17,7 +17,7 @@ let bottom = true;
     editConnectionsOnClick = onClick "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
     monitorOnClick         = onClick (focus "^Com.github.stsdc.monitor$" "${pkgs.monitor}/bin/com.github.stsdc.monitor");
 
-    browse = pkgs.callPackage ./browse { profile = "${config.home.homeDirectory}/.nix-profile"; };
+    browse = pkgs.callPackage ../browse { profile = "${config.home.homeDirectory}/.nix-profile"; };
     browseOnClick = url: onClick "${browse}/bin/browse ${builtins.replaceStrings [":"] ["\\\\:"] url}";
 
     onClick = program: label:
