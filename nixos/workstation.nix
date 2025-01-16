@@ -6,6 +6,8 @@ let orange = "#ffb52a";
     background = "${pkgs.backgrounds}/pexels-pok-rie-2049422.jpg";
  in
 {
+  imports = [ ./hyprland.nix ];
+
   options.workstation.user = lib.mkOption { type = lib.types.str; };
 
   config = {
