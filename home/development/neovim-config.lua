@@ -105,7 +105,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', ']d',        vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<space>q',  vim.diagnostic.setloclist, opts)
 
-  vim.lsp.buf.inlay_hint(bufnr, true)
+  vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
 lsp.hls.setup {
