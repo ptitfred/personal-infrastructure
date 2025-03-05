@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-      qemu
+      # qemu
       weechat
       ncdu
       gimp
