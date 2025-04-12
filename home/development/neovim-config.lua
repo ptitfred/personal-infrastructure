@@ -199,6 +199,10 @@ lsp.ts_ls.setup {
   on_attach = on_attach,
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
+lsp.eslint.setup {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+}
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = "*.wgsl",
