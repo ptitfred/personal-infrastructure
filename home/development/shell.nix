@@ -11,7 +11,7 @@ let baseSize = config.desktop.fontSize;
       bat
       file
       tree
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       patched-monospace
     ];
 

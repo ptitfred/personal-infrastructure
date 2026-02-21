@@ -24,17 +24,15 @@
     ];
   };
 
+  services.displayManager.gdm.enable = true;
+
   services.xserver = {
     # Enable the X11 windowing system.
     enable = true;
 
-    displayManager.gdm.enable = true;
     displayManager.lightdm.enable = false;
 
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-    };
+    windowManager.i3.enable = true;
 
     xkb.layout = "fr";
   };
@@ -113,9 +111,9 @@
   # Fancy boot screen
   boot.plymouth.enable = true;
 
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=10s
-  '';
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "10s";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

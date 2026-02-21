@@ -2,15 +2,11 @@
   description = "Personal infrastructure & Home Manager configuration";
 
   inputs = {
-    # package sets, currently on 24.11
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # package sets, currently on 25.11
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     previous.url = "github:nixos/nixpkgs/nixos-22.11";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Lix <https://lix.systems/add-to-config/>
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     # personal projects
     ptitfred-personal-homepage.url = "github:ptitfred/personal-homepage";
@@ -21,6 +17,7 @@
 
     # external dependencies
     colmena.url = "github:zhaofengli/colmena";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
     easy-purescript-nix.url = "github:justinwoo/easy-purescript-nix";
     nil.url = "github:oxalica/nil";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -28,7 +25,6 @@
     power-theme.flake = false;
     scram-sha-256.url = "github:supercaracal/scram-sha-256";
     scram-sha-256.flake = false;
-    wgsl-analyzer.url = "github:wgsl-analyzer/wgsl-analyzer";
   };
 
   outputs = inputs:
@@ -39,13 +35,16 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
-            inputs.lix-module.overlays.default
+            # See https://lix.systems/add-to-config/#advanced-change
+            lix-overlay
+
             inputs.ptitfred-posix-toolbox.overlays.linter
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
           ];
         };
 
+        lix-overlay = import pkgs/lix-overlay.nix;
         overlay = import pkgs/overlay.nix;
 
         colmena = pkgs.callPackage ./hive { inherit inputs; };
@@ -77,8 +76,10 @@
 
           devShells.${system}.default = pkgs.mkShell {
             buildInputs = [
-              inputs.colmena.packages.${system}.colmena pkgs.pwgen
+              pkgs.colmena
+              pkgs.pwgen
               tools.scram-sha-256
+              pkgs.lixPackageSets.stable.lix
             ];
           };
 
@@ -88,7 +89,7 @@
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;
-            inherit (pkgs) lix-updater matomo-updater obsidian-updater;
+            inherit (pkgs) obsidian-updater;
           };
         };
 }

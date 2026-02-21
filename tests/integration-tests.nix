@@ -2,7 +2,7 @@
 , httpie
 , cores
 , memorySize
-, nixosTest
+, testers
 }:
 
 let secret = filename: hostname: {
@@ -15,16 +15,16 @@ let secret = filename: hostname: {
     wg-private-key = secret "wg-private-key";
 in
 
-nixosTest {
+testers.nixosTest {
   name = "personal-integration-servers";
-  nodes.server_01 = { config, ... }: {
+  nodes.server_01 = { config, pkgs, ... }: {
     # Configuration of the VM
     virtualisation = { inherit cores memorySize; };
     networking.hostName = "server-01";
     system.stateVersion = "24.05";
 
     # Dependencies for the testing script
-    environment.systemPackages = [ httpie ];
+    environment.systemPackages = [ httpie pkgs.colmena ];
 
     # Actual machine configuration
     imports = [

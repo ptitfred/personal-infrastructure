@@ -14,14 +14,13 @@ test: test-hive test-home
 
 # Test the hive configuration
 test-hive:
-  # Test the hive configuration
-  nix build .#tests
+  nix build .#integration-tests
 
 # Test various home-manager configurations
 test-home:
   # Test various home-manager configurations
-  nix run home-manager/release-24.11 -- build --flake .#test-virtual-machine
-  nix run home-manager/release-24.11 -- build --flake .#test-laptop
+  nix run home-manager/release-25.11 -- build --flake .#test-virtual-machine
+  nix run home-manager/release-25.11 -- build --flake .#test-laptop
 
 # Lint the nix files
 lint:
@@ -35,6 +34,4 @@ integration-tests:
   nix build --print-build-logs .#integration-tests
 
 update-extras:
-  nix run .#lix-updater
   nix run .#obsidian-updater
-  nix run .#matomo-updater

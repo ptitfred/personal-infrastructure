@@ -5,7 +5,6 @@
 
   imports = [
     ../../nixos/hardware/gandicloud.nix
-    ../../nixos/personal-infrastructure
     ../../nixos/morph-utils/monitor-nginx.nix
     ../../nixos/services/web.nix
     inputs.ptitfred-personal-homepage.nixosModules.default
