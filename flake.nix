@@ -39,6 +39,8 @@
             lix-overlay
 
             inputs.ptitfred-posix-toolbox.overlays.linter
+            inputs.colmena.overlays.default
+            # (final: _: { colmena = (inputs.colmena.packages.${system}.colmena).override({ inherit (final) nix-eval-jobs; }); })
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
           ];
@@ -50,7 +52,7 @@
         colmena = pkgs.callPackage ./hive { inherit inputs; };
         home = pkgs.callPackage ./home { inherit inputs system; };
 
-        lib = pkgs.callPackage ./lib { baseHive = colmena; } // { inherit (home) mkHomeConfiguration; };
+        lib = pkgs.callPackage ./lib { baseHive = colmena; colmenaLib = inputs.colmena.lib; } // { inherit (home) mkHomeConfiguration; };
         helpers = pkgs.callPackage lib/helpers.nix {};
 
         tools =

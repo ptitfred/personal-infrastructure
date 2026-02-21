@@ -41,6 +41,7 @@ in
       listenIp = mkOption {
         type = types.str;
         example = "1.2.3.4";
+        default = null;
       };
 
       clients = mkOption {
