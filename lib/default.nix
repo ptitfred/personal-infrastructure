@@ -1,4 +1,4 @@
-{ baseHive, pkgs, ... }:
+{ baseHive, colmenaLib, pkgs, ... }:
 
 let stackHives = hives:
       let inherit (pkgs.lib) lists attrsets;
@@ -18,7 +18,7 @@ let stackHives = hives:
 
     nodesFromHive = hive: builtins.attrNames (builtins.removeAttrs hive [ "meta" "defaults" ]);
 
-    mkHive = hive: stackHives [ baseHive hive ];
+    mkHive = hive: colmenaLib.makeHive (stackHives [ baseHive hive ]);
 in
 {
   inherit stackHives nodesFromHive mkHive;

@@ -1,7 +1,7 @@
 { inputs, callPackage, lib, linkFarm }:
 
-let test-hive = lib.mkHive (import ./infra.nix);
-    test-infra = (inputs.colmena.lib.makeHive test-hive).toplevel;
+let test-hive = import ./infra.nix;
+    test-infra = (lib.mkHive test-hive).toplevel;
 
     tests =
       let mkNode = name: { inherit name; path = test-infra.${name}; };

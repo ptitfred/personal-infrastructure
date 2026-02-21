@@ -12,5 +12,10 @@ with subtest("NGinx configuration"):
 with subtest("Lix"):
   server_01.succeed("nix --version | grep 'Lix'")
   server_01.succeed("nix --version | grep '2.93'")
+
   server_01.succeed("which colmena")
-  server_01.succeed("colmena nix-info 2>&1 | grep 'Nix Version: 2.93'")
+
+  # Recent version of colmena expect a configuration file event for nix-info. This is a bug.
+  server_01.execute("touch hive.nix")
+
+  server_01.succeed("RUST_LOG=info colmena nix-info 2>&1 | grep 'Nix Version: 2.93'")
