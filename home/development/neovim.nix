@@ -20,6 +20,8 @@
     pkgs.shellcheck
     pkgs.wgsl-analyzer
     pkgs.elixir-ls
+    pkgs.typescript-language-server
+    pkgs.vscode-langservers-extracted
   ];
 
   programs.neovim = {
