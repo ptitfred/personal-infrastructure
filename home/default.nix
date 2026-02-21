@@ -1,14 +1,23 @@
 { callPackage, pkgs, inputs, system, ... }:
 
 let workstation =
-      { ... }:
+      { lib, ... }:
       {
         imports = [ ./workstation.nix ];
-        nixpkgs.overlays = [
-          inputs.nil.overlays.nil
-          inputs.wgsl-analyzer.overlays.default
-          hm-overlay
-        ];
+
+        options = {
+          inputs.infra = lib.mkOption {
+            type = lib.types.path;
+          };
+        };
+
+        config = {
+          nixpkgs.overlays = [
+            inputs.nil.overlays.nil
+            inputs.wgsl-analyzer.overlays.default
+            hm-overlay
+          ];
+        };
       };
 
     hm-overlay = self: previous: {
