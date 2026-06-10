@@ -14,7 +14,6 @@ let workstation =
         config = {
           nixpkgs.overlays = [
             inputs.nil.overlays.nil
-            inputs.wgsl-analyzer.overlays.default
             hm-overlay
           ];
         };

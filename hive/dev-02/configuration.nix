@@ -35,17 +35,15 @@ in
     ];
   };
 
+  services.displayManager.gdm.enable = true;
+
   services.xserver = {
     # Enable the X11 windowing system.
     enable = true;
 
-    displayManager.gdm.enable = true;
     displayManager.lightdm.enable = false;
 
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-    };
+    windowManager.i3.enable = true;
 
     xkb.layout = "fr";
     xkb.variant = "";

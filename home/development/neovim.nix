@@ -18,7 +18,6 @@
     pkgs.nil
     pkgs.nodePackages.bash-language-server
     pkgs.shellcheck
-    pkgs.wgsl-analyzer
     pkgs.elixir-ls
     pkgs.typescript-language-server
     pkgs.vscode-langservers-extracted

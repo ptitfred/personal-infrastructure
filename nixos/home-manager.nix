@@ -6,5 +6,5 @@ let hm = inputs.home-manager;
   imports = [
     hm.nixosModules.home-manager
   ];
-  environment.systemPackages = [ hm.packages.${pkgs.system}.home-manager ];
+  environment.systemPackages = [ hm.packages.${pkgs.stdenv.hostPlatform.system}.home-manager ];
 }

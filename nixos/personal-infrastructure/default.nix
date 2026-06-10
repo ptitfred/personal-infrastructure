@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -10,4 +10,7 @@
     ./wireguard.nix
     ./postgresql.nix
   ];
+
+  # See https://lix.systems/add-to-config/#advanced-change
+  nix.package = pkgs.lixPackageSets.stable.lix;
 }

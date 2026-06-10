@@ -6,7 +6,6 @@
     ./configuration.nix
     ../../nixos/backlight.nix
     ../../nixos/home-manager.nix
-    ../../nixos/personal-infrastructure
     ../../nixos/workstation.nix
   ];
 

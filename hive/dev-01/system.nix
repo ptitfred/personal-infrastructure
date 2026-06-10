@@ -5,7 +5,6 @@
   imports = [
     ./configuration.nix
     ../../nixos/home-manager.nix
-    ../../nixos/personal-infrastructure
     ../../nixos/workstation.nix
   ];
 

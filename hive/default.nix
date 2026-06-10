@@ -9,6 +9,10 @@
     };
   };
 
+  defaults = {
+    imports = [ ../nixos/personal-infrastructure ];
+  };
+
   dev-01      = import dev-01/system.nix;
   dev-02      = import dev-02/system.nix;
   homepage-02 = import homepage-02/system.nix;

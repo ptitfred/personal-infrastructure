@@ -4,7 +4,6 @@
 
   imports = [
     ../../nixos/hardware/ovhcloud
-    ../../nixos/personal-infrastructure
   ];
 
   networking.hostName = "homepage-03";

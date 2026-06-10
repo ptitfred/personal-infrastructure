@@ -80,7 +80,7 @@ in
             enable = true;
             font.name = toGTK roboto;
             theme = {
-              package = pkgs.breeze-gtk;
+              package = pkgs.kdePackages.breeze-gtk;
               name = "Breeze";
             };
             iconTheme = {
