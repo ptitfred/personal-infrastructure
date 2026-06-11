@@ -39,6 +39,7 @@
             lix-overlay
 
             inputs.ptitfred-posix-toolbox.overlays.linter
+            inputs.colmena.overlays.default
             (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
           ];
@@ -47,10 +48,14 @@
         lix-overlay = import pkgs/lix-overlay.nix;
         overlay = import pkgs/overlay.nix;
 
-        colmena = pkgs.callPackage ./hive { inherit inputs; };
+        baseHive = pkgs.callPackage ./hive { inherit inputs; };
         home = pkgs.callPackage ./home { inherit inputs system; };
 
-        lib = pkgs.callPackage ./lib { baseHive = colmena; } // { inherit (home) mkHomeConfiguration; };
+        lib =
+          pkgs.callPackage ./lib {
+            inherit baseHive;
+            colmenaLib = inputs.colmena.lib;
+          } // { inherit (home) mkHomeConfiguration; };
         helpers = pkgs.callPackage lib/helpers.nix {};
 
         tools =
@@ -60,7 +65,7 @@
         tests = pkgs.callPackage ./tests { inherit inputs lib; };
 
      in {
-          inherit lib colmena;
+          inherit lib;
           inherit (tests) homeConfigurations tests test-hive;
 
           apps.${system} = {
