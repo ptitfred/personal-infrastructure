@@ -8,7 +8,7 @@
       user.name = "Frédéric Menou";
       user.email = "frederic.menou@gmail.com";
 
-      aliases = rec {
+      alias = rec {
         st        = "status -sb";
         plog      = "log --oneline --decorate --graph";
         slog      = "log --format=short --decorate --graph";
