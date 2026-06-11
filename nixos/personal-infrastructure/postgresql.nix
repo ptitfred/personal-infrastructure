@@ -96,7 +96,7 @@ let cfg = config.personal-infrastructure.postgresql;
     };
 
     setPasswords = ''
-      $PSQL -tAf ${setPasswordsSQLFile}
+      psql -tAf ${setPasswordsSQLFile}
     '';
 
     setPasswordsSQLFile =
