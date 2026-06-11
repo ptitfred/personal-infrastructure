@@ -9,18 +9,18 @@
     ":e" = "vim";
   };
 
-  home.packages = [
-    pkgs.xclip
-    pkgs.libxml2
-    pkgs.gh
-    pkgs.marksman
-    pkgs.lua-language-server
-    pkgs.nil
-    pkgs.nodePackages.bash-language-server
-    pkgs.shellcheck
-    pkgs.elixir-ls
-    pkgs.typescript-language-server
-    pkgs.vscode-langservers-extracted
+  home.packages = with pkgs; [
+    xclip
+    libxml2
+    gh
+    rumdl
+    lua-language-server
+    nil
+    nodePackages.bash-language-server
+    shellcheck
+    elixir-ls
+    typescript-language-server
+    vscode-langservers-extracted
   ];
 
   programs.neovim = {
@@ -62,6 +62,7 @@
           nvim-treesitter
           nvim-treesitter-parsers.wgsl
           nvim-treesitter-parsers.wgsl_bevy
+          hurl
         ];
   };
 }

@@ -66,7 +66,7 @@
 
      in {
           inherit lib;
-          inherit (tests) homeConfigurations tests test-hive;
+          inherit (tests) homeConfigurations tests test-hive neovim-config;
 
           apps.${system} = {
             lint = {

@@ -6,7 +6,8 @@ Currently based on nixos-25.11 and home-manager-25.11 (both must be consistent).
 
 This project only support flakes.
 
-Example flake.nix to use this project as a base (this is very close to what I do on my machines):
+Example flake.nix to use this project as a base (this is very close to what I do
+on my machines):
 
 ```nix
 {

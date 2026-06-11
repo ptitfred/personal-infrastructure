@@ -2,7 +2,6 @@ require('nvim-autopairs').setup({ map_cr = true })
 require('fidget').setup {}
 
 local cmp = require'cmp'
-local lspkind = require('lspkind')
 cmp.setup {
   snippet = {
     -- REQUIRED - you must specify a snippet engine
@@ -33,7 +32,7 @@ cmp.setup {
     { name = 'buffer' },
   }),
   formatting = {
-    format = lspkind.cmp_format {
+    format = require('lspkind').cmp_format {
       -- mode = 'text',
       maxwidth = 50,
       ellipsis_char = '…',
@@ -72,8 +71,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local lsp = require('lspconfig')
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
@@ -91,10 +88,13 @@ local on_attach = function(_, bufnr)
   local toggle_inlay_hint = function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
   end
+  local hover = function()
+    vim.lsp.buf.hover({ border = "rounded", })
+  end
 
   vim.keymap.set('n', 'gD',        vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd',        vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K',         vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 'K',         hover, opts)
   vim.keymap.set('n', 'gi',        vim.lsp.buf.implementation, opts)
   vim.keymap.set("n", "ga",        vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "gh",        toggle_inlay_hint, opts)
@@ -110,30 +110,38 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', ']d',        vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<space>q',  vim.diagnostic.setloclist, opts)
 
+  vim.diagnostic.config({ virtual_text = true })
+
   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
-lsp.hls.setup {
+vim.lsp.config('*', {
+  on_attach = on_attach,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+
+local function setup_lsp(name, config)
+  vim.lsp.config(name, config or {})
+  vim.lsp.enable(name)
+end
+
+setup_lsp('hls', {
+  filetypes = { 'haskell' },
   settings = {
     haskell = {
       formattingProvider = "stylish-haskell"
     }
   },
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-  flags = {
-    -- This will be the default in neovim 0.7+
-    debounce_text_changes = 150,
-  }
-}
-lsp.rust_analyzer.setup{
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+
+setup_lsp('rust_analyzer', {
+  cmd = { 'rust-analyzer' },
+  filetypes = { 'rust' },
   settings = {
     ['rust-analyzer'] = {
-      checkOnSave = {
-        command = "clippy";
-      },
+      -- checkOnSave = {
+      --   command = "clippy";
+      -- },
       diagnostics = {
         enable = true;
       },
@@ -165,14 +173,14 @@ lsp.rust_analyzer.setup{
       }
     }
   }
-}
-lsp.marksman.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-}
-lsp.lua_ls.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+
+setup_lsp('rumdl', {
+  cmd = { 'rumdl', 'server' },
+  filetypes = { 'markdown' },
+  root_markers = { '.git' },
+})
+setup_lsp('lua_ls', {
   settings = {
     Lua = {
       diagnostics = {
@@ -181,28 +189,14 @@ lsp.lua_ls.setup {
       },
     },
   },
-}
-lsp.nil_ls.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-}
-lsp.bashls.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-}
-lsp.elixirls.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+setup_lsp('nil_ls')
+setup_lsp('bashls')
+setup_lsp('elixirls', {
   cmd = { "elixir-ls" },
-}
-lsp.ts_ls.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-}
-lsp.eslint.setup {
-  on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
-}
+})
+setup_lsp('ts_ls')
+setup_lsp('eslint')
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -211,16 +205,20 @@ require'nvim-treesitter.configs'.setup {
 }
 
 local hover = require('hover')
-hover.setup {
-  init = function()
-    -- Require providers
-    require("hover.providers.lsp")
-    require('hover.providers.gh')
-    require('hover.providers.gh_user')
-    -- require('hover.providers.jira')
-    -- require('hover.providers.man')
-    require('hover.providers.dictionary')
-  end,
+hover.config({
+  providers = {
+    {
+      module = 'hover.providers.diagnostic',
+      priority = 2000,
+      name = 'Diags'
+    },
+    "hover.providers.lsp",
+    'hover.providers.gh',
+    'hover.providers.gh_user',
+    'hover.providers.man',
+    'hover.providers.dictionary',
+    -- 'hover.providers.jira',
+  },
   preview_opts = {
     border = 'single'
   },
@@ -229,25 +227,29 @@ hover.setup {
   preview_window = false,
   title = true,
   mouse_providers = {
-    'LSP'
+    {
+      module = 'hover.providers.diagnostic',
+      priority = 2000,
+      name = 'Diags'
+    },
+    'hover.providers.lsp',
+    'hover.providers.man',
+    'hover.providers.dictionary',
   },
   mouse_delay = 1000
-}
+})
 
 -- Setup keymaps
-local hover_previous_source = function ()
-  hover.hover_switch("previous")
-end
-local hover_next_source = function ()
-  hover.hover_switch("next")
-end
-vim.keymap.set("n", "K",     hover.hover,           {desc = "hover.nvim"                  })
-vim.keymap.set("n", "gK",    hover.hover_select,    {desc = "hover.nvim (select)"         })
-vim.keymap.set("n", "<C-p>", hover_previous_source, {desc = "hover.nvim (previous source)"})
-vim.keymap.set("n", "<C-n>", hover_next_source,     {desc = "hover.nvim (next source)"    })
+local function hover_previous_source() hover.switch("previous") end
+local function hover_next_source()     hover.switch("next")     end
+
+vim.keymap.set("n", "K",     hover.open,            { desc = "hover.nvim (open)"            })
+vim.keymap.set("n", "gK",    hover.enter,           { desc = "hover.nvim (select)"          })
+vim.keymap.set("n", "<C-p>", hover_previous_source, { desc = "hover.nvim (previous source)" })
+vim.keymap.set("n", "<C-n>", hover_next_source,     { desc = "hover.nvim (next source)"     })
 
 -- Mouse support
-vim.keymap.set('n', '<MouseMove>', hover.hover_mouse, { desc = "hover.nvim (mouse)" })
+vim.keymap.set('n', '<MouseMove>', hover.mouse, { desc = "hover.nvim (mouse)" })
 vim.o.mousemoveevent = true
 
 -- Set completeopt to have a better completion experience
