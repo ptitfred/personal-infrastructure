@@ -21,14 +21,7 @@ hover.config({
   preview_window = false,
   title = true,
   mouse_providers = {
-    {
-      module = 'hover.providers.diagnostic',
-      priority = 2000,
-      name = 'Diags'
-    },
     'hover.providers.lsp',
-    'hover.providers.man',
-    'hover.providers.dictionary',
   },
   mouse_delay = 1000
 })
