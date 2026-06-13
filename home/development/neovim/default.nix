@@ -5,7 +5,7 @@ let inherit (lib) mkOption types;
 in
 {
   options = {
-    programs.neovim.extraLuaConfigFiles = mkOption {
+    programs.neovim.luaConfigFiles = mkOption {
       type = with types; listOf path;
       default = [];
     };
@@ -27,24 +27,25 @@ in
       rumdl
       lua-language-server
       nil
-      nodePackages.bash-language-server
+      bash-language-server
       shellcheck
       elixir-ls
       typescript-language-server
       vscode-langservers-extracted
+      luaPackages.tree-sitter-cli
     ];
 
     programs.neovim = {
       enable = true;
       vimAlias = true;
       extraConfig = builtins.readFile ./config.vim;
-      extraLuaConfigFiles = [
+      luaConfigFiles = [
         ./config.lua
         ./completions.lua
         ./lsp-config.lua
         ./hover.lua
       ];
-      extraLuaConfig = loadLuaConfigFiles config.programs.neovim.extraLuaConfigFiles;
+      initLua = loadLuaConfigFiles config.programs.neovim.luaConfigFiles;
       plugins =
         with pkgs.vimPlugins;
           [
@@ -72,11 +73,24 @@ in
             telescope-fzf-native-nvim
             telescope-lsp-handlers-nvim
             telescope-ui-select-nvim
-            nvim-treesitter
+            # Tree-sitter now compiles the parsers and stores in
+            # `~/.local/share/nvim/site/`, added to impermanence
+            {
+              plugin = nvim-treesitter;
+              type = "lua";
+              config = builtins.readFile ./treesitter.lua;
+            }
+            nvim-treesitter-parsers.bash
+            nvim-treesitter-parsers.elixir
+            nvim-treesitter-parsers.lua
+            nvim-treesitter-parsers.nix
+            nvim-treesitter-parsers.rust
             nvim-treesitter-parsers.wgsl
             nvim-treesitter-parsers.wgsl_bevy
             hurl
           ];
+      withPython3 = false;
+      withRuby = false;
     };
   };
 }

@@ -102,7 +102,7 @@ in
             } // lib.optionalAttrs hasGithub {
               "custom/github" = {
                 return-type = "json";
-                format = "  {}";
+                format = "  {text}";
                 interval = 60;
                 exec = "${github-notifications config.desktop.github.token}/bin/waybar-github-notifications-module";
                 on-click = browseOnClick "https://github.com/notifications";
