@@ -9,5 +9,10 @@
     zeal
     just
     ripgrep
+    unzip
+    hey
+    wget
+    tabiew
+    psmisc
   ];
 }
