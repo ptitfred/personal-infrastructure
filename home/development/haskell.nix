@@ -1,8 +1,6 @@
 { pkgs, lib, ... }:
 
 let check = name: assert (lib.asserts.assertMsg (pkgs.lib.attrsets.hasAttr name pkgs) "Missing ${name}"); name;
-    # FIXME get back to 23.05 when summoner is updated
-    summoner = pkgs.previous.haskellPackages.callPackage ./haskell/summoner-2.0.1.1.nix {};
 in
 {
   home = {
@@ -14,7 +12,6 @@ in
       gmp
       cabal-install
       cabal2nix
-      summoner
     ];
 
     sessionPath = [
