@@ -32,12 +32,6 @@ in
   ];
 
   options = with lib; {
-    desktop.spacing = mkOption {
-      type = types.int;
-      description = "";
-      default = 10;
-    };
-
     desktop.exec-on-login = mkOption {
       type = types.listOf types.str;
       default = [];

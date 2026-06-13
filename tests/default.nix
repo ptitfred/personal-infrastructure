@@ -10,7 +10,8 @@ let test-hive = import ./infra.nix;
 
     homeConfigurations = {
       test-virtual-machine = lib.mkHomeConfiguration ./virtual-machine.nix;
-      test-laptop          = lib.mkHomeConfiguration ./laptop.nix;
+      test-laptop-i3       = lib.mkHomeConfiguration ./laptop-i3.nix;
+      test-laptop-hyprland = lib.mkHomeConfiguration ./laptop-hyprland.nix;
     };
 
     integration-tests = callPackage ./integration-tests.nix {
@@ -20,7 +21,10 @@ let test-hive = import ./infra.nix;
     };
 
     compile-lua-file = path: "luac ${path};";
-    lua-files = homeConfigurations.test-laptop.config.programs.neovim.extraLuaConfigFiles;
+    lua-files =
+      homeConfigurations.test-virtual-machine.config.programs.neovim.extraLuaConfigFiles ++
+      homeConfigurations.test-laptop-i3.config.programs.neovim.extraLuaConfigFiles ++
+      homeConfigurations.test-laptop-hyprland.config.programs.neovim.extraLuaConfigFiles;
 
     neovim-config = runCommand "neovim-lua-check" { buildInputs = [ lua ]; } ''
       mkdir -p $out

@@ -38,42 +38,6 @@ let bottom = true;
        in "${github} cpu memory storage ${physicalHost} date";
 in
 {
-  options = with lib; {
-    desktop.battery.full-at = mkOption {
-      type = types.int;
-      default = 99;
-    };
-
-    desktop.battery.low-at = mkOption {
-      type = types.int;
-      default = 10;
-    };
-
-    desktop.battery.battery = mkOption {
-      type = types.str;
-      example = "BAT1";
-    };
-
-    desktop.battery.adapter = mkOption {
-      type = types.str;
-      example = "ADP1";
-    };
-
-    desktop.backlight.card = mkOption {
-      type = types.str;
-      default = "intel_backlight";
-    };
-
-    desktop.github.username = mkOption {
-      type = types.str;
-    };
-    desktop.github.token = mkOption {
-      type = types.nullOr types.str;
-      description = "Path to a file containing your Github API token. See https://github.com/settings/tokens/new?scopes=notifications&description=Notifier+for+Polybar.";
-      default = null;
-    };
-  };
-
   config = lib.mkIf (config.desktop.windowManager == "i3") {
     desktop.exec-on-login = [
       "systemctl --user restart polybar.service"

@@ -10,6 +10,7 @@
       adapter = "ADC0";
       battery = "BAT0";
     };
+    windowManager = "i3";
   };
 
   home.username = "test";

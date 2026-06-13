@@ -20,7 +20,8 @@ test-hive:
 test-home:
   # Test various home-manager configurations
   nix run home-manager/release-25.11 -- build --flake .#test-virtual-machine
-  nix run home-manager/release-25.11 -- build --flake .#test-laptop
+  nix run home-manager/release-25.11 -- build --flake .#test-laptop-i3
+  nix run home-manager/release-25.11 -- build --flake .#test-laptop-hyprland
 
 # Lint the nix files
 lint:
