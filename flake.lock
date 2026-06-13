@@ -247,22 +247,6 @@
         "type": "github"
       }
     },
-    "nixos-22_11_2": {
-      "locked": {
-        "lastModified": 1688392541,
-        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1772972630,
@@ -453,16 +437,15 @@
         "home-manager": [
           "home-manager"
         ],
-        "nixos-22_11": "nixos-22_11_2",
         "nixpkgs": "nixpkgs_5",
         "trapd00r-ls-colors": "trapd00r-ls-colors_2"
       },
       "locked": {
-        "lastModified": 1771697548,
-        "narHash": "sha256-5S2PaolyrwgtaErk/b0OwQI96gP3b8S8jFBoRoFqbhc=",
+        "lastModified": 1781367138,
+        "narHash": "sha256-VLdNou5dULllS8Q5obRGvzM+ea14aOGk+6cXUvbXBas=",
         "owner": "ptitfred",
         "repo": "posix-toolbox",
-        "rev": "a42ddacfdff59273d20b033e4dd6a296d96d7ea1",
+        "rev": "ff3df08e2593ad45eecf47b4edd7b69f9eb1b9b1",
         "type": "github"
       },
       "original": {
