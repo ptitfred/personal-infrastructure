@@ -16,9 +16,8 @@ let assets = import ../../assets { baseSize = config.desktop.fontSize; };
             else c;
 
     allMonitors = [ output ] ++ externalMonitors;
-    externalMonitors = [ "DP-1" "DP-2" "DP-3" "DP-4" ];
-
-    output = "eDP-1";
+    inherit (config.desktop) externalMonitors;
+    output = config.desktop.mainMonitor;
 in
 {
   imports = [
@@ -27,6 +26,16 @@ in
     ./terminal.nix
     ./waybar.nix
   ];
+
+  options = {
+    desktop.mainMonitor = lib.mkOption {
+      type = lib.types.str;
+    };
+
+    desktop.externalMonitors = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+    };
+  };
 
   config = lib.mkIf (config.desktop.windowManager == "hyprland") {
     # Focus the workspace with the last focused window of a given class

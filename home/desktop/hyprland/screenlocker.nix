@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-    assets = import ../../assets { baseSize = config.desktop.fontSize; };
+let assets = import ../../assets { baseSize = config.desktop.fontSize; };
     inherit (assets.fonts) roboto;
 
     forward_compatibility =

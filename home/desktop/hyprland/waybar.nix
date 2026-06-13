@@ -14,9 +14,8 @@ let assets = import ../../assets { baseSize = config.desktop.fontSize; };
     isPhysicalHost = ! config.desktop.virtual-machine;
     hasGithub = builtins.isString config.desktop.github.token;
 
-    externalMonitors = [ "DP-1" "DP-2" "DP-3" "DP-4" ];
-
-    output = "eDP-1";
+    inherit (config.desktop) externalMonitors;
+    output = config.desktop.mainMonitor;
 in
 {
   config = lib.mkIf (config.desktop.windowManager == "hyprland") {

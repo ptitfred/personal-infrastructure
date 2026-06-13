@@ -12,6 +12,9 @@
     };
     windowManager = "hyprland";
     keyboardDevice = "framework_laptop::kbd_backlight";
+
+    mainMonitor = "eDP-1";
+    externalMonitors = [ "DP-1" "DP-2" "DP-3" "DP-4" ];
   };
 
   home.username = "test";
