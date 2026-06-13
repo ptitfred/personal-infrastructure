@@ -5,7 +5,7 @@
     packages = with pkgs; [
       cachix
       niv
-      nix-linter
+      posix-toolbox.nix-linter
       nix-prefetch-git
       nix-prefetch-github
       nvd

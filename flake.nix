@@ -4,7 +4,6 @@
   inputs = {
     # package sets, currently on 25.11
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    previous.url = "github:nixos/nixpkgs/nixos-22.11";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -30,8 +29,6 @@
   outputs = inputs:
     let system = "x86_64-linux";
 
-        previous-pkgs = import inputs.previous { inherit system; };
-
         pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
@@ -40,7 +37,6 @@
 
             inputs.ptitfred-posix-toolbox.overlays.linter
             inputs.colmena.overlays.default
-            (_: _: { nix-linter = previous-pkgs.nix-linter; })
             overlay
           ];
         };
