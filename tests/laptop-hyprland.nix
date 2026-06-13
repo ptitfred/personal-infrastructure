@@ -1,0 +1,32 @@
+{ config, ... }:
+
+{
+  desktop = {
+    virtual-machine = false;
+    mainColor = "#FF0000";
+    location = { latitude = "44.0003"; longitude = "4.20001"; };
+    spacing = 10;
+    battery = {
+      adapter = "ADC0";
+      battery = "BAT0";
+    };
+    windowManager = "hyprland";
+    keyboardDevice = "framework_laptop::kbd_backlight";
+
+    mainMonitor = "eDP-1";
+    externalMonitors = [ "DP-1" "DP-2" "DP-3" "DP-4" ];
+  };
+
+  home.username = "test";
+  home.homeDirectory = "/home/test";
+
+  ptitfred.automation.flake-updater.enable = true;
+  ptitfred.automation.flake-updater.repositories = {
+    personal-infrastructure = {
+      gitRemoteUrl = "git@github.com:ptitfred/personal-infrastructure.git";
+      githubTokenFile = "${config.home.homeDirectory}/.private/automat-github-token";
+      localWorkingCopy = "${config.home.homeDirectory}/git/personal/infrastructure";
+      interval = "24h";
+    };
+  };
+}

@@ -1,0 +1,82 @@
+* {
+  border: none;
+}
+
+box.horizontal.modules-left {
+  padding: 0;
+}
+
+window#waybar.background {
+  border-radius: 6px;
+}
+
+window#waybar {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0;
+}
+
+#workspaces button {
+  border-radius: 0;
+  padding-top: 4px;
+  padding-bottom: 7px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+#workspaces button.visible {
+  border-bottom: 3px solid @mainColor;
+  padding-bottom: 4px;
+}
+
+.module {
+  padding: 5px 10px;
+}
+
+#battery.charging {
+  color: @activeColor;
+}
+
+#battery.warning:not(.charging) {
+  color: @warnColor;
+}
+
+#battery.critical:not(.charging) {
+  color: red;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#battery.warning:not(.charging),
+#battery.critical:not(.charging) {
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#pulseaudio.muted,
+#pulseaudio.source-muted {
+  color: @disabledColor;
+}
+
+#waybar > box:nth-child(2) > box:nth-child(3) > widget {
+  padding: 0 16px 0 16px;
+}
+
+#waybar > box:nth-child(2) > box:nth-child(3) > *:not(:first-child) > label {
+  background-image: linear-gradient(@mainColor, @mainColor);
+  background-size: 2px 60%;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+}
+
+#custom-github.hidden {
+  color: @disabledColor;
+}
