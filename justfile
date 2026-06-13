@@ -27,7 +27,11 @@ lint:
   nix run .#lint
 
 # Like the CI would do
-checks: lint tools test
+checks: lint tools test check-neovim-config
+
+# Only checks the syntax
+check-neovim-config:
+  nix build .#neovim-config
 
 # Integrations (not run by default locally)
 integration-tests:

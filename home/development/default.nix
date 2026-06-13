@@ -3,7 +3,7 @@
 {
   imports = [
     ./shell.nix
-    ./neovim.nix
+    ./neovim
     ./git.nix
     ./haskell.nix
     ./purescript.nix

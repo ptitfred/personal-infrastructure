@@ -62,11 +62,11 @@
           helpers.dropOverrides (
             pkgs.callPackage ./tools { inherit inputs; } // home.tools
           );
-        tests = pkgs.callPackage ./tests { inherit inputs lib; };
+        tests = pkgs.callPackage ./tests { inherit inputs lib; inherit (pkgs.lib) strings; };
 
      in {
           inherit lib;
-          inherit (tests) homeConfigurations tests test-hive;
+          inherit (tests) homeConfigurations tests test-hive neovim-config;
 
           apps.${system} = {
             lint = {

@@ -1,5 +1,10 @@
 colorscheme gruvbox
 
+" https://github.com/morhetz/gruvbox/issues/465#issuecomment-3063068187
+hi statusline cterm=NONE gui=NONE
+hi tabline cterm=NONE gui=NONE
+hi winbar cterm=NONE gui=NONE
+
 let g:airline_powerline_fonts = 1
 
 set tabstop=2

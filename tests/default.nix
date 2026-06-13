@@ -1,4 +1,4 @@
-{ inputs, callPackage, lib, linkFarm }:
+{ inputs, callPackage, lib, strings, linkFarm, lua, runCommand }:
 
 let test-hive = import ./infra.nix;
     test-infra = (lib.mkHive test-hive).toplevel;
@@ -19,4 +19,12 @@ let test-hive = import ./infra.nix;
       memorySize = 4096;
     };
 
-in { inherit homeConfigurations integration-tests tests test-hive; }
+    compile-lua-file = path: "luac ${path};";
+    lua-files = homeConfigurations.test-laptop.config.programs.neovim.extraLuaConfigFiles;
+
+    neovim-config = runCommand "neovim-lua-check" { buildInputs = [ lua ]; } ''
+      mkdir -p $out
+      ${strings.concatMapStrings compile-lua-file lua-files}
+    '';
+
+in { inherit homeConfigurations integration-tests tests test-hive neovim-config; }
