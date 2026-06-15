@@ -42,8 +42,6 @@ in
       luaConfigFiles = [
         ./config.lua
         ./completions.lua
-        ./lsp-config.lua
-        ./hover.lua
       ];
       initLua = loadLuaConfigFiles config.programs.neovim.luaConfigFiles;
       plugins =
@@ -68,7 +66,16 @@ in
             nvim-autopairs
             nvim-cmp
             nvim-lspconfig
-            hover-nvim
+            {
+              plugin = nvim-lspconfig;
+              type = "lua";
+              config = builtins.readFile ./lsp-config.lua;
+            }
+            {
+              plugin = hover-nvim;
+              type = "lua";
+              config = builtins.readFile ./hover.lua;
+            }
             telescope-nvim
             telescope-fzf-native-nvim
             telescope-lsp-handlers-nvim
