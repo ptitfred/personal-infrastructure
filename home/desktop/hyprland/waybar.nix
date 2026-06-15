@@ -86,6 +86,7 @@ in
               "clock" = {
                 format = "  {:%Y-%m-%d %H:%M}";
                 tooltip = false;
+                on-click = browseOnClick "https://calendar.google.com";
               };
 
               "custom/power" = {
