@@ -96,7 +96,7 @@ in
             nvim-treesitter-parsers.wgsl_bevy
             hurl
           ];
-      withPython3 = false;
+      withPython3 = true;
       withRuby = false;
     };
   };
