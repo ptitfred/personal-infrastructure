@@ -33,9 +33,9 @@ in
         example = "10.100.12.34";
       };
 
-      host = mkOption {
-        type = types.nullOr types.str;
-        default = null;
+      hosts = mkOption {
+        type = types.listOf types.str;
+        default = [];
       };
 
       listenIp = mkOption {
@@ -71,9 +71,7 @@ in
       let wg-interface = "tissue";
           cfg = config.personal-infrastructure.tissue;
           isServer = builtins.length cfg.clients > 0;
-          isClient = builtins.isString cfg.host;
-          server = nodes.${cfg.host}.config.personal-infrastructure.tissue.listenIp;
-          serverListenPort = nodes.${cfg.host}.config.networking.wireguard.interfaces.${wg-interface}.listenPort;
+          isClient = builtins.length cfg.hosts > 0;
           mkPeer = hostname:
             let cfg' = nodes.${hostname}.config.personal-infrastructure.tissue;
             in
@@ -86,6 +84,22 @@ in
             let ip' = nodes.${hostname}.config.personal-infrastructure.tissue.ip;
                 alias = "${hostname}.${wg-interface}";
             in _: { "${ip'}" = alias; };
+
+          mkServerPeer = host:
+            let server = nodes.${host}.config.personal-infrastructure.tissue.listenIp;
+                serverListenPort = nodes.${host}.config.networking.wireguard.interfaces.${wg-interface}.listenPort;
+             in {
+                  publicKey = nodes."${host}".config.personal-infrastructure.tissue.publicKey;
+                  allowedIPs = [ "10.100.0.0/24" ];
+                  endpoint = "${server}:${toString serverListenPort}";
+
+                  persistentKeepalive =
+                    if cfg.reachable
+                    then
+                      # Useful if we want mobile devices to be able to reach this machine behind NAT
+                      25
+                    else null;
+                };
 
           collectHostAliases = lib.attrsets.foldAttrs (n: a: [n] ++ a) [];
 
@@ -109,23 +123,8 @@ in
 
               privateKeyFile = "${config.deployment.keys.wg-private-key.destDir}/wg-private-key";
               peers =
-                if isServer
-                then (map mkPeer cfg.clients ++ cfg.other-peers)
-                else lib.modules.mkIf isClient
-                  [
-                    {
-                      publicKey = nodes."${cfg.host}".config.personal-infrastructure.tissue.publicKey;
-                      allowedIPs = [ "10.100.0.0/24" ];
-                      endpoint = "${server}:${toString serverListenPort}";
-
-                      persistentKeepalive =
-                        if cfg.reachable
-                        then
-                          # Useful if we want mobile devices to be able to reach this machine behind NAT
-                          25
-                        else null;
-                    }
-                  ];
+                map mkServerPeer cfg.hosts
+                ++ lib.lists.optionals isClient (map mkPeer cfg.clients ++ cfg.other-peers);
             };
           };
 
