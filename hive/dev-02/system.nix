@@ -15,7 +15,7 @@
     tissue = {
       publicKey = "NLCWc9YGiimqRJAZpvK6AK8NwiKd5JE5B564adtkLSk=";
       ip = "10.100.0.10";
-      hosts = ["homepage-02" "homelab-01"];
+      host = "homepage-02";
       reachable = true;
       open-ports = [ 3000 ];
     };

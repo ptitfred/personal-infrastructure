@@ -26,7 +26,7 @@
     tissue = {
       publicKey = "jOab1ZoQrdbcNSN3qKTOOZ783CdtkCYSnMDXqqIWwXg=";
       ip = "10.100.0.2";
-      hosts = ["homepage-02"];
+      host = "homepage-02";
       reachable = true;
     };
 
