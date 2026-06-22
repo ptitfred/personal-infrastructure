@@ -31,7 +31,10 @@ let assets = import ../../assets { baseSize = config.desktop.fontSize; };
       startup_session = let file = pkgs.writeText "session.conf" ''
         launch ${config.programs.tmux.package}/bin/tmux
       ''; in "${file}";
+
+      momentum_scroll = 0;
     };
+
     wayland.windowManager.hyprland.settings = {
       "$terminal" = "kitty";
     };
