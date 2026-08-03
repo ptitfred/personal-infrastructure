@@ -22,9 +22,9 @@ let test-hive = import ./infra.nix;
 
     compile-lua-file = path: "luac ${path};";
     lua-files =
-      homeConfigurations.test-virtual-machine.config.programs.neovim.extraLuaConfigFiles ++
-      homeConfigurations.test-laptop-i3.config.programs.neovim.extraLuaConfigFiles ++
-      homeConfigurations.test-laptop-hyprland.config.programs.neovim.extraLuaConfigFiles;
+      homeConfigurations.test-virtual-machine.config.programs.neovim.luaConfigFiles ++
+      homeConfigurations.test-laptop-i3.config.programs.neovim.luaConfigFiles ++
+      homeConfigurations.test-laptop-hyprland.config.programs.neovim.luaConfigFiles;
 
     neovim-config = runCommand "neovim-lua-check" { buildInputs = [ lua ]; } ''
       mkdir -p $out

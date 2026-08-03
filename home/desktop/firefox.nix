@@ -37,6 +37,7 @@ in
     config = {
       programs.firefox = {
         enable = true;
+        configPath = "${config.xdg.configHome}/mozilla/firefox";
         profiles = mkProfiles config.desktop.firefox.profiles;
       };
     };

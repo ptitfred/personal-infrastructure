@@ -1,12 +1,6 @@
 require('nvim-autopairs').setup({ map_cr = true })
 require('fidget').setup {}
 
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-}
-
 require('Comment').setup()
 
 require('telescope').setup {

@@ -9,7 +9,7 @@ let cfg = config.backlight-support;
   };
 
   config = lib.mkIf (cfg.enable){
-    programs.light.enable = true;
+    hardware.acpilight.enable = true;
     users.users.${cfg.user}.extraGroups = [ "video" ];
   };
 }

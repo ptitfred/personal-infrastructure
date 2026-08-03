@@ -5,8 +5,8 @@ let assets = import ../../assets { baseSize = config.desktop.fontSize; };
 
     mixer = command: "${pkgs.alsa-utils}/bin/amixer set Master ${command}";
 
-    count-github-notifications = githubTokenFile:
-      pkgs.count-github-notifications.override { inherit githubTokenFile; };
+    github-notifications = githubTokenFile:
+      pkgs.callPackage ./github-notifications { inherit githubTokenFile; };
 
     browse = pkgs.callPackage ../browse { profile = "${config.home.homeDirectory}/.nix-profile"; };
     browseOnClick = url: "${browse}/bin/browse ${url}";
@@ -86,6 +86,7 @@ in
               "clock" = {
                 format = "  {:%Y-%m-%d %H:%M}";
                 tooltip = false;
+                on-click = browseOnClick "https://calendar.google.com";
               };
 
               "custom/power" = {
@@ -102,9 +103,9 @@ in
             } // lib.optionalAttrs hasGithub {
               "custom/github" = {
                 return-type = "json";
-                format = "  {}";
+                format = "  {text}";
                 interval = 60;
-                exec = "${count-github-notifications config.desktop.github.token}/bin/count-github-notifications";
+                exec = "${github-notifications config.desktop.github.token}/bin/waybar-github-notifications-module";
                 on-click = browseOnClick "https://github.com/notifications";
               };
             } // lib.optionalAttrs isPhysicalHost {
