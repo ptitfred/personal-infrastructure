@@ -19,9 +19,9 @@ test-hive:
 # Test various home-manager configurations
 test-home:
   # Test various home-manager configurations
-  nix run home-manager/release-25.11 -- build --flake .#test-virtual-machine
-  nix run home-manager/release-25.11 -- build --flake .#test-laptop-i3
-  nix run home-manager/release-25.11 -- build --flake .#test-laptop-hyprland
+  nix run home-manager/release-26.05 -- build --flake .#test-virtual-machine
+  nix run home-manager/release-26.05 -- build --flake .#test-laptop-i3
+  nix run home-manager/release-26.05 -- build --flake .#test-laptop-hyprland
 
 # Lint the nix files
 lint:
@@ -37,6 +37,3 @@ check-neovim-config:
 # Integrations (not run by default locally)
 integration-tests:
   nix build --print-build-logs .#integration-tests
-
-update-extras:
-  nix run .#obsidian-updater
