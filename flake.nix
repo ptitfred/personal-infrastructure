@@ -22,8 +22,8 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     power-theme.url = "github:wfxr/tmux-power";
     power-theme.flake = false;
-    scram-sha-256.url = "github:supercaracal/scram-sha-256";
-    scram-sha-256.flake = false;
+    # scram-sha-256.url = "github:supercaracal/scram-sha-256";
+    # scram-sha-256.flake = false;
   };
 
   outputs = inputs:
@@ -79,7 +79,7 @@
             buildInputs = [
               pkgs.colmena
               pkgs.pwgen
-              tools.scram-sha-256
+              # tools.scram-sha-256
               pkgs.lixPackageSets.stable.lix
             ];
           };
