@@ -75,6 +75,8 @@ let baseSize = config.desktop.fontSize;
 
         # disable automatic renaming
         set-option -wg automatic-rename off
+
+        bind-key C-a last-window
       '';
     };
 

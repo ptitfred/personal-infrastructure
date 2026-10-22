@@ -57,6 +57,7 @@ in
     # Optional, hint Electron apps to use Wayland:
     home.sessionVariables.NIXOS_OZONE_WL = "1";
 
+    wayland.windowManager.hyprland.configType = "hyprlang";
     wayland.windowManager.hyprland.settings = {
       monitor =
         [
@@ -159,7 +160,6 @@ in
 
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
       dwindle = {
-        pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = true; # You probably want this
       };
 
@@ -216,7 +216,7 @@ in
           "$mainMod, V, togglefloating,"
           "$mainMod, D, exec, ${menu}"
           "$mainMod, P, pseudo," # dwindle
-          "$mainMod, J, togglesplit," # dwindle
+          "$mainMod, J, layoutmsg, rotatesplit" # dwindle
           "$mainMod, F, fullscreen"
           "$mainMod, comma, exec, loginctl lock-session"
 
@@ -304,22 +304,55 @@ in
 
       # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
       # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
+      windowrule = [
+        {
+          # Terminal's slightly transparent
+          name = "rule1";
+          opacity = "0.92 0.88 0.92";
+          "match:class" = "^(kitty)$";
+        }
 
-      windowrule =
-        [
-          "opacity 0.92 0.88 0.92,class:^(kitty)$"
-          "bordersize 0,class:^(firefox)$"
-          "workspace 6 silent,class:^(org.zealdocs.zeal)$"
+        {
+          # No border for firefox
+          name = "rule2";
+          border_size = 0;
+          "match:class" = "^(firefox)$";
+        }
 
-          "float,class:^(nm-connection-editor)$"
-          "center 1,class:^(nm-connection-editor)$"
+        {
+          # Send Zeal to workspace 6
+          name = "rule3";
+          workspace = "6 silent";
+          "match:class" = "^(org.zealdocs.zeal)$";
+        }
 
+        {
+          # NM connection editor floating
+          name = "rule4";
+          float = "on";
+          center = 1;
+          "match:class" = "^(nm-connection-editor)$";
+        }
+
+        {
           # Ignore maximize requests from apps. You'll probably like this.
-          "suppressevent maximize, class:.*"
+          name = "rule5";
+          suppress_event = "maximize";
+          "match:class" = ".*";
+        }
 
+        {
           # Fix some dragging issues with XWayland
-          "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-        ];
+          name = "rule6";
+          no_focus = "on";
+          "match:class" = "^$";
+          "match:title" = "^$";
+          "match:xwayland" = true;
+          "match:float" = true;
+          "match:fullscreen" = false;
+          "match:pin" = false;
+        }
+    ];
 
       workspace = [
         "7, monitor:DP-3"
