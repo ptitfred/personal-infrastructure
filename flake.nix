@@ -2,9 +2,9 @@
   description = "Personal infrastructure & Home Manager configuration";
 
   inputs = {
-    # package sets, currently on 25.11
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    # package sets, currently on 26.05
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # personal projects
@@ -22,8 +22,8 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     power-theme.url = "github:wfxr/tmux-power";
     power-theme.flake = false;
-    scram-sha-256.url = "github:supercaracal/scram-sha-256";
-    scram-sha-256.flake = false;
+    # scram-sha-256.url = "github:supercaracal/scram-sha-256";
+    # scram-sha-256.flake = false;
   };
 
   outputs = inputs:
@@ -67,7 +67,7 @@
           apps.${system} = {
             lint = {
               type = "app";
-              program = "${pkgs.posix-toolbox.nix-linter}/bin/nix-linter";
+              program = "${pkgs.nix-linter}/bin/nix-linter";
             };
           };
 
@@ -79,7 +79,7 @@
             buildInputs = [
               pkgs.colmena
               pkgs.pwgen
-              tools.scram-sha-256
+              # tools.scram-sha-256
               pkgs.lixPackageSets.stable.lix
             ];
           };
@@ -90,7 +90,6 @@
 
           packages.${system} = helpers.bundleTools tools // {
             inherit (tests) integration-tests;
-            inherit (pkgs) obsidian-updater;
           };
         };
 }

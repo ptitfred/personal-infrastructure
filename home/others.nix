@@ -15,7 +15,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "obsidian" ];
 
   # Electron version 25.9.0 is EOL but is used by obsidian.
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "electron-25.9.0"
+  # ];
 }

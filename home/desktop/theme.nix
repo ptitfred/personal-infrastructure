@@ -90,6 +90,7 @@ in
             gtk2.extraConfig = toGTK2 gtk2ExtraConfig;
             gtk3.extraConfig = gtk3ExtraConfig;
             gtk3.extraCss = "@import 'colors.css';";
+            gtk4.theme = config.gtk.theme;
           };
 
     xdg.configFile."gtk-3.0/colors.css".text = builtins.readFile ./colors.css;
