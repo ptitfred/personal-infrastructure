@@ -1,8 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let changeBrightness = variant: "exec --no-startup-id ${pkgs.light}/bin/light ${variant} ${toString config.desktop.brightness-step}";
-
- in
 {
   options.desktop.brightness-step = lib.mkOption {
     type = lib.types.int;
@@ -11,8 +8,8 @@ let changeBrightness = variant: "exec --no-startup-id ${pkgs.light}/bin/light ${
 
   config = lib.mkIf (! config.desktop.virtual-machine && config.desktop.windowManager == "i3") {
     desktop.i3-extra-bindings = {
-      "XF86MonBrightnessUp"   = changeBrightness "-A";
-      "XF86MonBrightnessDown" = changeBrightness "-U";
+      "XF86MonBrightnessUp"   = "${pkgs.brightnessctl}/bin/brightnessctl s ${toString config.desktop.brightness-step}%+";
+      "XF86MonBrightnessDown" = "${pkgs.brightnessctl}/bin/brightnessctl s ${toString config.desktop.brightness-step}%-";
     };
   };
 }

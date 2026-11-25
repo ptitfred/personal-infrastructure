@@ -7,4 +7,6 @@
 
   # Automatically restart systemd services deemed necessary
   systemd.user.startServices = "sd-switch";
+
+  xdg.enable = true;
 }

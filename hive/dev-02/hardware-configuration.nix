@@ -3,27 +3,30 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, modulesPath, ... }:
 
+let luks_device = "luks-86d918d1-32d8-4be5-9143-051f1b534997";
+    encrypted_disk_uuid = "86d918d1-32d8-4be5-9143-051f1b534997";
+in
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f61f9165-6a55-4716-8c98-e9cc74e39310";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/mapper/${luks_device}";
+    fsType = "ext4";
+  };
 
-  boot.initrd.luks.devices."luks-86d918d1-32d8-4be5-9143-051f1b534997".device = "/dev/disk/by-uuid/86d918d1-32d8-4be5-9143-051f1b534997";
+  boot.initrd.luks.devices.${luks_device}.device = "/dev/disk/by-uuid/${encrypted_disk_uuid}";
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/02D3-37B4";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/02D3-37B4";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

@@ -3,7 +3,7 @@
 let scram-sha-256 = buildGoModule {
       name = "scram-sha-256";
       src = inputs.scram-sha-256;
-      vendorHash = "sha256-L7nK+w4CB2H3b6vL0ZoFfaRMgCmpqzQo8ThMM60C76I=";
+      vendorHash = "sha256-/mTZkvmdSfFR+tBxuUKdDVqpxVAU7vxtcBS2yz2WBjI=";
     };
  in writeShellApplication {
        name = "scram-sha-256";
