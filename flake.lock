@@ -417,7 +417,24 @@
         "power-theme": "power-theme",
         "ptitfred-haddocset": "ptitfred-haddocset",
         "ptitfred-personal-homepage": "ptitfred-personal-homepage",
-        "ptitfred-posix-toolbox": "ptitfred-posix-toolbox"
+        "ptitfred-posix-toolbox": "ptitfred-posix-toolbox",
+        "scram-sha-256": "scram-sha-256"
+      }
+    },
+    "scram-sha-256": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795492050,
+        "narHash": "sha256-JURuIpyLtfO4fzaeSzEErU9Tj4ffBbpjVu0c4Fq3ZHs=",
+        "owner": "supercaracal",
+        "repo": "scram-sha-256",
+        "rev": "49fab47c640d7edbc3f7fc436398c1fda29cd0f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "supercaracal",
+        "repo": "scram-sha-256",
+        "type": "github"
       }
     },
     "stable": {
